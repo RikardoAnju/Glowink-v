@@ -102,7 +102,7 @@
         style="opacity: 0.5"
         aria-hidden="true"
     ></div>
-
+    
     <aside
         x-show="isSidebarOpen"
         x-transition:enter="transition-all transform duration-300 ease-in-out"

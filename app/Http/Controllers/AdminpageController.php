@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminpageController extends Controller
 {
@@ -10,4 +10,6 @@ class AdminpageController extends Controller
     {
         return view('auth.adminpage');
     }
+
+    
 }

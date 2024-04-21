@@ -5,27 +5,44 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
 use App\Models\Member;
+use App\Http\Controllers\Controller; 
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
 
+    
+    
     public function index()
     {
         return view('auth.login');
     }
-    public function login()
-    {
-        $credentials = request(['email', 'password']);
+    // Di dalam metode login
+public function login(Request $request)
+{
+    $credentials = $request->only('email', 'password');
 
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Email or Password is wrong'], 401);
-        }
-
-        return $this->respondWithToken($token);
+    if (Auth::attempt($credentials)) {
+        $token = Auth::guard('api')->attempt($credentials);
+        cookie ()->queue(cookie('token', $token, 60));
+        // Simpan pesan flash ke dalam sesi
+        session()->flash('success', 'Login successful!');
+        // Redirect ke halaman yang diinginkan setelah login berhasil
+        return redirect()->intended('/adminpage');
     }
+
+    // Jika autentikasi gagal, kembalikan dengan pesan kesalahan
+    return redirect('login')->withErrors([
+        'error' => 'Email or password is wrong'
+    ]);
+}
+
+    
 
     protected function respondWithToken($token)
     {
@@ -99,13 +116,13 @@ class AuthController extends Controller
     }
     public function logout()
     {
-        auth()->logout();
+        session::flush();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return redirect('/login');
     }
     public function logout_member()
     {
        session::flush();
-       redirect('/login');
+       return redirect('/login_member');
    }
 }
