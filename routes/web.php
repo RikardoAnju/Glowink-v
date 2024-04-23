@@ -1,12 +1,15 @@
 <?php
-use App\Http\Controllers\addbarangController;
-use App\Http\Controllers\AdminpageController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\detailprodukController;
-use App\Http\Controllers\kategoriController;
-use App\Http\Middleware\LoginMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\addbarangController;
+use App\Http\Controllers\login2Controller;
+use App\Http\Controllers\registercontroller;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\cartController;
+use App\Http\Controllers\kategoriController;
+use App\Http\Controllers\AdminpageController;
+use App\Http\Controllers\detailprodukController;
+use App\Http\Controllers\AuthController;
+use App\Http\Middleware\LoginMiddleware;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -22,6 +25,9 @@ Route::get('/add_barang', function () {
 
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
 Route::get('/detailproduk', [detailprodukController::class , 'detailproduk']);
+Route::get('/register', [registerController::class , 'register']);
+Route::get('/checkout', [checkoutController::class , 'checkout']);
+Route::get('/cart', [cartController::class , 'cart']);
 
 
 
