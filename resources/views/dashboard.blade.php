@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard
-    </title>
-    <!-- CSS Only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
     @include('components.navbar')
+
+    @section('title', 'Welcome Dear')
+    
+    @section('content')
     <br>
     <div class="max-w-6xl mx-auto">
       {{-- BANNER IKLAN --}}
@@ -66,172 +59,192 @@
       {{-- CLASS PRODUCT --}}
       
         <div class="bg-white rounded-lg max-w-6xl shadow-xl">
-        <div class="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8">
-          <h2 class="text-2xl text-red-400 font-bold tracking-tight text-center italic">For You Dear
+        <div class="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8 dark:bg-slate-600 dark:rounded-lg">
+          <h2 class="text-2xl text-red-400 font-bold tracking-tight text-center italic dark:text-white ">For You Dear
           </h2>
           {{-- atur jumlah berapa produk satu kolom --}}
           <div class="mt-0 m-1 grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-5 xl:gap-x-8 ">
             
 
             {{-- product --}}
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
                 <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
                         <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
                     </a>
                     </div>
                     <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
                             <a href="#">Emina Bright Stuff Face Wash</a>
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
                     </a>
                 </div>
             </div>
 
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
                 <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
                         <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
                     </a>
                     </div>
                     <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
                             <a href="#">Emina Bright Stuff Face Wash</a>
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
                     </a>
                 </div>
             </div>
 
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
                 <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
                         <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
                     </a>
                     </div>
                     <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
                             <a href="#">Emina Bright Stuff Face Wash</a>
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
                     </a>
                 </div>
             </div>
 
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
                 <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
                         <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
                     </a>
                     </div>
                     <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
                             <a href="#">Emina Bright Stuff Face Wash</a>
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
                     </a>
                 </div>
             </div>
 
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
                 <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
                         <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
                     </a>
                     </div>
                     <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
                             <a href="#">Emina Bright Stuff Face Wash</a>
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
                     </a>
                 </div>
             </div>
 
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
                 <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
                         <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
                     </a>
                     </div>
                     <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
                             <a href="#">Emina Bright Stuff Face Wash</a>
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
-                    </a>
-                </div>
-            </div>
-            
-
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
-                <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
-                        <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
-                    </a>
-                    </div>
-                    <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
-                            <a href="#">Emina Bright Stuff Face Wash</a>
-                        </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
                     </a>
                 </div>
             </div>
 
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
                 <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
                         <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
                     </a>
                     </div>
                     <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
                             <a href="#">Emina Bright Stuff Face Wash</a>
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
                     </a>
                 </div>
             </div>
 
-            <div class="card p-2 m-2 shadow group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 duration-300 bg-gradient-to-r max-w-xs"> 
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
                 <!-- max-w-xs menentukan lebar maksimum kartu -->
-                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54">                                                                                                          
-                    <a href="#">
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
                         <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
                     </a>
                     </div>
                     <div class="mt-2">
-                        <h3 class="text-sm font-semibold text-gray-700">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
                             <a href="#">Emina Bright Stuff Face Wash</a>
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">Face Wash</p>
-                        <p class="text-xs font-medium text-gray-900">Rp 55.000</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
                     </a>
                 </div>
             </div>
-            {{-- tag penutup --}}
+
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
+                <!-- max-w-xs menentukan lebar maksimum kartu -->
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
+                        <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
+                    </a>
+                    </div>
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
+                            <a href="#">Emina Bright Stuff Face Wash</a>
+                        </h3>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card p-2 m-2 rounded-md border shadow-lg group relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-100 hover:rounded-md dark:hover:bg-slate-700 duration-200 bg-gradient-to-r max-w-xs dark:border-2 dark:shadow-xl dark:rounded-xl"> 
+                <!-- max-w-xs menentukan lebar maksimum kartu -->
+                <div class="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-54  ">                                                                                                          
+                    <a href="/detailproduk">
+                        <img src="{{ asset('images/glowinkgambar1.jpeg') }}" class="aspect-square" alt="Product Image">
+                    </a>
+                    </div>
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-white">
+                            <a href="#">Emina Bright Stuff Face Wash</a>
+                        </h3>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Face Wash</p>
+                        <p class="text-xs font-medium text-gray-900 dark:text-white">Rp 55.000</p>
+                    </a>
+                </div>
+            </div>
+
+            {{-- penutup --}}
           </div>
         </div>
-      </div>
+        </div>
       <br>
+
+      {{-- @endsection --}}
+
       @include('components.footer')
       <!-- Javascript -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

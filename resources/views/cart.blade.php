@@ -50,10 +50,13 @@
           </div>
         </td>
         {{-- gambar produk --}}
-        <td class="p-2 px-0">
-          <div class="w-36 aspect-[1/1] bg-slate-600 rounded-lg">
+        
+          <td class="p-2 px-0">
+          <a href="/detailproduk">
+            <div class="w-36 aspect-[1/1] bg-slate-600 rounded-lg">
             <img src="{{ asset('images/lipstick.png')}}" class="rounded-md" id="foto-produk">
           </div>
+        </a>
         </td>
         <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
           XXXXXXXXXXXXXXXXXXXX

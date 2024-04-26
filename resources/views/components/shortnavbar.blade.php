@@ -30,7 +30,7 @@
     <title>GLOWINK</title>
 </head>
 
-<body class="font-[Poppins] h-screen dark:bg-slate-500">
+<body class="font-[Poppins] h-screen bg-[#A0CADB] dark:bg-slate-500">
     {{-- NAVBAR --}}
     <header class="bg-[#A0CADB] dark:bg-gray-900 border">
         <nav class="flex justify-between items-center w-[92%] mx-auto h-16 dark:text-white">

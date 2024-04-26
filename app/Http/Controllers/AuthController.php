@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
 
-    
+    public function loginn() {
+        return view('auth.loginn');
+    }
     
     public function index()
     {
