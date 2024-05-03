@@ -29,19 +29,14 @@ public function login(Request $request)
 {
     $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
-        $token = Auth::guard('api')->attempt($credentials);
-        cookie ()->queue(cookie('token', $token, 60));
-        // Simpan pesan flash ke dalam sesi
-        session()->flash('success', 'Login successful!');
-        // Redirect ke halaman yang diinginkan setelah login berhasil
-        return redirect()->intended('/adminpage');
+    $token = Auth::guard('api')->attempt($credentials);
+    if (auth()->attempt($credentials)) {
+        return response ()-> json([
+            'success' => true,
+            'message' => 'login Berhasil',
+            'token' => $token
+        ]);
     }
-
-    // Jika autentikasi gagal, kembalikan dengan pesan kesalahan
-    return redirect('login')->withErrors([
-        'error' => 'Email or password is wrong'
-    ]);
 }
 
     

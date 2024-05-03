@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Tambahkan jQuery -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <style>
     body {
-      font-style: normal;
+      font-family: 'Poppins', sans-serif; /* Menggunakan font Poppins */
       background-color: #A0CADB;
       margin: 0;
       padding: 0;
@@ -79,27 +81,21 @@
     <div class="card">
         <img src="images/logo.png" alt="Logo" />
         <h3 class="card-title">LOGIN</h3>
-        @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Error:</strong>
-            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-            </span>
-            <p>{{ $errors->first() }}</p>
-        </div>
-        @endif
-        <form action="login" method="POST">
+        <!-- Perubahan: Tambahkan kelas "user" pada form -->
+        <form class="form-login user" method="POST" action="/login">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group">
                 <label for="email">Email</label>
                 @error('email')
                     <div class="error">{{ $message }}</div>
                 @enderror
-                <input type="text" id="email" name="email" placeholder="Email" class="@error('email') error @enderror">
+                <!-- Perubahan: Tambahkan kelas "email" -->
+                <input type="text" id="email" name="email" placeholder="Email" class="email @error('email') error @enderror">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password" class="@error('password') error @enderror">
+                <!-- Perubahan: Tambahkan kelas "password" -->
+                <input type="password" id="password" name="password" placeholder="Password" class="password @error('password') error @enderror">
                 @error('password')
                     <div class="error">{{ $message }}</div>
                 @enderror
@@ -108,6 +104,45 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(function (){
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        $('.form-login').submit(function(e){
+            e.preventDefault();
+            const email = $('.email').val();
+            const password = $('.password').val();
+            const csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                url : '/login',
+                type : 'POST',
+                data : {
+                    email : email,
+                    password : password,
+                    _token : csrf_token
+                },
+                success : function(data){
+                    if (data.success) {
+                        localStorage.setItem('token', data.token); // Menggunakan setItem untuk menyimpan token
+                        window.location.href = '/adminpage';
+                    } else {
+                        alert(data.message ? data.message : 'Email or password is wrong');
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

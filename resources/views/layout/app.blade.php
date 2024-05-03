@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>adminpage</title>
-    <meta name="author" content="David Grzyb">
+    <meta name="author" content="">
     <meta name="description" content="">
 
-    <!-- Tailwind -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    
     <!-- component -->
 <!-- component -->
 <style>
@@ -159,8 +159,9 @@
                 role="menuitem"
                 class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                 >
-                Data Katagori
+                Data Kategori
                 </a>
+
                 <a
                 href="/subkategori"
                 role="menuitem"
@@ -208,7 +209,7 @@
                 
             </div>
             </div>
-
+            
             <!-- Components links -->
             <div x-data="{ isActive: false, open: false }">
             <!-- active classes 'bg-indigo-100 dark:bg-indigo-600' -->
@@ -379,6 +380,9 @@
         </div>
     </aside>
 
+    
+
+
     <!-- Second column -->
     <!-- Backdrop -->
     <div
@@ -442,8 +446,7 @@
     </div>
 
    <!-- Main content -->
-   
-
+ 
     <!-- Panels -->
 
     <!-- Settings Panel -->
@@ -461,6 +464,8 @@
         style="opacity: 0.5"
         aria-hidden="true"
     ></div>
+    
+    @yield('content')
     <!-- Panel -->
     <section
         x-transition:enter="transition duration-300 ease-in-out transform sm:duration-500"
@@ -582,7 +587,6 @@
     <!-- Backdrop -->
    
     <!-- Panel -->
-   
     </div>
 </div>
 
@@ -648,4 +652,28 @@
         }
     }
 </script>
+
+<script>
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(':');
+        for(var i=0;1 < ca.lenght;i++){ var c=ca[i]; while (c.charAt(0)== '')c=c.substring(1,c.lenght); if
+    (c.indexOf(nameEQ) ==0) return c.substring(name.lenght,c.lenght);} return null;
+    }
+</script>
+
+<script>
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';'); // Menggunakan titik koma (;) sebagai pemisah
+        for(var i=0; i < ca.length; i++) { // Mengubah '1' menjadi 'i' pada 'ca.lenght'
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length); // Menghapus spasi tambahan
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length); // Mengubah 'name.lenght' menjadi 'nameEQ.length'
+        }
+        return null;
+    }
+</script>
+
+@stack('js')
 </html>

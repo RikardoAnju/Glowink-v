@@ -37,11 +37,11 @@ Route::group([
         'members'=>MemberController::class,
         'testimoni'=>TestimoniController::class,
         'reviews'=>ReviewController::class,
-        'oreders'=>OrderController::class,
+        'orders'=>OrderController::class, // Perbaikan penulisan di sini
     ]);
 
     
-    Route::put('sliders/{slider}', [SliderController::class, 'update']);
+    Route::put('sliders/{slider}', [SliderController::class, 'update']); // Penyesuaian rute update
     Route::get('order/dikonfirmasi', [OrderController::class, 'dikonfirmasi']);
     Route::get('order/dikemas', [OrderController::class, 'dikemas']);
     Route::get('order/dikirim', [OrderController::class, 'dikirim']);
@@ -50,4 +50,3 @@ Route::group([
     Route::post('order/ubah_status/{order}', [OrderController::class, 'ubah_Status']);
     Route::get('reports', [ReportController::class, 'index']);
 });
-

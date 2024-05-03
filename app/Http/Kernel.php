@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'LoginMiddleware' => \App\Http\Middleware\LoginMiddleware::class, 
+        'can.delete' => \App\Http\Middleware\CanDeleteData::class,
         
     ];
     

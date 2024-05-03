@@ -9,9 +9,27 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    /**
-     * Menampilkan daftar kategori.
-     */
+    public function show($id)
+{
+    $category = Category::find($id);
+
+    if (!$category) {
+        return response()->json(['message' => 'Category not found'], 404);
+    }
+
+    return response()->json(['data' => $category], 200);
+}
+
+    public function edit(Category $category)
+    {
+        return view('kategori.edit', compact('category'));
+    }
+
+    public function list()
+    {
+        return view('kategori.index');
+    }
+
     public function index()
     {
         $categories = Category::all();
@@ -21,23 +39,12 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function show (Category $category)
-    {
-        return response()->json([
-            'data'=> $category
-        ]);
-    }
-
-    /**
-     * Menyimpan kategori baru.
-     */
     public function store(Request $request)
     {
-        // Validasi input
         $validator = Validator::make($request->all(), [
             'nama_kategori' => 'required',
             'deskripsi' => 'required',
-            'gambar' => 'required|image|mimes:jpg,png,jpeg,webp|max:2048', // Batas maksimum ukuran gambar adalah 2MB
+            'gambar' => 'required|image|mimes:jpg,png,jpeg,webp|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -61,50 +68,55 @@ class CategoryController extends Controller
         ]);
     }
 
-    /**
-     * Memperbarui kategori yang ditentukan.
-     */
     public function update(Request $request, Category $category)
-    {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
-            'nama_kategori' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'image|mimes:jpg,png,jpeg,webp|max:2048', // Batas maksimum ukuran gambar adalah 2MB
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'nama_kategori' => 'required',
+        'deskripsi' => 'required',
+        'gambar' => 'image|mimes:jpg,png,jpeg,webp|max:2048|nullable',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $input = $request->all();
+
+    if ($request->hasFile('gambar')) {
+        $gambar = $request->file('gambar');
+        $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
+        $gambar->move(public_path('uploads'), $nama_gambar);
+        $input['gambar'] = 'uploads/' . $nama_gambar;
+
+        // Hapus gambar lama jika ada
+        if ($category->gambar) {
+            File::delete(public_path($category->gambar));
         }
+    }
 
-        $input = $request->all();
-
-        if ($request->hasFile('gambar')) {
-            $gambar = $request->file('gambar');
-            $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
-            $gambar->move(public_path('uploads'), $nama_gambar);
-            $input['gambar'] = 'uploads/' . $nama_gambar;
-        }
-
+    try {
         $category->update($input);
-
         return response()->json([
             'message' => 'Kategori berhasil diperbarui.',
             'data' => $category
         ]);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error in updating category.'], 500);
     }
+}
 
-    /**
-     * Menghapus kategori yang ditentukan.
-     */
+
     public function destroy(Category $category)
     {
-        File::delete('uploads/' . $category->gambar);
-
+        // Hapus gambar jika ada
+        if ($category->gambar) {
+            File::delete(public_path($category->gambar));
+        }
+        
         $category->delete();
 
         return response()->json([
-            'message' => 'succes'
+            'message' => 'Kategori berhasil dihapus.'
         ]);
     }
 }
