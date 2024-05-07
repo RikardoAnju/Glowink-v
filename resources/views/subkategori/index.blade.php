@@ -1,11 +1,11 @@
 @extends('layout.app')
 
-@section('title', 'Data Kategori')
+@section('title', 'Data Subkategori')
 
 @section('content')
 <div class="container w-full md:w-4/5 xl:w-3/5 mx-auto px-2">
     <h1 class="flex items-center font-sans font-bold break-normal text-indigo-500 px-2 py-8 text-xl md:text-2xl">
-        Data Kategori
+        Data Subkategori
     </h1>
 
     <div class="flex justify-end mb-4">
@@ -20,6 +20,7 @@
                 <tr>
                     <th class="px-4 py-2 w-16">No</th>
                     <th class="px-4 py-2 w-48">Nama Kategori</th>
+                    <th class="px-4 py-2 w-48">Nama SubKategori</th>
                     <th class="px-4 py-2 w-64">Deskripsi</th>
                     <th class="px-4 py-2 w-24">Gambar</th>
                     <th class="px-4 py-2 w-32">Aksi</th>
@@ -48,13 +49,22 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
               <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                Tambah Data Kategori
+                Tambah Data SubKategori
               </h3>
               <div class="mt-2">
                 <div class="mb-4">
-                  <label for="nama_kategori" class="block text-sm font-medium text-gray-700">Nama Kategori</label>
-                  <input type="text" name="nama_kategori" id="nama_kategori" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                  <label for="nama_subkategori" class="block text-sm font-medium text-gray-700">Nama Subkategori</label>
+                  <input type="text" name="nama_subkategori" id="nama_subkategori" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
                 </div>
+                <div class="form-group">
+                  <label for="id_kategori" class="block">Kategori</label>
+                  <select name="id_kategori" id="id_kategori" class="form-control mt-1 block w-full">
+                      @foreach ($categories as $category)
+                          <option value="{{ $category->id }}">{{ $category->nama_kategori }}</option>
+                      @endforeach
+                  </select>
+              </div>
+              
                 <div class="mb-4">
                   <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                   <textarea name="deskripsi" id="deskripsi" rows="3" class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
@@ -76,8 +86,42 @@
   </div>
 </div>
 
+<!--modal konfirmasi di tambahkan-->
 
-<!-- Modal Konfirmasi Penghapusan -->
+<div id="successAddConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+              Berhasil Ditambahkan
+            </h3>
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">
+                Data berhasil ditambahkan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button type="button" id="confirmSuccessAddButton" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--- modal konfirmasi data telah di hapus-->
 <div id="deleteConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -114,43 +158,6 @@
   </div>
 </div>
 
-<!-- Modal Konfirmasi Berhasil Ditambahkan -->
-<div id="successAddConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-        <div class="sm:flex sm:items-start">
-          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-              Berhasil Ditambahkan
-            </h3>
-            <div class="mt-2">
-              <p class="text-sm text-gray-500">
-                Data berhasil ditambahkan.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-        <button type="button" id="confirmSuccessAddButton" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
-          OK
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal Konfirmasi Berhasil -->
-<!-- Modal Konfirmasi Berhasil -->
 <div id="successConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -184,9 +191,6 @@
   </div>
 </div>
 
-
-
-
 <!-- Modal Edit Data -->
 <div id="editDataModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -205,13 +209,17 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
               <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                Edit data Kategori
+                Edit data SubKategori
               </h3>
               <div class="mt-2">
-                <div class="mb-4">
-                  <label for="nama_kategori" class="block text-sm font-medium text-gray-700">Nama Kategori</label>
-                  <input type="text" name="nama_kategori" id="nama_kategori" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
-                </div>
+                <div class="form-group">
+                  <label for="id_kategori" class="block">Kategori</label>
+                  <select name="id_kategori" id="id_kategori" class="form-control mt-1 block w-full">
+                      @foreach ($categories as $category)
+                          <option value="{{ $category->id }}">{{ $category->nama_kategori }}</option>
+                      @endforeach
+                  </select>
+              </div>
                 <div class="mb-4">
                   <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                   <textarea name="deskripsi" id="deskripsi" rows="3" class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
@@ -274,168 +282,136 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        responsive: true,
-        paging: false,
-        searching: false,
-        language: {
-            emptyTable: "Tidak ada data yang tersedia dalam tabel",
-            zeroRecords: "Tidak ada data yang cocok dengan pencarian",
-        },
-        scrollY: "50vh",
-        scrollCollapse: true,
-        info: false,
-        ordering: false
-    });
+  $(document).ready(function() {
+      var table = $('#example').DataTable({
+          responsive: true,
+          paging: false,
+          searching: false,
+          language: {
+              emptyTable: "Tidak ada data yang tersedia dalam tabel",
+              zeroRecords: "Tidak ada data yang cocok dengan pencarian",
+          },
+          scrollY: "50vh",
+          scrollCollapse: true,
+          info: false,
+          ordering: false
+      });
 
-    // buat memasukan data ke tamble
-    function fetchDataAndPopulateTable() {
-        $.ajax({
-            url: '/api/categories',
-            success: function(response) {
-                var data = response.data;
-                var row = '';
-                data.forEach(function(val, index) {
-                    row += '<tr>' +
-                        '<td class="px-4 py-2 w-16">' + (index + 1) + '</td>' +
-                        '<td class="px-4 py-2 w-48 break-all">' + val.nama_kategori + '</td>' +
-                        '<td class="px-4 py-2 w-64 break-all">' + val.deskripsi + '</td>' +
-                        '<td class="px-4 py-2 w-24"><img src="/uploads/' + val.gambar + '" width="250" height="auto"></td>' +
-                        '<td class="px-4 py-2 w-32 flex items-center gap-2">' +
+      // Function untuk mengambil dan mengisi tabel dengan data
+      function fetchDataAndPopulateTable() {
+          $.ajax({
+              url: '/api/subcategories',
+              success: function(response) {
+                  var data = response.data;
+                  var row = '';
+
+                  data.forEach(function(val, index) {
+                      var categoryName = val.category ? val.category.nama_kategori : 'N/A';
+                      row += '<tr>' +
+                          '<td class="px-4 py-2 w-16">' + (index + 1) + '</td>' +
+                          '<td class="px-4 py-2 w-48 break-all">' + val.nama_subkategori + '</td>' +
+                          '<td class="px-4 py-2 w-48 break-all">' + categoryName + '</td>' +
+                          '<td class="px-4 py-2 w-64 break-all">' + val.deskripsi + '</td>' +
+                          '<td class="px-4 py-2 w-24"><img src="/uploads/' + val.gambar + '" width="250" height="auto"></td>' +
+                          '<td class="px-4 py-2 w-32 flex items-center gap-2">' +
                           '<a href="#" data-id="' + val.id + '" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded modal-ubah">Edit</a>' +
-                        '<button data-id="' + val.id + '" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded btn-hapus">Hapus</button>' +
-                        '</td>' +
-                        '</tr>';
-                        
-                });
-              
+                          '<button data-id="' + val.id + '" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded btn-hapus">Hapus</button>' +
+                          '</td>' +
+                          '</tr>';
+                  });
 
-                $('#kategoriTableBody').html(row);
-            }
-        });
-    }
+                  $('#kategoriTableBody').html(row);
+              }
+          });
+      }
 
-    // Call the function to populate the table initially
-    fetchDataAndPopulateTable();
+      // Panggil fungsi untuk mengisi tabel pada awalnya
+      fetchDataAndPopulateTable();
 
-    // Event handler for delete button click
-    $(document).on('click', '.btn-hapus', function () {
-        var id = $(this).data('id');
-        $('#deleteConfirmationModal').removeClass('hidden');
-        $('#confirmDeleteButton').off('click').on('click', function () {
-            // Call your delete API here with the id
-            $.ajax({
-                url: '/api/subcategories/' + id,
-                type: 'DELETE',
-                success: function () {
-                    $('#deleteConfirmationModal').addClass('hidden');
-                    $('#successConfirmationModal').removeClass('hidden');
-                    // Hide the success modal after 2 seconds
-                    setTimeout(function () {
-                        $('#successConfirmationModal').addClass('hidden');
-                    }, 2000);
-                    // Re-fetch and populate the table after deletion
-                    fetchDataAndPopulateTable();
-                },
-                error: function () {
-                    console.log('Error in deleting the record');
-                }
-            });
-        });
-        $('.btn-batal').off('click').on('click', function () {
-            $('#deleteConfirmationModal').addClass('hidden');
-        });
-    });
+      // Event handler untuk tombol hapus
+      $(document).on('click', '.btn-hapus', function () {
+          var id = $(this).data('id');
+          $('#deleteConfirmationModal').removeClass('hidden');
 
+          $('#confirmDeleteButton').off('click').on('click', function () {
+              $.ajax({
+                  url: '/api/subcategories/' + id,
+                  type: 'DELETE',
+                  success: function () {
+                      $('#deleteConfirmationModal').addClass('hidden');
+                      $('#successConfirmationModal').removeClass('hidden').text('Data berhasil dihapus');
+                      setTimeout(function () {
+                          $('#successConfirmationModal').addClass('hidden');
+                      }, 2000);
+                      fetchDataAndPopulateTable();
+                  },
+                  error: function () {
+                      console.log('Error dalam menghapus rekaman');
+                  }
+              });
+          });
 
-    // Event handler for showing add modal
-    $(document).on('click', '.modal-tambah', function () {
-        $('#addDataModal').removeClass('hidden');
-    });
+          $('.btn-batal').off('click').on('click', function () {
+              $('#deleteConfirmationModal').addClass('hidden');
+          });
+      });
 
-    // Event handler for closing add modal
-    $('#closeAddModalButton').on('click', function () {
-        $('#addDataModal').addClass('hidden');
-    });
+      // Event handler untuk menampilkan modal tambah
+      $(document).on('click', '.modal-tambah', function () {
+          $('#addDataModal').removeClass('hidden');
+      });
 
-    // Event handler for closing edit modal
-    $('#closeEditModalButton').on('click', function () {
-        $('#editDataModal').addClass('hidden');
-    });
+      // Event handler untuk menutup modal tambah
+      $('#closeAddModalButton').on('click', function () {
+          $('#addDataModal').addClass('hidden');
+      });
 
-    // Submit handler for add form
-    $('#addDataForm').on('submit', function (e) {
-    e.preventDefault();
-    var formData = new FormData($(this)[0]);
-    $.ajax({
-        url: '/api/categories',
-        type: 'POST',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function () {
-            $('#addDataModal').addClass('hidden');
-            $('#successAddConfirmationModal').removeClass('hidden');
-            // Hide the success modal after 2 seconds
-            setTimeout(function () {
-                $('#successAddConfirmationModal').addClass('hidden');
-            }, 2000);
-            // Re-fetch and populate the table after adding new record
-            fetchDataAndPopulateTable();
-        },
-        error: function () {
-            console.log('Error in adding new record');
-        }
-    });
-});
+      $('#closeEditModalButton').on('click', function () {
+          $('#editDataModal').addClass('hidden');
+      });
 
+      // Submit handler untuk add form
+      $('#addDataForm').on('submit', function (e) {
+          e.preventDefault();
+          var formData = new FormData($(this)[0]);
+          $.ajax({
+              url: '/api/subcategories',
+              type: 'POST',
+              data: formData,
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function () {
+                  $('#addDataModal').addClass('hidden');
+                  $('#successAddConfirmationModal').removeClass('hidden');
+                  setTimeout(function () {
+                      $('#successAddConfirmationModal').addClass('hidden');
+                  }, 2000);
+                  // Reset formulir setelah menambahkan data
+                  $('#addDataForm')[0].reset();
+                  fetchDataAndPopulateTable();
+              },
+              error: function () {
+                  console.log('Error dalam menambahkan rekaman baru');
+              }
+          });
+      });
 
-    // tombol 
+      // Submit handler untuk edit form
 
-    $('#closeEditModalButton').on('click', function () {
-        $('#editDataModal').addClass('hidden');
-    });
-
-    $(document).on('click', '.modal-tambah', function () {
-        $('#addDataModal').removeClass('hidden');
-    });
-
-    // Event handler for closing add modal
-    $('#closeAddModalButton').on('click', function () {
-        $('#addDataModal').addClass('hidden');
-    });
-
-    // Event handler for closing edit modal
-    $('#closeEditModalButton').on('click', function () {
-        $('#editDataModal').addClass('hidden');
-    });
-
-    // Event handler for showing edit modal
-    $(document).on('click', '.modal-tambah', function () {
-    $('#addDataModal').removeClass('hidden');
-});
-
-// Event handler for closing add modal
-$('#closeAddModalButton').on('click', function () {
-    $('#addDataModal').addClass('hidden');
-});
-
-
-// Event handler untuk menampilkan modal edit data
-$(document).on('click', '.modal-ubah', function () {
+      $(document).on('click', '.modal-ubah', function () {
     var id = $(this).data('id');
-    // Ambil data dari backend berdasarkan id
+
+
     $.ajax({
-        url: '/api/categories/' + id,
+        url: '/api/subcategories/' + id,
         type: 'GET',
         success: function (response) {
             // Isi formulir edit data dengan data yang diambil
-            $('#editDataForm input[name="nama_kategori"]').val(response.nama_kategori);
+            $('#editDataForm input[name="id_kategori"]').val(response.nama_subkategori);
+            $('#editDataForm select[name="id_kategori"]').val(response.id_kategori);
             $('#editDataForm textarea[name="deskripsi"]').val(response.deskripsi);
-            $('#editDataForm').attr('action', '/api/categories/' + id); // Set action form ke endpoint edit data
-            // Tampilkan modal edit data
+            $('#editDataForm').attr('action', '/api/subcategories/' + id);
             $('#editDataModal').removeClass('hidden');
         },
         error: function () {
@@ -475,11 +451,8 @@ $('#editDataForm').on('submit', function (e) {
 $('#confirmSuccessEditButton').on('click', function () {
     $('#successEditConfirmationModal').addClass('hidden');
 });
-
-
-
-
-
-});
+      
+  });
 </script>
+
 @endsection

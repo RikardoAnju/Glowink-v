@@ -114,42 +114,6 @@
   </div>
 </div>
 
-<!-- Modal Konfirmasi Berhasil Ditambahkan -->
-<div id="successAddConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-        <div class="sm:flex sm:items-start">
-          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-              Berhasil Ditambahkan
-            </h3>
-            <div class="mt-2">
-              <p class="text-sm text-gray-500">
-                Data berhasil ditambahkan.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-        <button type="button" id="confirmSuccessAddButton" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
-          OK
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal Konfirmasi Berhasil -->
 <!-- Modal Konfirmasi Berhasil -->
 <div id="successConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -184,8 +148,7 @@
   </div>
 </div>
 
-
-
+<!-- Modal Edit Data -->
 
 <!-- Modal Edit Data -->
 <div id="editDataModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -326,7 +289,7 @@ $(document).ready(function() {
         $('#confirmDeleteButton').off('click').on('click', function () {
             // Call your delete API here with the id
             $.ajax({
-                url: '/api/subcategories/' + id,
+                url: '/api/categories/' + id,
                 type: 'DELETE',
                 success: function () {
                     $('#deleteConfirmationModal').addClass('hidden');
@@ -348,7 +311,6 @@ $(document).ready(function() {
         });
     });
 
-
     // Event handler for showing add modal
     $(document).on('click', '.modal-tambah', function () {
         $('#addDataModal').removeClass('hidden');
@@ -366,37 +328,33 @@ $(document).ready(function() {
 
     // Submit handler for add form
     $('#addDataForm').on('submit', function (e) {
-    e.preventDefault();
-    var formData = new FormData($(this)[0]);
-    $.ajax({
-        url: '/api/categories',
-        type: 'POST',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function () {
-            $('#addDataModal').addClass('hidden');
-            $('#successAddConfirmationModal').removeClass('hidden');
-            // Hide the success modal after 2 seconds
-            setTimeout(function () {
-                $('#successAddConfirmationModal').addClass('hidden');
-            }, 2000);
-            // Re-fetch and populate the table after adding new record
-            fetchDataAndPopulateTable();
-        },
-        error: function () {
-            console.log('Error in adding new record');
-        }
+        e.preventDefault();
+        // You can use FormData to send files as well
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+            url: '/api/categories',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function () {
+                $('#addDataModal').addClass('hidden');
+                $('#successConfirmationModal').removeClass('hidden');
+                // Hide the success modal after 2 seconds
+                setTimeout(function () {
+                    $('#successConfirmationModal').addClass('hidden');
+                }, 2000);
+                // Re-fetch and populate the table after adding new record
+                fetchDataAndPopulateTable();
+            },
+            error: function () {
+                console.log('Error in adding new record');
+            }
+        });
     });
-});
 
-
-    // tombol 
-
-    $('#closeEditModalButton').on('click', function () {
-        $('#editDataModal').addClass('hidden');
-    });
+    //edut
 
     $(document).on('click', '.modal-tambah', function () {
         $('#addDataModal').removeClass('hidden');
@@ -443,7 +401,8 @@ $(document).on('click', '.modal-ubah', function () {
         }
     });
 });
-
+// Submit handler untuk form edit data
+// Submit handler untuk form edit data
 // Submit handler untuk form edit data
 $('#editDataForm').on('submit', function (e) {
     e.preventDefault();

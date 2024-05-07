@@ -183,14 +183,7 @@
                 >
                 Data Barang
                 </a>
-                <a
-                href="/member"
-                role="menuitem"
-                class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                >
-                Data Member
-                </a>
-                </a>
+                
                 <a
                 href="/tesmoni"
                 role="menuitem"
@@ -662,18 +655,7 @@
     }
 </script>
 
-<script>
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';'); // Menggunakan titik koma (;) sebagai pemisah
-        for(var i=0; i < ca.length; i++) { // Mengubah '1' menjadi 'i' pada 'ca.lenght'
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length); // Menghapus spasi tambahan
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length); // Mengubah 'name.lenght' menjadi 'nameEQ.length'
-        }
-        return null;
-    }
-</script>
+
 
 @stack('js')
 </html>

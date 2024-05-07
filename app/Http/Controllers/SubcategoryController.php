@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -9,12 +10,32 @@ use Illuminate\Support\Facades\Validator;
 
 class SubcategoryController extends Controller
 {
+    public function show($id)
+    {
+        $subcategory = Subcategory::find($id);
+    
+        if (!$subcategory) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
+    
+        return response()->json(['data' => $subcategory], 200);
+    }
+    public function edit(Subcategory $subcategory)
+    {
+        return view('subkategori.edit', compact('subcategory'));
+    }
+    public function list()
+    {
+        $categories = Category::all();
+        return view('subkategori.index', compact('categories'));
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $subcategories = Subcategory::all();
+        $subcategories = Subcategory::with('category')->get();
 
         return response()->json([
             'data' => $subcategories
@@ -28,7 +49,8 @@ class SubcategoryController extends Controller
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'nama_subkategori' => 'required',
+            'id_kategori' => 'required',
+            'nama_subkategori'=> 'required',
             'deskripsi' => 'required',
             'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
         ]);
@@ -51,17 +73,11 @@ class SubcategoryController extends Controller
         $subcategory = Subcategory::create($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'Subkategori berhasil disimpan.',
             'data' => $subcategory
         ]);
     }
-    public function show (Subcategory $subcategory)
-    {
-        return response()->json([
-            'data'=> $subcategory
-        ]);
-    }
-
     /**
      * Update the specified resource in storage.
      */
@@ -69,55 +85,62 @@ class SubcategoryController extends Controller
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'nama_subkategori' => 'required',
+            'id_kategori' => 'required',
             'deskripsi' => 'required',
-            'gambar' => 'image|mimes:jpg,png,jpeg,webp',
-            'kategori_id' => 'required|exists:kategoris,id'
+            'gambar' => 'nullable|image|mimes:jpg,png,jpeg,webp'
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
-        $input = $request->all();
-
-        // Handle image update
+    
+        $input = $request->only(['id_kategori', 'deskripsi']); // Hanya ambil input id_kategori dan deskripsi
+    
+        // Handle image upload
         if ($request->hasFile('gambar')) {
-            // Delete old image
-            if (File::exists(public_path($subcategory->gambar))) {
-                File::delete(public_path($subcategory->gambar));
-            }
-
             $gambar = $request->file('gambar');
             $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
             $gambar->move(public_path('uploads'), $nama_gambar);
             $input['gambar'] = 'uploads/' . $nama_gambar;
+    
+            // Hapus gambar lama jika ada
+            if ($subcategory->gambar && File::exists(public_path($subcategory->gambar))) {
+                File::delete(public_path($subcategory->gambar));
+            }
         }
-
-        // Update the subcategory
-        $subcategory->update($input);
-
-        return response()->json([
-            'message' => 'Subkategori berhasil diperbarui.',
-            'data' => $subcategory
-        ]);
+    
+        try {
+            $subcategory->update($input);
+            return response()->json([
+                'success' => true,
+                'message' => 'Subkategori berhasil diperbarui.',
+                'data' => $subcategory
+            ]);
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan dalam pembaruan
+            return response()->json(['message' => 'Error in updating subcategory.'], 500);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Subcategory $subcategory)
     {
-        // Delete the image file
-        if (File::exists(public_path($subcategory->gambar))) {
+        // Hapus gambar jika ada
+        if ($subcategory->gambar && File::exists(public_path($subcategory->gambar))) {
             File::delete(public_path($subcategory->gambar));
         }
-
-        // Delete the subcategory
+    
+        // Hapus subkategori
         $subcategory->delete();
-
+    
         return response()->json([
+            'success' => true,
             'message' => 'Subkategori berhasil dihapus.'
         ]);
     }
+    
+    /**
+     * Remove the specified resource from storage.
+     */
+  
 }

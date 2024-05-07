@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TestimoniController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CheckoutController;
@@ -10,6 +12,9 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\DashbuyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SliderController;
+use App\Http\Controllers\SubcategoryController;
 use App\Http\Middleware\CanDeleteData;
 
 Route::get('/', function () {
@@ -34,10 +39,28 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminpage', [AdminpageController::class, 'index']);
     Route::delete('/api/categories/{id}', [CategoryController::class, 'destroy'])->middleware([CanDeleteData::class]);
+    Route::delete('/api/subcategories/{id}', [SubcategoryController::class, 'destroy'])->middleware([CanDeleteData::class]);
+  
     
 });
 
 //kategori
 Route::get('/kategori', [CategoryController::class, 'list']);
+Route::get('/subkategori',[SubcategoryController::class, 'list']);
+Route::get('/slider',[SliderController::class, 'list']);
+Route::get('/barang',[ProductController::class, 'list']);
+Route::get('/tesmoni',[TestimoniController::class, 'list']);
+Route::get('/review',[ReviewController::class, 'list']);
+
+
+
+
+
+
 Route::get('/categories/{id}', 'CategoryController@show');
+Route::get('/subcategories/{id}', 'subCategoryController@show');
+Route::put('/subcategories/{subcategory}', 'SubcategoryController@update');
+
+
+
 
