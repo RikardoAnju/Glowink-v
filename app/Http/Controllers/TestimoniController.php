@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -8,26 +8,31 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class TestimoniController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
+{   
+    public function edit(Testimoni $testimoni)
+    {
+        return view('testimoni.edit', compact('testimoni'));
+    }
+
+    public function list()
+    {
+        return view('testimoni.index');
+    }
+
     public function index()
     {
         $testimonies = Testimoni::all();
 
         return response()->json([
+            'success' => true,
             'data' => $testimonies
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_tesmoni' => 'required',
+            'nama_testimoni' => 'required',
             'deskripsi' => 'required',
             'gambar' => 'required|image|mimes:jpg,png,jpeg,webp|max:2048', // Max size 2MB
         ]);
@@ -42,32 +47,33 @@ class TestimoniController extends Controller
             $gambar = $request->file('gambar');
             $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
             $gambar->move(public_path('uploads'), $nama_gambar);
-            $input['gambar'] = 'uploads/' . $nama_gambar;
-        } else {
-            return response()->json(['message' => 'File gambar tidak ada.'], 422);
+            $input['gambar'] = url('uploads/' . $nama_gambar); // Menyimpan jalur lengkap gambar
         }
 
         $testimoni = Testimoni::create($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'Testimoni berhasil disimpan.',
             'data' => $testimoni
         ]);
     }
-    public function show (Testimoni $testimoni)
+
+    public function show($id)
     {
-        return response()->json([
-            'data'=> $testimoni
-        ]);
+        $testimoni = Testimoni::find($id);
+    
+        if (!$testimoni) {
+            return response()->json(['message' => 'Testimoni not found'], 404);
+        }
+    
+        return response()->json(['data' => $testimoni], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Testimoni $testimoni)
     {
         $validator = Validator::make($request->all(), [
-            'nama_tesmoni' => 'required',
+            'nama_testimoni' => 'required',
             'deskripsi' => 'required',
             'gambar' => 'image|mimes:jpg,png,jpeg,webp|max:2048', // Max size 2MB
         ]);
@@ -82,20 +88,18 @@ class TestimoniController extends Controller
             $gambar = $request->file('gambar');
             $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
             $gambar->move(public_path('uploads'), $nama_gambar);
-            $input['gambar'] = 'uploads/' . $nama_gambar;
+            $input['gambar'] = url('uploads/' . $nama_gambar); // Menyimpan jalur lengkap gambar
         }
 
         $testimoni->update($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'Testimoni berhasil diperbarui.',
             'data' => $testimoni
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Testimoni $testimoni)
     {
         if (File::exists(public_path($testimoni->gambar))) {
@@ -105,6 +109,7 @@ class TestimoniController extends Controller
         $testimoni->delete();
 
         return response()->json([
+            'success' => true,
             'message' => 'Testimoni berhasil dihapus.'
         ]);
     }

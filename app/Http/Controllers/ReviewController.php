@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
+    public function list()
+    {
+        return view('review.index');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -17,6 +21,7 @@ class ReviewController extends Controller
         $reviews = Review::all();
 
         return response()->json([
+            'success' => true,
             'data' => $reviews
         ]);
     }
@@ -42,15 +47,21 @@ class ReviewController extends Controller
         $review = Review::create($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'Review berhasil disimpan.',
             'data' => $review
         ]);
     }
-    public function show (Review $review)
+
+    public function show($id)
     {
-        return response()->json([
-            'data'=> $review
-        ]);
+        $review = Review::find($id);
+    
+        if (!$review) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
+    
+        return response()->json(['data' => $review], 200);
     }
 
     /**
@@ -74,6 +85,7 @@ class ReviewController extends Controller
         $review->update($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'Review berhasil diperbarui.',
             'data' => $review
         ]);
@@ -93,6 +105,7 @@ class ReviewController extends Controller
         $review->delete();
 
         return response()->json([
+            'success' => true,
             'message' => 'Review berhasil dihapus.'
         ]);
     }

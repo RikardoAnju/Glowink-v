@@ -326,7 +326,7 @@ $(document).ready(function() {
         $('#confirmDeleteButton').off('click').on('click', function () {
             // Call your delete API here with the id
             $.ajax({
-                url: '/api/subcategories/' + id,
+                url: '/api/categories/' + id,
                 type: 'DELETE',
                 success: function () {
                     $('#deleteConfirmationModal').addClass('hidden');

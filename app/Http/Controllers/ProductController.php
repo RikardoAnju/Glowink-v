@@ -2,21 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+    
+    
+ 
+    public function list()
+    {
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        return view('product.index', compact('categories', 'subcategories'));
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category', 'subcategory')->get();
 
         return response()->json([
+            'success' => true,
             'data' => $products
         ]);
     }
@@ -68,6 +80,7 @@ class ProductController extends Controller
         $product = Product::create($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'Produk berhasil disimpan.',
             'data' => $product
         ]);
@@ -76,21 +89,27 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
-    {
-            return response()->json([
-                'data'=> $product
-            ]);
-
-    }
-
+    
+     public function show($id)
+     {
+         $product = Product::find($id);
+     
+         if (!$product) {
+             return response()->json(['message' => 'Product not found for ID ' . $id], 404);
+         }
+     
+         return response()->json(['data' => $product], 200);
+     }
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Product $product)
-    {
-        //
-    }
+{
+    return response()->json([
+        'success' => true,
+        'data' => $product
+    ]);
+}
 
     /**
      * Update the specified resource in storage.
@@ -106,7 +125,7 @@ class ProductController extends Controller
             'diskon' => 'required',
             'sku' => 'required',
             'stok' => 'required',
-            'gambar' => 'required|image|mimes:jpg,png,jpeg,webp|max:2048', // Batas maksimum ukuran gambar adalah 2MB
+            'gambar' => 'image|mimes:jpg,png,jpeg,webp|max:2048', // Perhatikan tidak ada "required" di sini karena gambar tidak selalu harus diubah
         ]);
             
         if ($validator->fails()) {
@@ -115,22 +134,28 @@ class ProductController extends Controller
                 422
             );
         }
-
+    
         $input = $request->all();
-
+    
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
             $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
             $gambar->move(public_path('uploads'), $nama_gambar);
             $input['gambar'] = 'uploads/' . $nama_gambar;
+            
+            // Hapus gambar lama jika ada
+            if ($product->gambar) {
+                Storage::delete($product->gambar);
+            }
         } else {
             unset($input['gambar']);
         }
-
-        $product = Product::create($input);
-
+    
+        $product->update($input); // Menggunakan metode update untuk memperbarui data yang ada
+    
         return response()->json([
-            'message' => 'Produk berhasil disimpan.',
+            'success' => true,
+            'message' => 'Produk berhasil diperbarui.',
             'data' => $product
         ]);
     }
@@ -148,6 +173,7 @@ class ProductController extends Controller
             $product->delete();
         
             return response()->json([
+                'success' => true,
                 'message' => 'success'
             ]);
     }

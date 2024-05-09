@@ -18,8 +18,8 @@
         <table id="example" class="stripe hover" style="width:100%;">
             <thead>
                 <tr>
-                    <th class="px-4 py-2 w-16">No</th>
-                    <th class="px-4 py-2 w-48">Nama Kategori</th>
+                   <th class="px-4 py-2" style="width: 3%;">No</th>
+                    <th class="px-4 py-2" style="width: 20%;">Nama Kategori</th>
                     <th class="px-4 py-2 w-48">Nama SubKategori</th>
                     <th class="px-4 py-2 w-64">Deskripsi</th>
                     <th class="px-4 py-2 w-24">Gambar</th>
@@ -158,7 +158,8 @@
   </div>
 </div>
 
-<div id="successConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<!-- Modal Konfirmasi Data Berhasil Dihapus -->
+<div id="successDeleteConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -183,13 +184,14 @@
         </div>
       </div>
       <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-        <button type="button" id="confirmSuccessButton" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+        <button type="button" id="confirmSuccessDeleteButton" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
           OK
         </button>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- Modal Edit Data -->
 <div id="editDataModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -329,32 +331,38 @@
       fetchDataAndPopulateTable();
 
       // Event handler untuk tombol hapus
-      $(document).on('click', '.btn-hapus', function () {
-          var id = $(this).data('id');
-          $('#deleteConfirmationModal').removeClass('hidden');
+     // Event handler untuk tombol hapus
+$(document).on('click', '.btn-hapus', function () {
+    var id = $(this).data('id');
+    $('#deleteConfirmationModal').removeClass('hidden');
 
-          $('#confirmDeleteButton').off('click').on('click', function () {
-              $.ajax({
-                  url: '/api/subcategories/' + id,
-                  type: 'DELETE',
-                  success: function () {
-                      $('#deleteConfirmationModal').addClass('hidden');
-                      $('#successConfirmationModal').removeClass('hidden').text('Data berhasil dihapus');
-                      setTimeout(function () {
-                          $('#successConfirmationModal').addClass('hidden');
-                      }, 2000);
-                      fetchDataAndPopulateTable();
-                  },
-                  error: function () {
-                      console.log('Error dalam menghapus rekaman');
-                  }
-              });
-          });
+    $('#confirmDeleteButton').off('click').on('click', function () {
+        $.ajax({
+            url: '/api/subcategories/' + id,
+            type: 'DELETE',
+            success: function () {
+                $('#deleteConfirmationModal').addClass('hidden');
+                $('#successDeleteConfirmationModal').removeClass('hidden');
+                setTimeout(function () {
+                    $('#successDeleteConfirmationModal').addClass('hidden');
+                }, 2000);
+                fetchDataAndPopulateTable();
+            },
+            error: function () {
+                console.log('Error dalam menghapus rekaman');
+            }
+        });
+    });
 
-          $('.btn-batal').off('click').on('click', function () {
-              $('#deleteConfirmationModal').addClass('hidden');
-          });
-      });
+    $('.btn-batal').off('click').on('click', function () {
+        $('#deleteConfirmationModal').addClass('hidden');
+    });
+});
+
+// Event handler untuk tombol OK pada modal konfirmasi berhasil dihapus
+$('#confirmSuccessDeleteButton').on('click', function () {
+    $('#successDeleteConfirmationModal').addClass('hidden');
+});
 
       // Event handler untuk menampilkan modal tambah
       $(document).on('click', '.modal-tambah', function () {

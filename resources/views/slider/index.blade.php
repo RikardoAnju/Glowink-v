@@ -1,11 +1,11 @@
 @extends('layout.app')
 
-@section('title', 'Data Kategori')
+@section('title', 'Data Slider')
 
 @section('content')
 <div class="container w-full md:w-4/5 xl:w-3/5 mx-auto px-2">
     <h1 class="flex items-center font-sans font-bold break-normal text-indigo-500 px-2 py-8 text-xl md:text-2xl">
-        Data Kategori
+        Data  Slider
     </h1>
 
     <div class="flex justify-end mb-4">
@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th class="px-4 py-2 w-16">No</th>
-                    <th class="px-4 py-2 w-48">Nama Kategori</th>
+                    <th class="px-4 py-2 w-48">Nama Slider</th>
                     <th class="px-4 py-2 w-64">Deskripsi</th>
                     <th class="px-4 py-2 w-24">Gambar</th>
                     <th class="px-4 py-2 w-32">Aksi</th>
@@ -48,12 +48,12 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
               <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                Tambah Data Kategori
+                Tambah Data Slider
               </h3>
               <div class="mt-2">
                 <div class="mb-4">
-                  <label for="nama_kategori" class="block text-sm font-medium text-gray-700">Nama Kategori</label>
-                  <input type="text" name="nama_kategori" id="nama_kategori" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                  <label for="nama_slider" class="block text-sm font-medium text-gray-700">Nama Slider</label>
+                  <input type="text" name="nama_slider" id="nama_slider" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
                 </div>
                 <div class="mb-4">
                   <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
@@ -114,6 +114,42 @@
   </div>
 </div>
 
+<!-- Modal Konfirmasi Berhasil Ditambahkan -->
+<div id="successAddConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+              Berhasil Ditambahkan
+            </h3>
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">
+                Data berhasil ditambahkan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button type="button" id="confirmSuccessAddButton" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Konfirmasi Berhasil -->
 <!-- Modal Konfirmasi Berhasil -->
 <div id="successConfirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -148,7 +184,8 @@
   </div>
 </div>
 
-<!-- Modal Edit Data -->
+
+
 
 <!-- Modal Edit Data -->
 <div id="editDataModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -168,12 +205,12 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
               <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                Edit data Kategori
+                Edit data Slider
               </h3>
               <div class="mt-2">
                 <div class="mb-4">
-                  <label for="nama_kategori" class="block text-sm font-medium text-gray-700">Nama Kategori</label>
-                  <input type="text" name="nama_kategori" id="nama_kategori" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                  <label for="nama_slider" class="block text-sm font-medium text-gray-700">Nama Slider</label>
+                  <input type="text" name="nama_slider" id="nama_slider" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
                 </div>
                 <div class="mb-4">
                   <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
@@ -255,14 +292,14 @@ $(document).ready(function() {
     // buat memasukan data ke tamble
     function fetchDataAndPopulateTable() {
         $.ajax({
-            url: '/api/categories',
+            url: '/api/sliders',
             success: function(response) {
                 var data = response.data;
                 var row = '';
                 data.forEach(function(val, index) {
                     row += '<tr>' +
                         '<td class="px-4 py-2 w-16">' + (index + 1) + '</td>' +
-                        '<td class="px-4 py-2 w-48 break-all">' + val.nama_kategori + '</td>' +
+                        '<td class="px-4 py-2 w-48 break-all">' + val.nama_slider + '</td>' +
                         '<td class="px-4 py-2 w-64 break-all">' + val.deskripsi + '</td>' +
                         '<td class="px-4 py-2 w-24"><img src="/uploads/' + val.gambar + '" width="250" height="auto"></td>' +
                         '<td class="px-4 py-2 w-32 flex items-center gap-2">' +
@@ -289,7 +326,7 @@ $(document).ready(function() {
         $('#confirmDeleteButton').off('click').on('click', function () {
             // Call your delete API here with the id
             $.ajax({
-                url: '/api/categories/' + id,
+                url: '/api/sliders/' + id,
                 type: 'DELETE',
                 success: function () {
                     $('#deleteConfirmationModal').addClass('hidden');
@@ -311,6 +348,7 @@ $(document).ready(function() {
         });
     });
 
+
     // Event handler for showing add modal
     $(document).on('click', '.modal-tambah', function () {
         $('#addDataModal').removeClass('hidden');
@@ -328,33 +366,37 @@ $(document).ready(function() {
 
     // Submit handler for add form
     $('#addDataForm').on('submit', function (e) {
-        e.preventDefault();
-        // You can use FormData to send files as well
-        var formData = new FormData($(this)[0]);
-        $.ajax({
-            url: '/api/categories',
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function () {
-                $('#addDataModal').addClass('hidden');
-                $('#successConfirmationModal').removeClass('hidden');
-                // Hide the success modal after 2 seconds
-                setTimeout(function () {
-                    $('#successConfirmationModal').addClass('hidden');
-                }, 2000);
-                // Re-fetch and populate the table after adding new record
-                fetchDataAndPopulateTable();
-            },
-            error: function () {
-                console.log('Error in adding new record');
-            }
-        });
+    e.preventDefault();
+    var formData = new FormData($(this)[0]);
+    $.ajax({
+        url: '/api/sliders',
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function () {
+            $('#addDataModal').addClass('hidden');
+            $('#successAddConfirmationModal').removeClass('hidden');
+            // Hide the success modal after 2 seconds
+            setTimeout(function () {
+                $('#successAddConfirmationModal').addClass('hidden');
+            }, 2000);
+            // Re-fetch and populate the table after adding new record
+            fetchDataAndPopulateTable();
+        },
+        error: function () {
+            console.log('Error in adding new record');
+        }
     });
+});
 
-    //edut
+
+    // tombol 
+
+    $('#closeEditModalButton').on('click', function () {
+        $('#editDataModal').addClass('hidden');
+    });
 
     $(document).on('click', '.modal-tambah', function () {
         $('#addDataModal').removeClass('hidden');
@@ -386,13 +428,13 @@ $(document).on('click', '.modal-ubah', function () {
     var id = $(this).data('id');
     // Ambil data dari backend berdasarkan id
     $.ajax({
-        url: '/api/categories/' + id,
+        url: '/api/sliders/' + id,
         type: 'GET',
         success: function (response) {
             // Isi formulir edit data dengan data yang diambil
-            $('#editDataForm input[name="nama_kategori"]').val(response.nama_kategori);
+            $('#editDataForm input[name="nama_slider"]').val(response.nama_slider);
             $('#editDataForm textarea[name="deskripsi"]').val(response.deskripsi);
-            $('#editDataForm').attr('action', '/api/categories/' + id); // Set action form ke endpoint edit data
+            $('#editDataForm').attr('action', '/api/sliders/' + id); // Set action form ke endpoint edit data
             // Tampilkan modal edit data
             $('#editDataModal').removeClass('hidden');
         },
@@ -401,8 +443,7 @@ $(document).on('click', '.modal-ubah', function () {
         }
     });
 });
-// Submit handler untuk form edit data
-// Submit handler untuk form edit data
+
 // Submit handler untuk form edit data
 $('#editDataForm').on('submit', function (e) {
     e.preventDefault();

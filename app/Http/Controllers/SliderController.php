@@ -17,14 +17,31 @@ class SliderController extends Controller
         $sliders = Slider::all();
 
         return response()->json([
+            'success' => true,
             'data' => $sliders
         ]);
     }
-    public function show (Slider $slider)
+
+    public function show($id)
     {
-        return response()->json([
-            'data'=> $slider
-        ]);
+        $slider = Slider::find($id);
+    
+        if (!$slider) {
+            return response()->json(['message' => 'Slider not found'], 404);
+        }
+    
+        return response()->json(['data' => $slider], 200);
+    }
+
+    public function edit(Slider $slider)
+    {
+        return view('slider.index', compact('slider'));
+    }
+
+    public function list()
+    {
+        $sliders = Slider::all();
+        return view('slider.index', compact('sliders'));
     }
 
     /**
@@ -40,7 +57,7 @@ class SliderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
         $input = $request->all();
@@ -55,7 +72,8 @@ class SliderController extends Controller
         $slider = Slider::create($input);
 
         return response()->json([
-            'message' => 'Slider berhasil disimpan.',
+            'success' => true,
+            'message' => 'Slider successfully created.',
             'data' => $slider
         ]);
     }
@@ -73,10 +91,7 @@ class SliderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(
-                $validator->errors(),
-                 422
-                );
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
         $input = $request->all();
@@ -100,7 +115,8 @@ class SliderController extends Controller
         $slider->update($input);
 
         return response()->json([
-            'message' => 'Slider berhasil diperbarui.',
+            'success' => true,
+            'message' => 'Slider successfully updated.',
             'data' => $slider
         ]);
     }
@@ -119,7 +135,8 @@ class SliderController extends Controller
         $slider->delete();
 
         return response()->json([
-            'message' => 'Slider berhasil dihapus.'
+            'success' => true,
+            'message' => 'Slider successfully deleted.'
         ]);
     }
 }

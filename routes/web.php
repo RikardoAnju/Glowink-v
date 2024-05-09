@@ -52,6 +52,8 @@ Route::get('/barang',[ProductController::class, 'list']);
 Route::get('/tesmoni',[TestimoniController::class, 'list']);
 Route::get('/review',[ReviewController::class, 'list']);
 
+Route::get('/testimonis', [TestimoniController::class, 'index']);
+
 
 
 
@@ -60,6 +62,9 @@ Route::get('/review',[ReviewController::class, 'list']);
 Route::get('/categories/{id}', 'CategoryController@show');
 Route::get('/subcategories/{id}', 'subCategoryController@show');
 Route::put('/subcategories/{subcategory}', 'SubcategoryController@update');
+
+
+
 
 
 

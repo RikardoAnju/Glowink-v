@@ -35,18 +35,28 @@ Route::group([
         'sliders'=> SliderController::class,
         'products'=> ProductController::class,
         'members'=>MemberController::class,
-        'testimoni'=>TestimoniController::class,
+        'testimonis'=>TestimoniController::class,
         'reviews'=>ReviewController::class,
-        'orders'=>OrderController::class, // Perbaikan penulisan di sini
+        'orders'=>OrderController::class,
     ]);
 
-    
-    Route::put('sliders/{slider}', [SliderController::class, 'update']); // Penyesuaian rute update
-    Route::get('order/dikonfirmasi', [OrderController::class, 'dikonfirmasi']);
-    Route::get('order/dikemas', [OrderController::class, 'dikemas']);
-    Route::get('order/dikirim', [OrderController::class, 'dikirim']);
-    Route::get('order/diterima', [OrderController::class, 'diterima']);
-    Route::get('order/selesai', [OrderController::class, 'selesai']);
-    Route::post('order/ubah_status/{order}', [OrderController::class, 'ubah_Status']);
+    // Penyesuaian rute update
+    Route::put('sliders/{slider}', [SliderController::class, 'update']);
+    Route::put('products/{product}', [ProductController::class, 'update']);
+    Route::put('categories/{category}', [CategoryController::class, 'update']);
+    Route::put('subcategories/{subcategory}', [SubcategoryController::class, 'update']);
+    Route::put('testimonis/{testimonis}', [TestimoniController::class, 'update']);
+
+    // Rute untuk mengubah status pesanan
+    Route::post('orders/ubah_status/{order}', [OrderController::class, 'ubah_Status']);
+
+    // Rute-rute untuk status pesanan
+    Route::get('orders/dikonfirmasi', [OrderController::class, 'dikonfirmasi']);
+    Route::get('orders/dikemas', [OrderController::class, 'dikemas']);
+    Route::get('orders/dikirim', [OrderController::class, 'dikirim']);
+    Route::get('orders/diterima', [OrderController::class, 'diterima']);
+    Route::get('orders/selesai', [OrderController::class, 'selesai']);
+
+    // Rute untuk laporan
     Route::get('reports', [ReportController::class, 'index']);
 });

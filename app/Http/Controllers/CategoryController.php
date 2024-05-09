@@ -116,6 +116,7 @@ class CategoryController extends Controller
         $category->delete();
 
         return response()->json([
+           
             'message' => 'Kategori berhasil dihapus.'
         ]);
     }
