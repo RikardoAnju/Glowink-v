@@ -3,6 +3,9 @@
 @section('title', 'Data Kategori')
 
 @section('content')
+
+
+
 <div class="container w-full md:w-4/5 xl:w-3/5 mx-auto px-2">
     <h1 class="flex items-center font-sans font-bold break-normal text-indigo-500 px-2 py-8 text-xl md:text-2xl">
         Data Kategori
@@ -22,15 +25,16 @@
                     <th class="px-4 py-2 w-48">Nama Kategori</th>
                     <th class="px-4 py-2 w-64">Deskripsi</th>
                     <th class="px-4 py-2 w-24">Gambar</th>
-                    <th class="px-4 py-2 w-32">Aksi</th>
+                    <th class="px-4 py-2 aksi-column">Aksi</th> <!-- Tambahkan kelas untuk menyesuaikan lebar -->
                 </tr>
             </thead>
             <tbody id="kategoriTableBody">
                 <!-- Data dari API akan dimasukkan di sini -->
             </tbody>
         </table>
-    </div>
+    </div> 
 </div>
+
 
 <!-- Modal Tambah Data -->
 <div id="addDataModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -303,8 +307,8 @@ $(document).ready(function() {
                         '<td class="px-4 py-2 w-64 break-all">' + val.deskripsi + '</td>' +
                         '<td class="px-4 py-2 w-24"><img src="/uploads/' + val.gambar + '" width="250" height="auto"></td>' +
                         '<td class="px-4 py-2 w-32 flex items-center gap-2">' +
-                          '<a href="#" data-id="' + val.id + '" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded modal-ubah">Edit</a>' +
-                        '<button data-id="' + val.id + '" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded btn-hapus">Hapus</button>' +
+                          '<a href="#" data-id="' + val.id + '" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded modal-ubah">Edit</a>' +
+                        '<button data-id="' + val.id + '" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-2 rounded btn-hapus">Hapus</button>' +
                         '</td>' +
                         '</tr>';
                         

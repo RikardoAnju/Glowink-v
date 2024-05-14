@@ -12,6 +12,7 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\DashbuyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubcategoryController;
@@ -28,7 +29,7 @@ Route::get('/add_barang', function () {
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 Route::get('/detailproduk', [DetailProdukController::class, 'detailproduk'])->name('detailproduk');
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
-Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+
 Route::get('/pesanan', [PesananController::class, 'pesanan'])->name('pesanan');
 Route::get('/dashbuy', [DashbuyController::class, 'dashbuy'])->name('dashbuy');
 
@@ -51,14 +52,23 @@ Route::get('/slider',[SliderController::class, 'list']);
 Route::get('/barang',[ProductController::class, 'list']);
 Route::get('/tesmoni',[TestimoniController::class, 'list']);
 Route::get('/review',[ReviewController::class, 'list']);
-
 Route::get('/testimonis', [TestimoniController::class, 'index']);
 
 
+//pesanan
+
+Route::get('/pesanan/baru',[OrderController::class, 'list']);
+Route::get('/pesanan/dikomfirmasi',[OrderController::class, 'dikomfirmasi_list']);
+Route::get('/pesanan/dikemas',[OrderController::class, 'dikemas_list']);
+Route::get('/pesanan/dikirim',[OrderController::class, 'dikirim_list']);
+Route::get('/pesanan/diterima',[OrderController::class, 'diterima_list']);
+Route::get('/pesanan/selesai',[OrderController::class, 'selesai_list']);
 
 
 
 
+
+// subcategory
 Route::get('/categories/{id}', 'CategoryController@show');
 Route::get('/subcategories/{id}', 'subCategoryController@show');
 Route::put('/subcategories/{subcategory}', 'SubcategoryController@update');

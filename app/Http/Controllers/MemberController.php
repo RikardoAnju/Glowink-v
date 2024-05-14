@@ -34,26 +34,30 @@ class MemberController extends Controller
             'kecamatan' => 'required',
             'detail_alamat' => 'required',
             'no_hp' => 'required',
-            'email' => 'required',
-            'password' => 'required|same:konfirmasi_password',
-            'konfirmasi_password' => 'required|same:password'
+            'email' => 'required|unique:members,email|email',
+            'password' => 'required',
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
+    
+        // Enkripsi password sebelum menyimpan ke dalam database
         $input = $request->all();
-
-
-        $members = Member::create($input);
-
+        $input['password'] = bcrypt($request->password);
+    
+        // Hapus konfirmasi_password dari array input karena tidak disimpan di dalam database
+        unset($input['konfirmasi_password']);
+    
+        // Simpan data ke dalam database
+        $member = Member::create($input);
+    
         return response()->json([
-            'message' => 'Kategori berhasil disimpan.',
-            'data' => $members
+            'message' => 'Data berhasil disimpan.',
+            'data' => $member
         ]);
     }
-
+    
     public function show (Member $member)
     {
         return response()->json([
@@ -76,7 +80,7 @@ class MemberController extends Controller
             'no_hp' => 'required',
             'email' => 'required',
             'password' => 'required|same:konfirmasi_password',
-            'konfirmasi_password' => 'required|same:password',
+           
         ]);
 
 
