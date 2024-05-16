@@ -287,7 +287,7 @@
                         '<td class="px-4 py-2 w-16">' + (index + 1) + '</td>' +
                         '<td class="px-4 py-2 w-48 break-all">' + val.nama_testimoni + '</td>' +
                         '<td class="px-4 py-2 w-64 break-all">' + val.deskripsi + '</td>' +
-                        '<td class="px-4 py-2 w-24"><img src="/uploads/' + val.gambar + '" width="250" height="auto"></td>' +
+                        '<td class="px-4 py-2 w-24"><img src="/' + val.gambar + '" width="250" height="auto"></td>' +
                         '<td class="px-4 py-2 w-32 flex items-center gap-2">' +
                         '<a href="#" data-id="' + val.id + '" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded modal-ubah">Edit</a>' +
                         '<button data-id="' + val.id + '" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-2 rounded btn-hapus">Hapus</button>' +

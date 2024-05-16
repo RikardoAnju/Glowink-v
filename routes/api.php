@@ -68,5 +68,5 @@ Route::group([
         Route::post('/pesanan/ubah_status/{id}', [PesananController::class, 'ubahStatus']);
     });
     // Rute untuk laporan
-    Route::get('reports', [ReportController::class, 'index']);
+    Route::get('/reports', [ReportController::class, 'get_reports']);
 });
