@@ -13,6 +13,7 @@ use App\Http\Controllers\DashbuyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SliderController;
@@ -65,6 +66,11 @@ Route::get('/pesanan/dikirim',[OrderController::class, 'dikirim_list']);
 Route::get('/pesanan/diterima',[OrderController::class, 'diterima_list']);
 Route::get('/pesanan/selesai',[OrderController::class, 'selesai_list']);
 Route::get('/laporan',[ReportController::class, 'index']);
+
+
+//payment
+Route::get('/payment', [PaymentController::class, 'list']);
+
 
 
 

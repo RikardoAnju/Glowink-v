@@ -285,7 +285,7 @@
                     aria-haspopup="true"
                     :aria-expanded="(open || isActive) ? 'true' : 'false'"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24"  width="22" height="22 " style="enable-background:new 0 0 24 24;" xml:space="preserve">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24"  width="24" height="24 " style="enable-background:new 0 0 24 24;" xml:space="preserve">
                     <path d="M24,20c0,1.7-1.3,3-3,3v1h-2v-1c-1.7,0-3-1.3-3-3h2c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1c0-0.4-0.3-0.7-0.6-0.8l-3-0.5  C17,18.5,16,17.4,16,16c0-1.7,1.3-3,3-3v-1h2v1c1.7,0,3,1.3,3,3h-2c0-0.6-0.4-1-1-1h-2c-0.6,0-1,0.4-1,1c0,0.4,0.3,0.7,0.6,0.8  l3,0.5C23,17.5,24,18.6,24,20z M14,20v-4c0-2,1.2-3.8,3-4.6l1-0.3V2h-5.2c-0.4-1.2-1.5-2-2.8-2H8C6.7,0,5.6,0.8,5.2,2H0v19  c0,1.7,1.3,3,3,3h12c0.3,0,0.6-0.1,0.8-0.1C14.7,22.9,14,21.6,14,20z M7.2,16.5C6.9,16.8,6.5,17,6.1,17s-0.8-0.2-1.1-0.5l-1.6-1.6  l1.4-1.4l1.4,1.4l2.5-2.5l1.4,1.4C10,13.7,7.2,16.5,7.2,16.5z M7.2,10.5C6.9,10.8,6.5,11,6.1,11s-0.8-0.2-1.1-0.5L3.3,8.9l1.4-1.4  l1.4,1.4l2.5-2.5L10,7.7C10,7.7,7.2,10.5,7.2,10.5z"/>
                     </svg>
                     <span class="ml-2 text-sm"> Data Report </span>
@@ -312,6 +312,72 @@
                         class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                     >
                         Laporan Pemesanan
+                    </a>
+                </div>
+            </div>
+            <div x-data="{ isActive: false, open: false }">
+                <!-- active classes 'bg-indigo-100 dark:bg-indigo-600' -->
+                <a
+                    href="#"
+                    @click="$event.preventDefault(); open = !open"
+                    class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-indigo-100 dark:hover:bg-indigo-600"
+                    :class="{ 'bg-indigo-100 dark:bg-indigo-600': isActive || open }"
+                    role="button"
+                    aria-haspopup="true"
+                    :aria-expanded="(open || isActive) ? 'true' : 'false'"
+                >
+                <svg height="22px" width="22px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 502.685 502.685" xml:space="preserve">
+<g>
+	<g>
+		<path style="fill:#010002;" d="M482.797,276.924c4.53-5.824,6.73-13.331,4.724-20.988L428.05,30.521
+			c-3.451-13.029-16.847-20.837-29.854-17.386L18.184,113.331C5.22,116.761-2.61,130.2,0.798,143.207L60.269,368.6
+			c3.408,13.007,16.868,20.816,29.876,17.408l134.278-35.419v75.476c0,42.214,69.954,64.303,139.11,64.303
+			c69.113,0,139.153-22.089,139.153-64.302V311.61C502.685,297.869,495.157,286.307,482.797,276.924z M439.763,199.226l6.212,23.469
+			l-75.541,19.953l-6.169-23.512L439.763,199.226z M395.931,50.733l11.799,44.695l-118.014,31.148l-11.799-44.695L395.931,50.733z
+			 M342.975,224.744l6.04,22.951c-27.934,1.251-55.113,6.126-76.943,14.452l-4.616-17.429L342.975,224.744z M79.984,319.224
+			l-6.169-23.426l75.519-19.975l6.212,23.555L79.984,319.224z M170.625,270.237l75.476-19.953l5.716,21.506
+			c-1.834,1.122-3.559,2.286-5.242,3.473l-69.781,18.421L170.625,270.237z M477.491,424.209c0,24.612-50.993,44.544-113.958,44.544
+			c-62.9,0-113.937-19.953-113.937-44.544v-27.718c0-0.928,0.539-1.769,0.69-2.653c3.602,23.34,52.654,41.847,113.247,41.847
+			c60.614,0,109.687-18.508,113.268-41.847c0.151,0.884,0.69,1.726,0.69,2.653V424.209z M477.491,369.678
+			c0,24.591-50.993,44.522-113.958,44.522c-62.9,0-113.937-19.931-113.937-44.522V341.96c0-0.906,0.539-1.769,0.69-2.653
+			c3.602,23.318,52.654,41.869,113.247,41.869c60.614,0,109.687-18.551,113.268-41.869c0.151,0.884,0.69,1.747,0.69,2.653V369.678z
+			 M363.532,356.11c-62.9,0-113.937-19.931-113.937-44.501c0-24.569,51.036-44.5,113.937-44.5c62.965,0,113.958,19.931,113.958,44.5
+			C477.491,336.179,426.497,356.11,363.532,356.11z"/>
+	</g>
+	<g>
+	<g>
+	</g>
+	
+	<g>
+	</g>
+</g>
+</svg>
+                    </svg>
+                    <span class="ml-2 text-sm"> Data Payment </span>
+                    <span aria-hidden="true" class="ml-auto">
+                        <!-- active class 'rotate-180' -->
+                        <svg
+                            class="w-4 h-4 transition-transform transform"
+                            :class="{ 'rotate-180': open }"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </a>
+                <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" aria-label="Components">
+                    <!-- active & hover classes 'text-gray-700 dark:text-light' -->
+                    <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
+                    <a
+                        href="/payment"
+                        role="menuitem"
+                        class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
+                    >
+                        Laporan Pembayaran
                     </a>
                 </div>
             </div>

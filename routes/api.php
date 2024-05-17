@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PesananController; // Pastikan huruf P besar
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
@@ -39,6 +40,7 @@ Route::group([
         'testimonis'=>TestimoniController::class,
         'reviews'=>ReviewController::class,
         'orders'=>OrderController::class,
+        'paymentS'=>PaymentController::class,
     ]);
 
     // Penyesuaian rute update
@@ -69,4 +71,8 @@ Route::group([
     });
     // Rute untuk laporan
     Route::get('/reports', [ReportController::class, 'get_reports']);
+
+    Route::get('/payments', [PaymentController::class, 'index']);
+    Route::get('/payments/{id}', [PaymentController::class, 'show']);
+    Route::put('/payments/{payment}', [PaymentController::class, 'update']);
 });
