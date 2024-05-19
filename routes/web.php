@@ -5,7 +5,6 @@ use App\Http\Controllers\TestimoniController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminpageController;
 use App\Http\Controllers\DetailProdukController;
 use App\Http\Controllers\PesananController;
@@ -37,7 +36,17 @@ Route::get('/dashbuy', [DashbuyController::class, 'dashbuy'])->name('dashbuy');
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('login_member', [AuthController::class, 'login_member']);
+Route::post('login_member', [AuthController::class, 'login_member_action']);
+Route::post('logout_member', [AuthController::class, 'logout_member']);
+
+Route::get('register_member', [AuthController::class, 'register_member']);
+Route::post('register_member', [AuthController::class, 'register_member_action']);
+Route::post('/login_member_action', [AuthController::class, 'login_member_action'])->name('login_member_action');
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminpage', [AdminpageController::class, 'index']);

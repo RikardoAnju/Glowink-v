@@ -21,10 +21,10 @@
         <table id="example" class="stripe hover" style="width:100%;">
             <thead>
                 <tr>
-                    <th class="px-4 py-2 w-16">No</th>
-                    <th class="px-4 py-2 w-48">Nama Kategori</th>
+                    <th class="px-2 py-2 w-10">No</th>
+                    <th class="px-4 py-2 w-20">Nama Kategori</th>
                     <th class="px-4 py-2 w-64">Deskripsi</th>
-                    <th class="px-4 py-2 w-24">Gambar</th>
+                    <th class="px-14 py-2 w-24">Gambar</th>
                     <th class="px-4 py-2 aksi-column">Aksi</th> <!-- Tambahkan kelas untuk menyesuaikan lebar -->
                 </tr>
             </thead>

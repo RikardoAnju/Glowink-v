@@ -18,11 +18,11 @@
         <table id="example" class="stripe hover" style="width:100%;">
             <thead>
                 <tr>
-                   <th class="px-4 py-2" style="width: 3%;">No</th>
-                    <th class="px-4 py-2" style="width: 20%;">Nama Kategori</th>
+                   <th class="px-4 py-2 w-10">No</th>
+                    <th class="px-4 py-2">Nama Kategori</th>
                     <th class="px-4 py-2 w-48">Nama SubKategori</th>
-                    <th class="px-4 py-2 w-64">Deskripsi</th>
-                    <th class="px-4 py-2 w-24">Gambar</th>
+                    <th class="px-1 py-2 w-64">Deskripsi</th>
+                    <th class="px-5 py-2 w-30">Gambar</th>
                     <th class="px-4 py-2 w-32">Aksi</th>
                 </tr>
             </thead>

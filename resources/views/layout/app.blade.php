@@ -428,6 +428,7 @@
                 
                 <a
                 href="#"
+                onclick="logout(event)"
                 role="menuitem"
                 class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-indigo-600"
                 >
@@ -435,6 +436,7 @@
                 </a>
             </div>
             </div>
+            <div id="loading-spinner" class="loading-spinner"></div>
 
             <!-- Settings button -->
             <button
@@ -532,12 +534,6 @@
         </span>
         </button>
     </div>
-
-   <!-- Main content -->
- 
-    <!-- Panels -->
-
-    <!-- Settings Panel -->
     <!-- Backdrop -->
     <div
         x-transition:enter="transition duration-300 ease-in-out"
@@ -671,10 +667,7 @@
         </div>
     </section>
 
-    <!-- Search panel -->
-    <!-- Backdrop -->
-   
-    <!-- Panel -->
+
     </div>
 </div>
 
@@ -750,7 +743,56 @@
     }
 </script>
 
+<script>
+    function logout(event) {
+        event.preventDefault();
 
+        // Tampilkan animasi loading
+        document.getElementById('loading-spinner').style.display = 'block';
+
+        fetch('{{ route("logout") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '{{ route("login") }}';
+            } else {
+                console.error('Logout gagal');
+            }
+        })
+        .catch(error => {
+            console.error('Terjadi kesalahan saat logout:', error);
+        });
+    }
+</script>
+
+<style>
+    /* Gaya untuk animasi loading */
+    .loading-spinner {
+        display: none; /* Awalnya sembunyikan animasi */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        z-index: 9999;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
 
 @stack('js')
 </html>
