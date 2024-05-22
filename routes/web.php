@@ -18,6 +18,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\TentangController;
 use App\Http\Middleware\CanDeleteData;
 
 //Route::get('/', function () {
@@ -76,6 +77,9 @@ Route::get('/pesanan/dikirim',[OrderController::class, 'dikirim_list']);
 Route::get('/pesanan/diterima',[OrderController::class, 'diterima_list']);
 Route::get('/pesanan/selesai',[OrderController::class, 'selesai_list']);
 Route::get('/laporan',[ReportController::class, 'index']);
+
+Route::get('/tentang', [TentangController::class, 'index']); // Mengubah rute tentang menjadi metode GET
+Route::post('/tentang/{about}', [TentangController::class, 'update']); // Menambahkan rute baru untuk metode POST
 
 
 //payment
