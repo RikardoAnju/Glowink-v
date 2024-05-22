@@ -11,6 +11,7 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\DashbuyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -19,20 +20,20 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Middleware\CanDeleteData;
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+//Route::get('/', function () {
+    //return view('dashboard');
+//});
 
 Route::get('/add_barang', function () {
     return view('add_barang');
 });
 
-Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
-Route::get('/detailproduk', [DetailProdukController::class, 'detailproduk'])->name('detailproduk');
-Route::get('/register', [RegisterController::class, 'register'])->name('register');
+//Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+//Route::get('/detailproduk', [DetailProdukController::class, 'detailproduk'])->name('detailproduk');
+//Route::get('/register', [RegisterController::class, 'register'])->name('register');
 
-Route::get('/pesanan', [PesananController::class, 'pesanan'])->name('pesanan');
-Route::get('/dashbuy', [DashbuyController::class, 'dashbuy'])->name('dashbuy');
+//Route::get('/pesanan', [PesananController::class, 'pesanan'])->name('pesanan');
+//Route::get('/dashbuy', [DashbuyController::class, 'dashbuy'])->name('dashbuy');
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
@@ -82,6 +83,8 @@ Route::get('/payment', [PaymentController::class, 'list']);
 
 
 
+//category
+
 
 
 
@@ -93,6 +96,15 @@ Route::put('/subcategories/{subcategory}', 'SubcategoryController@update');
 
 
 
-
+// home route
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/products/{category}', [HomeController::class, 'products']);
+Route::get('/product/{id}', [HomeController::class, 'product']);
+Route::get('/cart', [HomeController::class, 'cart']);
+Route::get('/checkout', [HomeController::class, 'checkout']);
+Route::get('/orders', [HomeController::class, 'orders']);
+Route::get('/about', [HomeController::class, 'about']);
+Route::get('/contact', [HomeController::class, 'contact']);
+Route::get('/faq', [HomeController::class, 'faq']);
 
 
