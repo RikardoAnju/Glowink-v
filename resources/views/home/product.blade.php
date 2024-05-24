@@ -31,8 +31,8 @@
         <div class="flickity flickity-slider-wrap mfp-hover" id="gallery-main">
 
           <div class="gallery-cell">
-            <a href="/front/img/shop/item_lg_1.jpg" class="lightbox-img">
-              <img src="/front/img/shop/item_lg_1.jpg" alt="" />
+            <a href="{{ asset($product->gambar) }}" class="lightbox-img">
+              <img src="{{ asset($product->gambar) }}" alt="" />
               <i class="ui-zoom zoom-icon"></i>
             </a>
           </div>
@@ -47,37 +47,24 @@
       <div class="col-md-6 col-xs-12 product-description-wrap">
         <ol class="breadcrumb">
           <li>
-            <a href="index.html">Home</a>
+            <a href="/">Home</a>
           </li>
           <li>
-            <a href="index.html">Shop</a>
+            <a href="/products/{{ $product->id_subkategori }}">{{ $product->subcategory->nama_subkategori }}</a>
           </li>
           <li class="active">
             Catalog
           </li>
         </ol>
-        <h1 class="product-title">Sport T-Shirt</h1>              
+        <h1 class="product-title">{{ $product->nama_barang }}</h1>              
         <span class="price">
-          <del>
-            <span>$1550.00</span>
-          </del>
+         
           <ins>
-            <span class="amount">$1250.00</span>
+            <span class="amount">Rp.{{ number_format($product->harga) }}</span>
           </ins>
         </span>
-        <span class="rating">
-          <a href="#">3 Reviews</a>
-        </span>
-        <p class="short-description">Our Shop is a very slick and clean e-Our Theme is a very slick and clean e-commerce template with endless possibilities. Creating an awesome website with this Theme is easy than you can imagine. Our Theme is a very slick and clean e-commerce template with endless possibilities.</p>
-
-        <div class="color-swatches clearfix">
-          <span>Color:</span>
-          <a href="#" class="swatch-violet"></a>
-          <a href="#" class="swatch-black"></a>
-          <a href="#" class="swatch-cream"></a>
-        </div>
-
        
+        <p class="short-description">{{ $product->deskripsi }}</p>
 
         <div class="product-actions">
           <span>Qty:</span>
@@ -101,9 +88,9 @@
         
 
         <div class="product_meta">
-          <span class="sku">SKU: <a href="#">111763</a></span>
-          <span class="brand_as">Category: <a href="#">Men T-shirt</a></span>
-          <span class="posted_in">Tags: <a href="#">Sport, T-shirt, Blue</a></span>                
+          <span class="sku">SKU: <a href="#">{{ $product->sku }}</a></span>
+          <span class="brand_as">Category: <a href="#">{{ $product->category->nama_kategori }}</a></span>
+          <span class="posted_in">Stok: <a href="#"></a></span>                
         </div>
 
         <!-- Accordion -->
@@ -115,7 +102,7 @@
             </div>
             <div id="collapseOne" class="panel-collapse collapse in">
               <div class="panel-body">
-               
+                {{ $product->deskripsi }}
               </div>
             </div>
           </div>
@@ -130,58 +117,19 @@
                 <table class="table shop_attributes">
                   <tbody>
                     <tr>
-                      <th>Size:</th>
-                      <td>EU 41 (US 8), EU 42 (US 9), EU 43 (US 10), EU 45 (US 12)</td>
+                      <th>Ukuran:</th>
+                      <td></td>
                     </tr>
                     <tr>
-                      <th>Colors:</th>
+                      <th>Terbuat Dari:</th>
                       <td>Violet, Black, Blue</td>
                     </tr>
                     <tr>
-                      <th>Fabric:</th>
+                      <th>Manfaat:</th>
                       <td>Cotton (100%)</td>
                     </tr>                                     
                   </tbody>
                 </table>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-heading">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="plus">Reviews<span>&nbsp;</span>
-              </a>
-            </div>
-            <div id="collapseThree" class="panel-collapse collapse">
-              <div class="panel-body">
-                <div class="reviews">
-                  <ul class="reviews-list">
-                    <li>
-                      <div class="review-body">
-                        <div class="review-content">
-                          <p class="review-author"><strong>Alexander Samokhin</strong> - May 6, 2014 at 12:48 pm</p>
-                          <div class="rating">
-                            <a href="#"></a>
-                          </div>
-                          <p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="review-body">
-                        <div class="review-content">
-                          <p class="review-author"><strong>Christopher Robins</strong> - May 6, 2014 at 12:48 pm</p>
-                          <div class="rating">
-                            <a href="#"></a>
-                          </div>
-                          <p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
-                        </div>
-                      </div>
-                    </li>
-
-                  </ul>         
-                </div> <!--  end reviews -->
               </div>
             </div>
           </div>
@@ -209,20 +157,21 @@
     <div class="row heading-row">
       <div class="col-md-12 text-center">
         <h2 class="heading bottom-line">
-          Related Products
+          Lastest Products
         </h2>
       </div>
     </div>
 
     <div class="row">
 
+      @foreach ($lastest_products as $product)
       <div id="owl-related-items" class="owl-carousel owl-theme">
         <div class="product">
           <div class="product-item hover-trigger">
             <div class="product-img">
-              <a href="shop-single.html">
-                <img src="/front/img/shop/shop_item_3.jpg" alt="">
-                <img src="/front/img/shop/shop_item_back_3.jpg" alt="" class="back-img">
+              <a href="/product/{{ $product->id }}">
+                <img src="{{ asset($product->gambar) }}" alt="">
+                <img src="{{ asset($product->gambar) }}" alt="" class="back-img">
               </a>
               <div class="product-label">
                 <span class="sale">sale</span>
@@ -234,195 +183,24 @@
                   </a>
                 </div>                        
               </div>
-              <a href="#" class="product-quickview">Quick View</a>
+              <a href="/product/{{ $product->id }}" class="product-quickview">More</a>
             </div>
             <div class="product-details">                      
               <h3 class="product-title">
-                <a href="shop-single.html">Tribal Grey Blazer</a>
+                <a href="/product/{{ $product->id }}">{{ $product->nama_barang }}</a>
               </h3>
               <span class="category">
-                <a href="catalogue-grid.html">Women</a>
-              </span>
-            </div>
-            <span class="price">
-              <del>
-                <span>$730.00</span>
-              </del>
-              <ins>
-                <span class="amount">$399.99</span>
-              </ins>
-            </span>
-          </div>
-        </div>
-
-        <div class="product">
-          <div class="product-item hover-trigger">
-            <div class="product-img">
-              <a href="shop-single.html">
-                <img src="/front/img/shop/shop_item_11.jpg" alt="">
-                <img src="/front/img/shop/shop_item_back_11.jpg" alt="" class="back-img">
-              </a>
-              <div class="hover-2">                    
-                <div class="product-actions">
-                  <a href="#" class="product-add-to-wishlist">
-                    <i class="fa fa-heart"></i>
-                  </a>
-                </div>                        
-              </div>
-              <a href="#" class="product-quickview">Quick View</a>
-            </div>
-            <div class="product-details">                      
-              <h3 class="product-title">
-                <a href="shop-single.html">Mantle Brown Bag</a>
-              </h3>
-              <span class="category">
-                <a href="catalogue-grid.html">Accessories</a>
+                <a href="/productS/{{ $product->id_subkategori }}">{{ $product->subcategory->nama_subkategori }}</a>
               </span>
             </div>
             <span class="price">
               <ins>
-                <span class="amount">$150.00</span>
+                <span class="amount">Rp.{{ number_format($product->harga) }}</span>
               </ins>
             </span>
           </div>
         </div>
-
-        <div class="product">
-          <div class="product-item hover-trigger">
-            <div class="product-img">
-              <a href="shop-single.html">
-                <img src="/front/img/shop/shop_item_6.jpg" alt="">
-                <img src="/front/img/shop/shop_item_back_6.jpg" alt="" class="back-img">
-              </a>
-              <div class="hover-2">                    
-                <div class="product-actions">
-                  <a href="#" class="product-add-to-wishlist">
-                    <i class="fa fa-heart"></i>
-                  </a>
-                </div>                        
-              </div>
-              <a href="#" class="product-quickview">Quick View</a>
-            </div>
-            <div class="product-details">                      
-              <h3 class="product-title">
-                <a href="shop-single.html">Faux Suits</a>
-              </h3>
-              <span class="category">
-                <a href="catalogue-grid.html">Men</a>
-              </span>
-            </div>
-            <span class="price">
-              <ins>
-                <span class="amount">$233.00</span>
-              </ins>
-            </span>
-          </div>
-        </div>
-
-        <div class="product">
-          <div class="product-item hover-trigger">
-            <div class="product-img">
-              <a href="shop-single.html">
-                <img src="/front/img/shop/shop_item_4.jpg" alt="">
-                <img src="/front/img/shop/shop_item_back_4.jpg" alt="" class="back-img">
-              </a>
-              <div class="hover-2">                    
-                <div class="product-actions">
-                  <a href="#" class="product-add-to-wishlist">
-                    <i class="fa fa-heart"></i>
-                  </a>
-                </div>                        
-              </div>
-              <a href="#" class="product-quickview">Quick View</a>
-            </div>
-            <div class="product-details">                      
-              <h3 class="product-title">
-                <a href="shop-single.html">Sweater w/ Colar</a>
-              </h3>
-              <span class="category">
-                <a href="catalogue-grid.html">Men</a>
-              </span>
-            </div>
-            <span class="price">
-              <ins>
-                <span class="amount">$299.00</span>
-              </ins>
-            </span>
-          </div>
-        </div>
-
-        <div class="product">
-          <div class="product-item hover-trigger">
-            <div class="product-img">
-              <a href="shop-single.html">
-                <img src="/front/img/shop/shop_item_5.jpg" alt="">
-                <img src="/front/img/shop/shop_item_back_5.jpg" alt="" class="back-img">
-              </a>
-              <div class="hover-2">                    
-                <div class="product-actions">
-                  <a href="#" class="product-add-to-wishlist">
-                    <i class="fa fa-heart"></i>
-                  </a>
-                </div>                        
-              </div>
-              <a href="#" class="product-quickview">Quick View</a>
-            </div>
-            <div class="product-details">                      
-              <h3 class="product-title">
-                <a href="shop-single.html">Lola May Crop Blazer</a>
-              </h3>
-              <span class="category">
-                <a href="catalogue-grid.html">Women</a>
-              </span>
-            </div>
-            <span class="price">
-              <ins>
-                <span class="amount">$42.00</span>
-              </ins>
-            </span>
-          </div>
-        </div>
-
-        <div class="product">
-          <div class="product-item hover-trigger">
-            <div class="product-img">
-              <a href="shop-single.html">
-                <img src="/front/img/shop/shop_item_6.jpg" alt="">
-                <img src="/front/img/shop/shop_item_back_6.jpg" alt="" class="back-img">
-              </a>
-              <div class="product-label">
-                <span class="sale">sale</span>
-              </div>
-              <div class="hover-2">                    
-                <div class="product-actions">
-                  <a href="#" class="product-add-to-wishlist">
-                    <i class="fa fa-heart"></i>
-                  </a>
-                </div>                        
-              </div>
-              <a href="#" class="product-quickview">Quick View</a>
-            </div>
-            <div class="product-details">                      
-              <h3 class="product-title">
-                <a href="shop-single.html">Faux Suits</a>
-              </h3>
-              <span class="category">
-                <a href="catalogue-grid.html">Men</a>
-              </span>
-            </div>
-            <span class="price">
-              <del>
-                <span>$500.00</span>
-              </del>
-              <ins>
-                <span class="amount">$233.00</span>
-              </ins>
-            </span>
-          </div>
-        </div>
-
-      </div> <!-- end slider -->
-
+        @endforeach
     </div>
   </div>
 </section> <!-- end related products -->

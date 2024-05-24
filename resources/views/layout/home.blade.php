@@ -58,7 +58,6 @@
       <nav class="navbar navbar-static-top">
         <div class="navigation" id="sticky-nav">
           <div class="container relative">
-
             <div class="row flex-parent">
 
               <div class="navbar-header flex-child">
@@ -86,7 +85,7 @@
                     </div>
                   </div>
                 </div>
-              </div> <!-- end navbar-header -->
+              </div> 
 
               <div class="nav-wrap flex-child">
                 <div class="collapse navbar-collapse text-center" id="navbar-collapse">
@@ -99,25 +98,34 @@
                     <li class="dropdown">
                       <a href="/about">About</a>
                     </li>
+                    @php
+                        $categories = App\Models\Category::all();
+                    @endphp
                     <li class="dropdown">
                       <a href="#">Shop</a>
                       <i class="fa fa-angle-down dropdown-trigger"></i>
                       <ul class="dropdown-menu megamenu-wide">
                         <li>
                           <div class="megamenu-wrap container">
-                            <div class="row">
-
+                            <div class="row">                       
+                              @foreach ($categories as $category)
                               <div class="col-md-3 megamenu-item">
-                                <ul class="menu-list">
+                                <ul class="menu-list">     
                                   <li>
-                                    <span>Shop Pages</span>
+                                    <span>{{ $category->nama_kategori }}</span>
                                   </li>
+                                  @php
+                                  $subcategories = App\Models\Subcategory::where('id_kategori',
+                                  $category->id)->get();
+                                  @endphp
+                                  @foreach ($subcategories as $subcategory)     
                                   <li>
-                                    <a href="/products/1">Catalog no Sidebar</a>
-                                    </li>
-              
+                                    <a href="/products/{{ $subcategory->id }}">{{ $subcategory->nama_subkategori }}</a>
+                                  </li>  
+                                  @endforeach
                                 </ul>
                               </div>
+                              @endforeach
                             </div> 
                           </div>
                         </li>

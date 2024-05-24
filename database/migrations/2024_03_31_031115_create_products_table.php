@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('harga');
             $table->integer('diskon');
             $table->string('sku');
-            $table->integer('stok');
+            $table->text('bahan');
             $table->timestamps();
         });
     }

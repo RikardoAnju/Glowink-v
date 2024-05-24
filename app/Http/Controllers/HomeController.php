@@ -2,21 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
+use App\Models\Category;
+use App\Models\product;
+use App\Models\slider;
+
+use App\Models\Testimoni;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index ()
     {
-        return view('home.index');
+        $sliders = slider::all();
+        $categories = Category::all();
+        $testimonis = Testimoni::all();
+        $products = product::skip(0)->take(6)->get();
+        return view('home.index', compact('sliders', 'categories', 'testimonis', 'products'));
     }
-    public function products ()
+    public function products ($id_subcategory)
     {
-        return view('home.products');
+        $products = product::where('id_subkategori', $id_subcategory)->get();
+        return view('home.products', compact('products'));
     }
-    public function product ()
+    public function product ($id_product)
     {
-        return view('home.product');
+        $product = product::find($id_product);
+        $lastest_products = product::orderByDesc('created_at')->offset(0)->limit(10)->get();
+        return view('home.product', compact('product', 'lastest_products'));
     }
     public function cart ()
     {
@@ -32,11 +45,14 @@ class HomeController extends Controller
     }
     public function about ()
     {
-        return view('home.about');
+        $about = About::first();
+        $testimonis = Testimoni::all();
+        return view('home.about', compact('about', 'testimonis'));
     }
     public function contact ()
     {
-        return view('home.contact');
+        $about = About::first();
+        return view('home.contact', compact('about'));
     }
     public function faq ()
     {

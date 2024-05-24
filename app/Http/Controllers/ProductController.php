@@ -56,7 +56,7 @@ class ProductController extends Controller
             'harga' => 'required',
             'diskon' => 'required',
             'sku' => 'required',
-            'stok' => 'required',
+            'bahan' => 'required',
         ]);
             
         if ($validator->fails()) {
@@ -124,7 +124,7 @@ class ProductController extends Controller
             'harga' => 'required',
             'diskon' => 'required',
             'sku' => 'required',
-            'stok' => 'required',
+            'bahan' => 'required',
             'gambar' => 'image|mimes:jpg,png,jpeg,webp|max:2048', // Perhatikan tidak ada "required" di sini karena gambar tidak selalu harus diubah
         ]);
             

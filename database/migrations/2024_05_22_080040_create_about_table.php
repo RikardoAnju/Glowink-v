@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('about', function (Blueprint $table) {
             $table->id();
-            $table->string('judul website');
+            $table->string('judul_website');
             $table->string('logo');
             $table->text('deskripsi');
             $table->string('alamat');

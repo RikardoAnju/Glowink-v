@@ -26,7 +26,7 @@
                   <th class="px-4 py-2 w-48">Harga</th> 
                   <th class="px-4 py-2 w-48">Diskon</th> 
                   <th class="px-4 py-2 w-48">Sku</th> 
-                  <th class="px-4 py-2 w-48">Stok</th> 
+                  <th class="px-4 py-2 w-48">Bahan</th> 
                   <th class="px-4 py-2 w-64">Deskripsi</th> 
                   <th class="px-4 py-2 w-24">Gambar</th> 
                   <th class="px-4 py-2 w-32">Aksi</th> 
@@ -89,8 +89,8 @@
                   <input type="text" name="sku" id="sku" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Sku Barang">
                 </div>
                 <div class="mb-4">
-                  <label for="stok" class="block text-sm font-medium text-gray-700">Stok:</label>
-                  <input type="text" name="stok" id="stok"  class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang">
+                  <label for="bahan" class="block text-sm font-medium text-gray-700">Bahan:</label>
+                  <input type="text" name="bahan" id="bahan"  class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang">
                 </div>
 
                 <div class="mb-4">
@@ -278,8 +278,8 @@
               </div>
               
               <div class="mb-4">
-                  <label for="stok" class="block text-sm font-medium text-gray-700">Stok:</label>
-                  <input type="number" name="stok" id="stok" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang" required>
+                  <label for="bahan" class="block text-sm font-medium text-gray-700">Bahan:</label>
+                  <input type="text" name="bahan" id="bahan" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang" required>
               </div>
               
                 <div class="mb-4">
@@ -372,7 +372,7 @@
                   '<td class="px-4 py-2 w-64 break-all">' + val.harga + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.diskon + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.sku + '</td>' +
-                  '<td class="px-4 py-2 w-64 break-all">' + val.stok + '</td>' +
+                  '<td class="px-4 py-2 w-64 break-all">' + val.bahan + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.deskripsi + '</td>' +
                   '<td class="px-4 py-2 w-24"><img src="/' + val.gambar + '" width="250" height="auto"></td>' +
                   '<td class="px-4 py-2 w-10 flex items-center gap-2">' +

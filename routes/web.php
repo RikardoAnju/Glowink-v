@@ -78,10 +78,9 @@ Route::get('/pesanan/diterima',[OrderController::class, 'diterima_list']);
 Route::get('/pesanan/selesai',[OrderController::class, 'selesai_list']);
 Route::get('/laporan',[ReportController::class, 'index']);
 
-Route::get('/tentang', [TentangController::class, 'index']); // Mengubah rute tentang menjadi metode GET
-Route::post('/tentang/{about}', [TentangController::class, 'update']); // Menambahkan rute baru untuk metode POST
 
-
+Route::get('/tentang', [TentangController::class, 'index'])->name('tentang.index');
+Route::put('/tentang/{about}', [TentangController::class, 'update'])->name('tentang.update');
 //payment
 Route::get('/payment', [PaymentController::class, 'list']);
 

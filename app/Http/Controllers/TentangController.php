@@ -1,9 +1,10 @@
-<?PHP
+<?php
+
 namespace App\Http\Controllers;
 
 use App\Models\About;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class TentangController extends Controller
 {
@@ -15,26 +16,35 @@ class TentangController extends Controller
 
     public function update(Request $request, About $about)
     {
-        $input = $request->all();
-        
+        // Validasi input
+        $validatedData = $request->validate([
+            'judul_website' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $input = $request->except('logo');
+
+        // Handle logo upload
         if ($request->hasFile('logo')) {
-            // Hapus gambar lama jika ada
-            File::delete('uploads/' . $about->logo);
+            $logo = $request->file('logo');
+            $nama_logo = time() . '.' . $logo->getClientOriginalExtension();
             
             // Simpan gambar baru
-            $logo= $request->file('logo');
-            $nama_logo = time() . rand(1, 9) . '.' . $logo->getClientOriginalExtension();
-            $logo->storeAs('uploads', $nama_logo);
+            $logo->storeAs('uploads', $nama_logo, 'public');
+            
+            // Hapus gambar lama jika ada
+            if ($about->logo) {
+                Storage::disk('public')->delete('uploads/' . $about->logo);
+            }
             
             // Simpan nama gambar baru ke dalam input
             $input['logo'] = $nama_logo;
-        } else {
-            unset($input['logo']);
         }
 
         // Update data About
         $about->update($input);
-        return redirect('/tentang');
+        
+        return redirect('/tentang')->with('success', 'Data Tentang berhasil diperbarui');
     }
-
 }

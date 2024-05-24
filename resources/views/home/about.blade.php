@@ -7,13 +7,7 @@
         <div class="row">
           <div class="col-sm-8 mb-50">
             <h2 class="intro-heading">about our shop</h2>
-            <p>Glowink is an e-commerce website that provides various types of skincare that can care for your face, with this website you can easily find the skincare you need </p>
-          </div>
-          <div class="col-sm-3 col-sm-offset-1">
-            <span class="result">1</span>
-            <p>Years on Global Market.</p>
-            <span class="result">45</span>
-            <p>Partners are Working With Us.</p>
+            <p>{{ $about->deskripsi }}</p>
           </div>
         </div>
         <hr class="mb-0">
@@ -42,8 +36,8 @@
                   <img src="/front/img/team/team_1.jpg" alt="">
                 </div>
                 <div class="team-details text-center">                
-                  <h4 class="team-title">Michael Deo</h4>
-                  <span>CEO of Company</span>
+                  <h4 class="team-title">Name</h4>
+                  <span>#</span>
                   <div class="social-icons rounded">
                     <a href="#"><i class="fa fa-twitter"></i></a>
                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -62,8 +56,8 @@
                   <img src="/front/img/team/team_2.jpg" alt="">
                 </div>
                 <div class="team-details text-center">
-                  <h4 class="team-title">Tom Trump</h4>
-                  <span>Co-founder</span>
+                  <h4 class="team-title">name</h4>
+                  <span>#</span>
                   <div class="social-icons rounded">
                     <a href="/front/#"><i class="fa fa-twitter"></i></a>
                     <a href="/front/#"><i class="fa fa-facebook"></i></a>
@@ -82,7 +76,7 @@
                   <img src="/front/img/team/team_3.jpg" alt="">
                 </div>
                 <div class="team-details text-center">
-                  <h4 class="team-title">Monica Green</h4>
+                  <h4 class="team-title">name</h4>
                   <span>Marketing Officer</span>
                   <div class="social-icons rounded">
                     <a href="/front/#"><i class="fa fa-twitter"></i></a>
@@ -102,7 +96,7 @@
                   <img src="/front/img/team/team_4.jpg" alt="">
                 </div>
                 <div class="team-details text-center">
-                  <h4 class="team-title">alex smith</h4>
+                  <h4 class="team-title">name</h4>
                   <span>Photographer</span>
                   <div class="social-icons rounded">
                     <a href="/front/#"><i class="fa fa-twitter"></i></a>
@@ -141,29 +135,16 @@
         </div>
 
         <div id="owl-testimonials" class="owl-carousel owl-theme owl-dark-dots text-center">
-
+          @foreach ($testimonis as $Testimoni)
+           
           <div class="item">
             <div class="testimonial">
-              <p class="testimonial-text">I’am amazed, I should say thank you so much for your awesome template. Design is so good and neat, every detail has been taken care these team are realy amazing and talented! I will work only with this agency.</p>
-              <span>Donald Trump / CEO of Trump organization</span>
+              <p class="testimonial-text">{{ $Testimoni->deskripsi }}</p>
+              <span>{{ $Testimoni->nama_testimoni }}</span>
             </div>
           </div>
-
-          <div class="item">
-            <div class="testimonial">
-              <p class="testimonial-text">This is the excellent theme. It has many useful features that can be use for any kind of business. The support is just amazing and design</p>
-              <span>John C. Marshall / Art Director</span>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="testimonial">
-              <p class="testimonial-text">Needless to say, beautifully designed theme that serves many purpose. Even more sutomers support is the best! Highly recommend this theme to anyone who enjoys a fine product.</p>
-              <span>Matthew Whilson / PR Agent</span>
-            </div>
-          </div>
-        </div>
-      </div>
+          
+          @endforeach
 
     </section> <!-- end testimonials -->
 
