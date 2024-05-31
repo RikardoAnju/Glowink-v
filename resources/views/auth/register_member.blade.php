@@ -29,30 +29,7 @@
                         <input required type="text" placeholder="Nama Member" name="nama_member" id="nama_member"
                             class="block border-2 rounded-full mt-2 py-2 px-5 w-full">
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="my-3">
-                            <label class="font-semibold" for="provinsi">Provinsi</label>
-                            <input required type="text" placeholder="Provinsi" name="provinsi" id="provinsi"
-                                class="block border-2 rounded-full mt-2 py-2 px-5 w-full">
-                        </div>
-                        <div class="my-3">
-                            <label class="font-semibold" for="kabupaten">Kabupaten</label>
-                            <input required type="text" placeholder="Kabupaten" name="kabupaten" id="kabupaten"
-                                class="block border-2 rounded-full mt-2 py-2 px-5 w-full">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="my-3">
-                            <label class="font-semibold" for="kecamatan">Kecamatan</label>
-                            <input required type="text" placeholder="Kecamatan" name="kecamatan" id="kecamatan"
-                                class="block border-2 rounded-full mt-2 py-2 px-5 w-full">
-                        </div>
-                        <div class="my-3">
-                            <label class="font-semibold" for="detail_alamat">Detail Alamat</label>
-                            <input required type="text" placeholder="Detail Alamat" name="detail_alamat" id="detail_alamat"
-                                class="block border-2 rounded-full mt-2 py-2 px-5 w-full">
-                        </div>
-                    </div>
+                    
                     <div class="my-3">
                         <label class="font-semibold" for="no_hp">No Hp</label>
                         <input required type="text" placeholder="Your Number Phone" name="no_hp" id="no_hp"

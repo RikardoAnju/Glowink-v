@@ -16,10 +16,11 @@
   <link rel="stylesheet" href="/front/css/style.css" />
 
   <!-- Favicons -->
-  <link rel="shortcut icon" href="/front/img/favicon.ico">
-  <link rel="apple-touch-icon" href="/front/img/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/front/img/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/front/img/apple-touch-icon-114x114.png">
+  <link rel="shortcut icon" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="apple-touch-icon" sizes="200x200" href="images/logo.png">
+  <link rel="apple-touch-icon" sizes="200x200" href="images/logo.png">
+
 </head>
 <body>
   <section class="section-wrap pt-80 pb-40 catalogue">
@@ -120,6 +121,5 @@
   <script type="text/javascript" src="front/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="front/js/plugins.js"></script>  
   <script type="text/javascript" src="front/js/scripts.js"></script>
-    
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TestimoniController;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,7 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('login_member', [AuthController::class, 'login_member']);
 Route::post('login_member', [AuthController::class, 'login_member_action']);
-Route::post('logout_member', [AuthController::class, 'logout_member']);
+Route::get('logout_member', [AuthController::class, 'logout_member']);
 
 Route::get('register_member', [AuthController::class, 'register_member']);
 Route::post('register_member', [AuthController::class, 'register_member_action']);
@@ -81,6 +82,9 @@ Route::get('/laporan',[ReportController::class, 'index']);
 
 Route::get('/tentang', [TentangController::class, 'index'])->name('tentang.index');
 Route::put('/tentang/{about}', [TentangController::class, 'update'])->name('tentang.update');
+
+
+
 //payment
 Route::get('/payment', [PaymentController::class, 'list']);
 
@@ -109,5 +113,11 @@ Route::get('/orders', [HomeController::class, 'orders']);
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/contact', [HomeController::class, 'contact']);
 Route::get('/faq', [HomeController::class, 'faq']);
+Route::post('/add_to_cart', [CartController::class, 'add_to_cart'])->name('add_to_cart');
+Route::get('/delete_from_cart/{cart}', [HomeController::class, 'delete_from_cart']);
+
+
+
+
 
 

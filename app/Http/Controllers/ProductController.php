@@ -53,6 +53,8 @@ class ProductController extends Controller
             'gambar' => 'required|image|mimes:jpg,png,jpeg,webp|max:2048', // Batas maksimum ukuran gambar adalah 2MB
             'nama_barang' => 'required',
             'deskripsi' => 'required',
+            'ukuran' => 'required',
+            'manfaat' => 'required',
             'harga' => 'required',
             'diskon' => 'required',
             'sku' => 'required',
@@ -122,6 +124,8 @@ class ProductController extends Controller
             'nama_barang' => 'required',
             'deskripsi' => 'required',
             'harga' => 'required',
+            'manfaat' => 'required',
+            'ukuran' => 'required',
             'diskon' => 'required',
             'sku' => 'required',
             'bahan' => 'required',

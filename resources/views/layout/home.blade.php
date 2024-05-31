@@ -157,23 +157,33 @@
 
               <div class="flex-child flex-right nav-right hidden-sm hidden-xs">
                 <ul>
-                  <li class="nav-register">
-                    <a href="/login_member">Login</a>
-                  </li>
-                  <li class="nav-search-wrap style-2 hidden-sm hidden-xs">
-                    <a href="#" class="nav-search search-trigger">
-                      <i class="fa fa-search"></i>
-                    </a>
-                  </li>
-                  <li class="nav-cart">
-                    <div class="nav-cart-outer">
-                      <div class="nav-cart-inner">
-                        <a href="/cart" class="nav-cart-icon"></a>
-                      </div>
-                    </div>
+                    <li class="nav-register">
+                        @if (Auth::guard('webmember')->check())
+                            <a href="/profile">{{ Auth::guard('webmember')->user()->nama_member }}</a>
+                        @else
+                            <a href="/login_member">Login</a>
+                        @endif
+                    </li>
+                    <li class="nav-search-wrap style-2 hidden-sm hidden-xs">
+                        <a href="#" class="nav-search search-trigger">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </li>
+                    <li class="nav-cart">
+                        <div class="nav-cart-outer">
+                            <div class="nav-cart-inner">
+                                <a href="/cart" class="nav-cart-icon"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-register">
+                      @if (Auth::guard('webmember')->check())
+                          <a href="/logout_member">Logout</a>
+                      @endif
                   </li>
                 </ul>
-              </div>
+            </div>
+            
           
             </div> <!-- end row -->
           </div> <!-- end container -->
@@ -306,6 +316,7 @@
   <script type="text/javascript" src="front/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="front/js/plugins.js"></script>  
   <script type="text/javascript" src="front/js/scripts.js"></script>
-    
+  
+    @stack('js')
 </body>
 </html>

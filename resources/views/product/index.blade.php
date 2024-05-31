@@ -27,6 +27,8 @@
                   <th class="px-4 py-2 w-48">Diskon</th> 
                   <th class="px-4 py-2 w-48">Sku</th> 
                   <th class="px-4 py-2 w-48">Bahan</th> 
+                  <th class="px-4 py-2 w-48">Ukuran</th> 
+                  <th class="px-4 py-2 w-48">Manfaat</th> 
                   <th class="px-4 py-2 w-64">Deskripsi</th> 
                   <th class="px-4 py-2 w-24">Gambar</th> 
                   <th class="px-4 py-2 w-32">Aksi</th> 
@@ -91,6 +93,14 @@
                 <div class="mb-4">
                   <label for="bahan" class="block text-sm font-medium text-gray-700">Bahan:</label>
                   <input type="text" name="bahan" id="bahan"  class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang">
+                </div>
+                <div class="mb-4">
+                  <label for="ukuran" class="block text-sm font-medium text-gray-700">Ukuran:</label>
+                  <input type="text" name="ukuran" id="ukuran"  class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang">
+                </div>
+                <div class="mb-4">
+                  <label for="manfaat" class="block text-sm font-medium text-gray-700">Manfaat:</label>
+                  <input type="text" name="manfaat" id="manfaat"  class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang">
                 </div>
 
                 <div class="mb-4">
@@ -281,6 +291,14 @@
                   <label for="bahan" class="block text-sm font-medium text-gray-700">Bahan:</label>
                   <input type="text" name="bahan" id="bahan" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang" required>
               </div>
+              <div class="mb-4">
+                  <label for="ukuran" class="block text-sm font-medium text-gray-700">Ukuran:</label>
+                  <input type="text" name="ukuran" id="ukuran" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang" required>
+              </div>
+              <div class="mb-4">
+                  <label for="manfaat" class="block text-sm font-medium text-gray-700">Manfaat:</label>
+                  <input type="text" name="manfaat" id="manfaat" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang" required>
+              </div>
               
                 <div class="mb-4">
                   <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
@@ -345,6 +363,8 @@
 
 <script>
   $(document).ready(function () {
+      var ERROR_MESSAGE = "An error occurred while processing your request.";  // Definisikan variabel ERROR_MESSAGE
+
       var table = $('#example').DataTable({
           responsive: true,
           paging: false,
@@ -358,7 +378,7 @@
           info: false,
           ordering: false
       });
-  
+
       function populateTable(data) {
           var row = '';
           data.forEach(function (val, index) {
@@ -373,6 +393,8 @@
                   '<td class="px-4 py-2 w-64 break-all">' + val.diskon + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.sku + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.bahan + '</td>' +
+                  '<td class="px-4 py-2 w-64 break-all">' + val.ukuran + '</td>' +
+                  '<td class="px-4 py-2 w-64 break-all">' + val.manfaat + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.deskripsi + '</td>' +
                   '<td class="px-4 py-2 w-24"><img src="/' + val.gambar + '" width="250" height="auto"></td>' +
                   '<td class="px-4 py-2 w-10 flex items-center gap-2">' +
@@ -383,7 +405,7 @@
           });
           $('#kategoriTableBody').html(row);
       }
-  
+
       // Fungsi untuk mengambil data dari server dan memperbarui tabel
       function fetchDataAndPopulateTable() {
           $.ajax({
@@ -391,20 +413,21 @@
               success: function (response) {
                   populateTable(response.data);
               },
-              error: function () {
-                  console.log(ERROR_MESSAGE);
+              error: function (xhr, status, error) {
+                  console.error(ERROR_MESSAGE, xhr, status, error);
+                  console.log(xhr.responseText);
               }
           });
       }
-  
+
       // Memanggil fungsi untuk mengisi tabel saat dokumen siap
       fetchDataAndPopulateTable();
-  
+
       // Event handler untuk tombol hapus
       $(document).on('click', '.btn-hapus', function () {
           var id = $(this).data('id');
           $('#deleteConfirmationModal').removeClass('hidden');
-  
+
           $('#confirmDeleteButton').off('click').on('click', function () {
               $.ajax({
                   url: '/api/products/' + id,
@@ -417,17 +440,18 @@
                       }, 2000);
                       fetchDataAndPopulateTable();
                   },
-                  error: function () {
-                      console.log(ERROR_MESSAGE);
+                  error: function (xhr, status, error) {
+                      console.error(ERROR_MESSAGE, xhr, status, error);
+                      console.log(xhr.responseText);
                   }
               });
           });
-  
+
           $('.btn-batal').off('click').on('click', function () {
               $('#deleteConfirmationModal').addClass('hidden');
           });
       });
-  
+
       // Event handler untuk tombol edit
       $(document).on('click', '.modal-ubah', function () {
           var id = $(this).data('id');
@@ -441,12 +465,13 @@
                   $('#editDataForm').attr('action', '/api/products/' + id);
                   $('#editDataModal').removeClass('hidden');
               },
-              error: function () {
-                  console.log(ERROR_MESSAGE);
+              error: function (xhr, status, error) {
+                  console.error(ERROR_MESSAGE, xhr, status, error);
+                  console.log(xhr.responseText);
               }
           });
       });
-  
+
       // Event handler untuk form edit
       $('#editDataForm').on('submit', function (e) {
           e.preventDefault();
@@ -466,17 +491,18 @@
                   }, 2000);
                   fetchDataAndPopulateTable();
               },
-              error: function () {
-                  console.log(ERROR_MESSAGE);
+              error: function (xhr, status, error) {
+                  console.error(ERROR_MESSAGE, xhr, status, error);
+                  console.log(xhr.responseText);
               }
           });
       });
-  
+
       // Event handler untuk tombol tambah
       $(document).on('click', '.modal-tambah', function () {
           $('#addDataModal').removeClass('hidden');
       });
-  
+
       // Event handler untuk form tambah
       $('#addDataForm').on('submit', function (e) {
           e.preventDefault();
@@ -497,34 +523,35 @@
                   $('#addDataForm')[0].reset();
                   fetchDataAndPopulateTable();
               },
-              error: function () {
-                  console.log(ERROR_MESSAGE);
+              error: function (xhr, status, error) {
+                  console.error(ERROR_MESSAGE, xhr, status, error);
+                  console.log(xhr.responseText);
               }
           });
       });
-  
+
       // Event handler untuk tombol tutup modal tambah
       $('#closeAddModalButton').on('click', function () {
           $('#addDataModal').addClass('hidden');
       });
-  
+
       // Event handler untuk tombol tutup modal edit
       $('#closeEditModalButton').on('click', function () {
           $('#editDataModal').addClass('hidden');
       });
-  
+
       // Event handler untuk tombol konfirmasi sukses edit
       $('#confirmSuccessEditButton').on('click', function () {
           $('#successEditConfirmationModal').addClass('hidden');
       });
-  
+
       // Event handler untuk tombol konfirmasi sukses hapus
       $('#confirmSuccessDeleteButton').on('click', function () {
           $('#successDeleteConfirmationModal').addClass('hidden');
       });
   });
-  
-  </script>
+</script>
+
   
 
 @endsection

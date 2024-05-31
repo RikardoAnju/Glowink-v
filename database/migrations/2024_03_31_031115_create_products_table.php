@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('diskon');
             $table->string('sku');
             $table->text('bahan');
+            $table->text('manfaat');
+            $table->text('ukuran');
             $table->timestamps();
         });
     }
