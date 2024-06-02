@@ -17,6 +17,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\TentangController;
@@ -115,8 +116,13 @@ Route::get('/contact', [HomeController::class, 'contact']);
 Route::get('/faq', [HomeController::class, 'faq']);
 Route::post('/add_to_cart', [CartController::class, 'add_to_cart'])->name('add_to_cart');
 Route::get('/delete_from_cart/{cart}', [HomeController::class, 'delete_from_cart']);
+Route::get('/get_kota/{id}', [HomeController::class, 'get_kota']);
+//Route::get('/get_ongkir/{destination}/{weight}', [HomeController::class, 'get_kota']);
 
 
+
+
+Route::get('/get_ongkir/{destination}/{weight}', [ShippingController::class, 'getOngkir']);
 
 
 
