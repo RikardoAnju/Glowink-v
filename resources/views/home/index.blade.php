@@ -26,7 +26,7 @@
           <div class="row">
             @foreach ($categories as $category)   
             <div class="col-xs-4 col-xxs-12 mb-30 promo-banner">
-              <a href="/front/#">
+              <a href="">
                 <img src="{{ asset($category->gambar) }}" alt="">
                 <div class="overlay"></div>
                 <div class="promo-inner valign">
@@ -61,12 +61,12 @@
             <div class="col-md-3 col-xs-6">
               <div class="product-item hover-trigger">
                 <div class="product-img">
-                  <a href="/front/shop-single.html">
+                  <a href="">
                     <img src="{{ asset($product->gambar) }}" alt="">
                   </a>
                   <div class="hover-overlay">                    
                     <div class="product-actions">
-                      <a href="/front/#" class="product-add-to-wishlist">
+                      <a href="" class="product-add-to-wishlist">
                         <i class="fa fa-heart"></i>
                       </a>
                     </div>
@@ -118,7 +118,6 @@
             @endforeach
           </div>
         </div>
-      </section> <!-- end testimonials -->
-
+      </section> 
 
 @endsection

@@ -28,6 +28,7 @@
                   <th class="px-4 py-2 w-48">Sku</th> 
                   <th class="px-4 py-2 w-48">Bahan</th> 
                   <th class="px-4 py-2 w-48">Ukuran</th> 
+                  <th class="px-4 py-2 w-48">Stok</th> 
                   <th class="px-4 py-2 w-48">Manfaat</th> 
                   <th class="px-4 py-2 w-64">Deskripsi</th> 
                   <th class="px-4 py-2 w-24">Gambar</th> 
@@ -97,6 +98,10 @@
                 <div class="mb-4">
                   <label for="ukuran" class="block text-sm font-medium text-gray-700">Ukuran:</label>
                   <input type="text" name="ukuran" id="ukuran"  class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang">
+                </div>
+                <div class="mb-4">
+                  <label for="stok" class="block text-sm font-medium text-gray-700">Stok:</label>
+                  <input type="number" name="stok" id="stok"  class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang">
                 </div>
                 <div class="mb-4">
                   <label for="manfaat" class="block text-sm font-medium text-gray-700">Manfaat:</label>
@@ -296,6 +301,10 @@
                   <input type="text" name="ukuran" id="ukuran" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang" required>
               </div>
               <div class="mb-4">
+                  <label for="stok" class="block text-sm font-medium text-gray-700">Stok:</label>
+                  <input type="number" name="stok" id="stok" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang" required>
+              </div>
+              <div class="mb-4">
                   <label for="manfaat" class="block text-sm font-medium text-gray-700">Manfaat:</label>
                   <input type="text" name="manfaat" id="manfaat" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Stok Barang" required>
               </div>
@@ -394,6 +403,7 @@
                   '<td class="px-4 py-2 w-64 break-all">' + val.sku + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.bahan + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.ukuran + '</td>' +
+                  '<td class="px-4 py-2 w-64 break-all">' + val.stok + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.manfaat + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.deskripsi + '</td>' +
                   '<td class="px-4 py-2 w-24"><img src="/' + val.gambar + '" width="250" height="auto"></td>' +

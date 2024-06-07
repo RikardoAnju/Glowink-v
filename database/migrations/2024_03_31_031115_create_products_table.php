@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('bahan');
             $table->text('manfaat');
             $table->text('ukuran');
+            $table->integer('stok');
             $table->timestamps();
         });
     }

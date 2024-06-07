@@ -120,7 +120,8 @@ Route::get('/get_kota/{id}', [HomeController::class, 'get_kota']);
 //Route::get('/get_ongkir/{destination}/{weight}', [HomeController::class, 'get_kota']);
 
 
-
+Route::post('/checkout_orders', [HomeController::class, 'checkout_orders']);
+Route::post('/payments', [HomeController::class, 'payments']);
 
 Route::get('/get_ongkir/{destination}/{weight}', [ShippingController::class, 'getOngkir']);
 

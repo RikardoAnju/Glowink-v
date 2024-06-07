@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_member');
             $table->integer('invoice');
-            $table->integer('grand_total');
+            $table->integer('grand_total')->nullable(); // Kolom grand_total sekarang bisa menerima nilai null
             $table->timestamps();
         });
 
