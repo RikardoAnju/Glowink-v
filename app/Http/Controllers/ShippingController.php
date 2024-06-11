@@ -1,39 +1,47 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class ShippingController extends Controller
 {
-    public function getOngkir($destination, $weight)
+    public function getOngkir($destination)
     {
-        $curl = curl_init();
+        $client = new Client();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "origin=22&destination=".$destination."&weight=".$weight."&courier=jne",
-            CURLOPT_HTTPHEADER => array(
-                "content-type: application/x-www-form-urlencoded",
-                "key: 1dc1002793a890f90a69835a2c9858e4"
-            ),
-        ));
+        try {
+            $formParams = [
+                'origin' => '7', // ID of the origin city
+                'destination' => $destination,
+                'weight' => 1000, // Default weight set to 1000 grams (1 kg)
+                'courier' => 'jne'
+            ];
 
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
+            $response = $client->post('https://api.rajaongkir.com/starter/cost', [
+                'form_params' => $formParams,
+                'headers' => [
+                    'content-type' => 'application/x-www-form-urlencoded',
+                    'key' => env('RAJAONGKIR_API_KEY')
+                ]
+            ]);
 
-        curl_close($curl);
+            $responseBody = $response->getBody()->getContents();
+            Log::info('Request Data: ', $formParams);
+            Log::info('Response from RajaOngkir: ' . $responseBody);
 
-        if ($err) {
-            return response()->json(['error' => "cURL Error #: " . $err], 500);
-        } else {
-            return response()->json(json_decode($response, true));
+            if ($response->getStatusCode() !== 200) {
+                return response()->json(['error' => "Error: " . $response->getReasonPhrase()], 500);
+            }
+
+            $responseBody = json_decode($responseBody, true);
+            return response()->json($responseBody);
+
+        } catch (\Exception $e) {
+            Log::error('ShippingController@getOngkir: ' . $e->getMessage());
+
+            return response()->json(['error' => 'Internal Server Error. Please try again later.'], 500);
         }
     }
 }
