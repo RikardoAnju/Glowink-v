@@ -3,6 +3,26 @@
 @section('title', 'Data Payment')
 
 @section('content')
+<style>
+ 
+/* CSS untuk tabel scrollable horizontal */
+#recipients {
+  overflow-x: auto;
+  
+}
+#recipients {
+  overflow-y: auto; /* Tambahkan scrollbar vertikal saat konten melebihi tinggi elemen */
+}
+
+/* Tetapkan lebar tetap untuk setiap kolom tabel */
+#example th,
+#example td {
+  white-space: nowrap; /* Mencegah teks terpotong saat lebar kolom tidak mencukupi */
+}
+
+/* Anda mungkin perlu menyesuaikan lebar kolom sesuai kebutuhan Anda */
+
+</style>
 <div class="container mx-auto px-2 w-full">
     <h1 class="flex items-center font-sans font-bold break-normal text-indigo-500 px-2 py-8 text-xl md:text-2xl">
         Data Payment
@@ -18,6 +38,11 @@
                     <th class="px-14 py-2 w-20">Jumlah</th>
                     <th class="px-6 py-2 w-64">No Rekening</th> 
                     <th class="px-4 py-2 w-64">Atas Nama</th> 
+                    <th class="px-4 py-2 w-64">Metode Pembayaran</th> 
+                    <th class="px-4 py-2 w-64">bukti</th> 
+                    <th class="px-4 py-2 w-64">Provinsi</th> 
+                    <th class="px-4 py-2 w-64">kabupaten</th> 
+                    <th class="px-4 py-2 w-64">Detail Alamat</th> 
                     <th class="px-1 py-2 w-64">Status</th> 
                     <th class="px-10 py-5 w-14">Aksi</th>
                 </tr>
@@ -159,6 +184,12 @@
             '<td class="px-4 py-2 w-24 break-all">' + val.jumlah + '</td>' +
             '<td class="px-4 py-2 w-64 break-all">' + val.no_rekening + '</td>' +
             '<td class="px-4 py-2 w-64 break-all">' + val.atas_nama + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.metode_pembayaran + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.bukti + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.provinsi + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.kabupaten + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.detail_alamat + '</td>' +
+           '<td class="px-4 py-2 w-64 break-all"><img src="' + val.bukti + '" alt="Bukti" class="w-20 h-20"></td>' +
             '<td class="px-4 py-2 w-64 break-all">' + val.status + '</td>' +
             '<td class="px-4 py-2 w-32 flex items-center gap-2">' +
             '<button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded modal-ubah" data-id="' + val.id + '">Edit</button>' +
@@ -169,6 +200,41 @@
       },
       error: function(xhr) {
         console.log('Error fetching data: ' + xhr.responseText);
+      }
+    });
+
+    // Fetch data checkout and append to the table
+    $.ajax({
+      url: '/api/checkout',
+      success: function(response) {
+        var data = response.data;
+        var row = '';
+        data.forEach(function(val, index) {
+          var tgl = new Date(val.created_at);
+          var tgl_lengkap = `${tgl.getDate()}-${tgl.getMonth() + 1}-${tgl.getFullYear()}`; // Mengubah bulan menjadi +1 karena indeks bulan dimulai dari 0
+          row += '<tr class="table-row">' +
+            '<td class="px-4 py-2 w-16">' + (index + 1) + '</td>' +
+            '<td class="px-4 py-2 w-48 break-all">' + tgl_lengkap + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.id_order + '</td>' +
+            '<td class="px-4 py-2 w-24 break-all">' + val.jumlah + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.no_rekening + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.atas_nama + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.metode_pembayaran + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.bukti + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.pronvinsi + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.kabupaten + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.detail_alamat + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.bukti + '</td>' +
+            '<td class="px-4 py-2 w-64 break-all">' + val.status + '</td>' +
+            '<td class="px-4 py-2 w-32 flex items-center gap-2">' +
+            '<button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded modal-ubah" data-id="' + val.id + '">Edit</button>' +
+            '</td>' +
+            '</tr>';
+        });
+        $('#kategoriTableBody').append(row); // Append data checkout
+      },
+      error: function(xhr) {
+        console.log('Error fetching checkout data: ' + xhr.responseText);
       }
     });
   }

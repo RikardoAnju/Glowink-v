@@ -75,4 +75,10 @@ Route::group([
     Route::get('/payments', [PaymentController::class, 'index']);
     Route::get('/payments/{id}', [PaymentController::class, 'show']);
     Route::put('/payments/{payment}', [PaymentController::class, 'update']);
+
+    Route::post('/payments', [PaymentController::class, 'create']);
+    Route::post('/webhook/midtrans', [PaymentController::class, 'webhook']);
+    Route::get('/callback', [PaymentController::class, 'callback'])->name('callback');
+    Route::post('/webhook', [PaymentController::class, 'webhook']);
+
 });

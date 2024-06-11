@@ -111,6 +111,7 @@ Route::get('/product/{id}', [HomeController::class, 'product']);
 Route::get('/cart', [HomeController::class, 'cart']);
 Route::get('/checkout', [HomeController::class, 'checkout']);
 Route::get('/orders', [HomeController::class, 'orders']);
+Route::get('/orders', [HomeController::class, 'orders'])->name('orders');
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/contact', [HomeController::class, 'contact']);
 Route::get('/faq', [HomeController::class, 'faq']);
@@ -121,8 +122,13 @@ Route::get('/get_kota/{id}', [HomeController::class, 'get_kota']);
 
 
 Route::post('/checkout_orders', [HomeController::class, 'checkout_orders']);
-Route::post('/payments', [HomeController::class, 'payments']);
-
+Route::post('/payments/upload', [HomeController::class, 'payments'])->name('payments.upload');
+Route::post('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+Route::post('/pesanan_selesai/{order}', [HomeController::class, 'pesanan_selesai']);
+Route::post('/payments', [HomeController::class, 'payments'])->name('payments');
+Route::post('/upload_bukti', [PaymentController::class, 'uploadBukti'])->name('upload_bukti');
+Route::post('/payments', [HomeController::class, 'payment'])->name('payments');
+Route::post('/payments', [PaymentController::class, 'store'])->name('payments');
 Route::get('/get_ongkir/{destination}/{weight}', [ShippingController::class, 'getOngkir']);
 
 

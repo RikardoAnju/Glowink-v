@@ -27,13 +27,6 @@
                                 <label for="judul_website" class="block text-sm font-medium text-gray-700">Judul Website</label>
                                 <input type="text" name="judul_website" id="judul_website" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Judul Website" required value="{{ $about->judul_website }}">
                             </div>
-                            @if ($about->logo)
-                                <img src="/uploads/{{ $about->logo }}" alt="Logo" width="200px">
-                            @endif
-                            <div class="mb-4 w-full">
-                                <label for="logo" class="block text-sm font-medium text-gray-700">Logo</label>
-                                <input type="file" name="logo" id="logo" accept="image/*" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Logo">
-                            </div>
                             <div class="mb-4 w-full">
                                 <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                                 <textarea name="deskripsi" id="deskripsi" rows="3" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Deskripsi" required>{{ $about->deskripsi }}</textarea>
@@ -55,8 +48,16 @@
                                 <input type="text" name="atas_nama" id="atas_nama" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->atas_nama }}">
                             </div>
                             <div class="mb-4 w-full">
-                                <label for="no_rekening" class="block text-sm font-medium text-gray-700">No Rekening</label>
-                                <input type="text" name="no_rekening" id="no_rekening" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->no_rekening }}">
+                                <label for="no_rekening_mandiri" class="block text-sm font-medium text-gray-700">Mandiri</label>
+                                <input type="text" name="no_rekening_mandiri" id="no_rekening_mandiri" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->no_rekening_mandiri }}">
+                            </div>
+                            <div class="mb-4 w-full">
+                                <label for="no_rekening_bca" class="block text-sm font-medium text-gray-700">BCA</label>
+                                <input type="text" name="no_rekening_bca" id="no_rekening_bca" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->no_rekening_bca }}">
+                            </div>
+                            <div class="mb-4 w-full">
+                                <label for="no_rekening_bsi" class="block text-sm font-medium text-gray-700">BSI</label>
+                                <input type="text" name="no_rekening_bsi" id="no_rekening_bsi" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->no_rekening_bsi }}">
                             </div>
                         </div>
                     </div>

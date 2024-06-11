@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\About;
 use App\Models\cart;
 use App\Models\Category;
+use App\Models\Member;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\product;
 use App\Models\slider;
-use illuminate\Support\Str;
+
 use App\Models\Testimoni;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -74,16 +77,31 @@ public function cart()
     curl_close($curl);
 
     if ($err) {
-        echo "cURL Error #:" . $err;
+        // Handle cURL error more appropriately, such as logging or returning an error view
+        return view('error_page', ['error' => "cURL Error #:" . $err]);
     }
     
-    $provinsi = json_decode($response);
-   
+    // Check if response is not empty before decoding JSON
+    if (!empty($response)) {
+        $provinsi = json_decode($response);
+    } else {
+        // Handle empty response more appropriately
+        return view('error_page', ['error' => "Empty response from RajaOngkir API"]);
+    }
 
-    $carts = Cart::where('id_member', Auth::guard('webmember')->user()->id)->where('is_checkout',0)->get();
-    $cart_total = Cart::where('id_member', Auth::guard('webmember')->user()->id)->where('is_checkout',0)->sum('total');
-    return view('home.cart', compact('carts','provinsi', 'cart_total'));
+
+    $carts = Cart::where('id_member', Auth::guard('webmember')->user()->id)->where('is_checkout', 0)->get();
+    $cart_total = Cart::where('id_member', Auth::guard('webmember')->user()->id)->where('is_checkout', 0)->sum('total');
+
+    // Tambahkan logika untuk mendapatkan nama barang dari produk
+    foreach ($carts as $cart) {
+        $cart->nama_barang = $cart->product->nama_barang;
+    }
+
+    return view('home.cart', compact('carts', 'provinsi', 'cart_total'));
 }
+
+
 
 public function checkout_orders(Request $request)
 {
@@ -96,6 +114,7 @@ public function checkout_orders(Request $request)
         'created_at' => now(),
         'updated_at' => now()
     ]);
+    
 
     // Memasukkan detail order ke dalam tabel orders_details
     for ($i = 0; $i < count($request->id_produk); $i++) {
@@ -115,6 +134,7 @@ public function checkout_orders(Request $request)
 
     return response()->json(['success' => true, 'message' => 'Order placed successfully.']);
 }
+
 
 public function get_kota ($id)
 {
@@ -148,7 +168,8 @@ if ($err) {
 public function checkout()
 {
     $about = About::first(); // Ambil data tentang
-    $user_id = Auth::guard('webmember')->user()->id; // Ambil ID user yang sedang login
+    $members = Member::find(Auth::guard('webmember')->user()->id);
+    $orders = Order::where('id_member', Auth::guard('webmember')->user()->id)->first();
     
     // Ambil data provinsi dari API RajaOngkir
     $curl = curl_init();
@@ -178,35 +199,32 @@ public function checkout()
         $provinsi = json_decode($response);
     }
     
-    // Ambil pesanan untuk user yang login
-    $orders = Order::where('id_member', $user_id)->get();
 
-    return view('home.checkout', compact('about', 'orders', 'provinsi'));
+
+    return view('home.checkout', compact('about', 'orders', 'provinsi', 'members'));
 }
 
-
-public function payments(Request $request)
+public function pesanan_selesai(Order $order)
 {
-    Payment::create([
-        'id_order' => $request->id_order, // Perbaiki nama kolom
-        'jumlah' => $request->jumlah_transfer,
-        'provinsi' => $request->provinsi,
-        'kabupaten' => $request->kota,
-        'kecamatan' => "", // Jika tidak digunakan, Anda bisa mengosongkannya
-        'detail_alamat' => $request->detail_alamat,
-        'status' => 'pending',
-        'no_rekening' => $request->no_rekening,
-        'atas_nama' => $request->atas_nama,
-    ]);
-
+    $order->status = 'Selesai';
+    $order->save();
     return redirect('/orders');
 }
 
+public function orders()
+{
+    // Mendapatkan ID member yang sedang login
+    $memberId = Auth::guard('webmember')->user()->id;
 
-    public function orders ()
-    {
-        return view('home.orders');
-    }
+    // Mengambil orders berdasarkan ID member
+    $orders = Order::where('id_member', $memberId)->get();
+
+    // Mengambil payments berdasarkan ID member
+    $payments = Payment::where('id_member', $memberId)->get();
+
+    // Mengirim data orders dan payments ke view
+    return view('home.orders', compact('orders', 'payments'));
+}
     public function about ()
     {
         $about = About::first();
@@ -220,29 +238,12 @@ public function payments(Request $request)
         return redirect('/cart');
     }
     
-
-    //public function add_to_cart(Request $request)
-//{
-    // Validasi data yang diterima dari permintaan POST
-   // $validatedData = $request->validate([
-    //    'id_member' => 'required',
-        //'id_barang' => 'required',
-       // 'jumlah' => 'required|integer|min:1',
-       // 'total' => 'required|numeric|min:0',
-       // 'is_checkout' => 'required|boolean',
-   // ]);
-
-    // Simpan data ke dalam database
-   // $cart = Cart::create($validatedData);
-
-    // Response success
-    //return response()->json(['message' => 'Data berhasil ditambahkan ke dalam keranjang.']);
-//}
     public function contact ()
     {
         $about = About::first();
         return view('home.contact', compact('about'));
     }
+
     public function faq ()
     {
         return view('home.faq');

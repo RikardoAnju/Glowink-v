@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_member');
             $table->integer('invoice');
-            $table->integer('grand_total')->nullable(); // Kolom grand_total sekarang bisa menerima nilai null
+            $table->integer('grand_total')->nullable();
             $table->timestamps();
         });
 

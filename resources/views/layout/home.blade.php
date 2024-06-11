@@ -133,13 +133,6 @@
                     </li>
 
                     <ul class="nav navbar-nav">
-                      <li class="dropdown">
-                        <a href="/faq">F.A.Q</a>
-                      </li>
-                      <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                          <a href="/contact">Contact Us</a>
-                        </li>
 
                     <!-- Mobile search -->
                     <li id="mobile-search" class="hidden-lg hidden-md">
@@ -195,19 +188,7 @@
 
       @yield('content')
       <!-- Newsletter -->
-      <section class="newsletter" id="subscribe">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12 text-center">
-              <h4>Get the latest updates</h4>
-              <form class="relative newsletter-form">
-                <input type="email" class="newsletter-input" placeholder="Enter your email">
-                <input type="submit" class="btn btn-lg btn-dark newsletter-submit" value="Subscribe">
-              </form>
-            </div>
-          </div>
-        </div>       
-      </section>
+   
 
       <!-- Footer Type-1 -->
       <footer class="footer footer-type-1">

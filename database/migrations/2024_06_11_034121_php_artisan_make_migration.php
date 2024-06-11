@@ -11,10 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('about', function (Blueprint $table) {
-            $table->string('atas_nama');
-            $table->string('no_rekening');
-        });
+        //
     }
 
     /**
@@ -22,9 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('about', function (Blueprint $table) {
-            $table->dropColumn('atas_nama');
-            $table->dropColumn('no_rekening');
-        });
+        //
     }
 };

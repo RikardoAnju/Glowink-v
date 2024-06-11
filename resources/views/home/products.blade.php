@@ -40,17 +40,6 @@
           <a href="#">all</a>
         </div>
         <form class="ecommerce-ordering">
-          <select>
-            <option value="default-sorting">Default Sorting</option>
-            <option value="price-low-to-high">Price: high to low</option>
-            <option value="price-high-to-low">Price: low to high</option>
-            <option value="by-popularity">By Popularity</option>
-            <option value="date">By Newness</option>
-            <option value="rating">By Rating</option>
-          </select>
-        </form>
-      </div>
-  
       <div class="row">
         <div class="col-md-12 catalogue-col right mb-50">
           <div class="shop-catalogue grid-view">

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,12 +10,15 @@ class Order extends Model
 
     protected $guarded = [];
 
+    protected $fillable = ['nama_barang']; // Tambahkan 'nama_barang' ke dalam $fillable jika ingin mengisinya secara massal
+
     public function member()
     {
         return $this->belongsTo(Member::class, 'id_member', 'id');
     }
-    public function payment()
+
+    public function payments()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class, 'id_order', 'id');
     }
 }
