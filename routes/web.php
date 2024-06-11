@@ -123,7 +123,7 @@ Route::get('/get_kota/{id}', [HomeController::class, 'get_kota']);
 Route::post('/checkout_orders', [HomeController::class, 'checkout_orders']);
 Route::post('/payments', [HomeController::class, 'payments']);
 
-Route::get('/get_ongkir/{destination}/{weight}', [ShippingController::class, 'getOngkir']);
+Route::get('/get_ongkir/{destination}', [ShippingController::class, 'getOngkir']);
 
 
 

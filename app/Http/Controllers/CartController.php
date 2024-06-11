@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -20,8 +21,20 @@ class CartController extends Controller
                 'is_checkout' => 'required|boolean',
             ]);
 
-            // Simpan data ke dalam database
-            $cart = Cart::create($validatedData);
+            // Cek apakah item sudah ada dalam keranjang untuk member tertentu
+            $existingCartItem = Cart::where('id_member', $validatedData['id_member'])
+                ->where('id_barang', $validatedData['id_barang'])
+                ->first();
+
+            if ($existingCartItem) {
+                // Jika item sudah ada, tambahkan jumlah kuantitasnya
+                $existingCartItem->jumlah += $validatedData['jumlah'];
+                $existingCartItem->total += $validatedData['total'];
+                $existingCartItem->save();
+            } else {
+                // Jika item belum ada, tambahkan sebagai item baru dalam keranjang
+                Cart::create($validatedData);
+            }
 
             // Response success
             return response()->json(['message' => 'Data berhasil ditambahkan ke dalam keranjang.']);

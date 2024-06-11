@@ -89,13 +89,6 @@
           <select name="kota" id="kota" class="country_to_state provinsi kota" rel="calc_shipping_state">
           </select>
         </p>
-        <div class="row row-10">
-          <div class="col-sm-12">
-            <p class="form-row form-row-wide">
-              <input type="text" class="input-text" placeholder="Berat" name="berat" id="berat">
-            </p>
-          </div>
-        </div>
 
         <p>
           <a href="#" name="calc_shipping" class="btn btn-lg btn-stroke mt-10 mb-mdm-40 update-total" style="background-color: #000000; color: white; padding: 15px 30px; border-radius: 10px; display: inline-block; transition: background-color 0.3s;">
@@ -196,41 +189,40 @@
   });
 
   $('.update-total').click(function(e) {
-    e.preventDefault(); 
-    var selectedKota = $('#kota').val();
-    var berat = $('#berat').val();
-    if (selectedKota != null && berat != "") {
-      $.ajax({
-        url: '/get_ongkir/' + selectedKota + '/' + berat,
-        success: function(data) {
-          console.log("Response from server:", data);
-          if (data.rajaongkir && data.rajaongkir.results && data.rajaongkir.results.length > 0) {
-            var result = data.rajaongkir.results[0];
-            if (result.costs && result.costs.length > 0) {
-              var shippingCost = parseInt(result.costs[0].cost[0].value);
-              $('.shipping-cost').text('Rp.' + shippingCost);
+  e.preventDefault(); 
+  var selectedKota = $('#kota').val();
+  if (selectedKota != null) {
+    $.ajax({
+      url: '/get_ongkir/' + selectedKota,
+      success: function(data) {
+        console.log("Response from server:", data);
+        if (data.rajaongkir && data.rajaongkir.results && data.rajaongkir.results.length > 0) {
+          var result = data.rajaongkir.results[0];
+          if (result.costs && result.costs.length > 0) {
+            var shippingCost = parseInt(result.costs[0].cost[0].value);
+            $('.shipping-cost').text('Rp.' + shippingCost);
 
-              // Mengupdate total pesanan
-              var cartTotal = parseInt($('.cart-total').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
-              var grandTotal = cartTotal + shippingCost;
-              $('.grand-total').text('Rp.' + grandTotal);
-              $('input[name="grand_total"]').val(grandTotal); // Set nilai untuk input tersembunyi
-            } else {
-              alert('Failed to retrieve shipping cost. No shipping options available.');
-            }
+            // Mengupdate total pesanan
+            var cartTotal = parseInt($('.cart-total').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
+            var grandTotal = cartTotal + shippingCost;
+            $('.grand-total').text('Rp.' + grandTotal);
+            $('input[name="grand_total"]').val(grandTotal); // Set nilai untuk input tersembunyi
           } else {
-            alert('Failed to retrieve shipping cost. Invalid response data.');
+            alert('Failed to retrieve shipping cost. No shipping options available.');
           }
-        },
-        error: function(xhr, status, error) {
-          console.error(xhr.responseText);
-          alert('Failed to retrieve shipping cost. ' + error);
+        } else {
+          alert('Failed to retrieve shipping cost. Invalid response data.');
         }
-      });
-    } else {
-      alert('Please select a city and enter the weight.');
-    }
-  });
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        alert('Failed to retrieve shipping cost. ' + error);
+      }
+    });
+  } else {
+    alert('Please select a city.');
+  }
+});
 });
 
 </script>
