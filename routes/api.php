@@ -61,6 +61,7 @@ Route::group([
     Route::get('pesanan/selesai', [OrderController::class, 'selesai']);
 
     // Rute khusus pesanan yang memerlukan autentikasi
+    
     Route::middleware('auth:api')->group(function () {
         Route::get('/pesanan/komfirmasi', [PesananController::class, 'getKomfirmasiPesanan']);
         Route::get('/pesanan/kemas', [PesananController::class, 'getKemasPesanan']);
@@ -68,7 +69,7 @@ Route::group([
         Route::get('/pesanan/terima', [PesananController::class, 'getTerimaPesanan']);
         Route::get('/pesanan/selesai', [PesananController::class, 'getSelesaiPesanan']);
         Route::post('/pesanan/ubah_status/{id}', [PesananController::class, 'ubahStatus']);
-    });
+    });   
     // Rute untuk laporan
     Route::get('/reports', [ReportController::class, 'get_reports']);
 
@@ -81,4 +82,6 @@ Route::group([
     Route::get('/callback', [PaymentController::class, 'callback'])->name('callback');
     Route::post('/webhook', [PaymentController::class, 'webhook']);
 
+
+    Route::get('/order/{id}', [OrderController::class, 'show'])->name('orders.show');
 });

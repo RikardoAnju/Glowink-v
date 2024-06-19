@@ -1,4 +1,3 @@
-
 @extends('layout.app')
 
 @section('title', 'Data Pesanan Baru')
@@ -28,6 +27,7 @@
                   <th class="px-4 py-2 w-48">Tanggal Pesanan</th>
                   <th class="px-4 py-2 w-48">Invoice</th>
                   <th class="px-4 py-2 w-32">Member</th>
+                  <th class="px-4 py-2 w-32">Nama Barang</th>
                   <th class="px-4 py-2 w-24">Total</th>
                   <th class="px-4 py-2 w-32">Aksi</th>
               </tr>
@@ -86,11 +86,13 @@
                   var data = response.data;
                   var row = '';
                   data.forEach(function(val, index) {
+                      var namaBarang = val.nama_barang ? val.nama_barang : '';
                       row += '<tr>' +
                           '<td class="px-4 py-2 w-16">' + (index + 1) + '</td>' +
                           '<td class="px-4 py-2 w-48 break-all">' + formatDate(val.created_at) + '</td>' +
                           '<td class="px-4 py-2 w-48 break-all">' + val.invoice + '</td>' +
                           '<td class="px-4 py-2 w-32 break-all">' + (val.member ? val.member.nama_member : '') + '</td>' +
+                          '<td class="px-4 py-2 w-32 break-all">' + namaBarang + '</td>' +
                           '<td class="px-4 py-2 w-24 break-all">' + rupiah(val.grand_total) + '</td>' +
                           '<td class="px-4 py-2 w-32 flex items-center gap-2">' +
                           '<button data-id="' + val.id + '" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-1 rounded btn-aksi">Konfirmasi</button>' +

@@ -26,9 +26,12 @@
               </thead>
               <tbody>
                 @foreach ($carts as $cart)
+                @if($cart->product)
                 <input type="hidden" name="id_produk[]" value="{{ $cart->product->id }}">
                 <input type="hidden" name="jumlah[]" value="{{ $cart->jumlah }}">
                 <input type="hidden" name="total[]" value="{{ $cart->total }}">
+                <input type="hidden" name="nama_barang" value="{{ $cart->nama_barang }}">
+                
                 <tr class="cart_item">
                   <td class="product-thumbnail">
                     <a href="#">
@@ -56,6 +59,11 @@
                     </a>
                   </td>
                 </tr>
+                @else
+                <tr>
+                  <td colspan="6" class="text-center">Product not found</td>
+                </tr>
+                @endif
                 @endforeach
               </tbody>
             </table>
@@ -80,8 +88,8 @@
         <p class="form-row form-row-wide">
           <select name="provinsi" id="provinsi" class="country_to_state provinsi" rel="calc_shipping_state">
             <option value="">Pilih Provinsi</option>
-            @foreach ($provinsi->rajaongkir->results as $prov)
-            <option value="{{ $prov->province_id }}">{{ $prov->province }}</option>
+            @foreach ($provinsi as $prov)
+            <option value="{{ $prov['province_id'] }}">{{ $prov['province'] }}</option>
             @endforeach
           </select>
         </p>
@@ -91,11 +99,12 @@
         </p>
 
         <p>
-          <a href="#" name="calc_shipping" class="btn btn-lg btn-stroke mt-10 mb-mdm-40 update-total" style="background-color: #000000; color: white; padding: 15px 30px; border-radius: 10px; display: inline-block; transition: background-color 0.3s;">
+          <a href="#" name="calc_shipping" class="btn btn-lg btn-stroke mt-10 mb-mdm-40 update-total"
+            style="background-color: #000000; color: white; padding: 15px 30px; border-radius: 10px; display: inline-block; transition: background-color 0.3s;">
             Update Total
           </a>
         </p>
-        
+
       </div> <!-- end col shipping calculator -->
 
       <div class="col-md-6">
@@ -107,126 +116,129 @@
               <tr class="cart-subtotal">
                 <th>Cart Subtotal</th>
                 <td>
-                  <span class="amount cart-total">Rp
-                    .{{ number_format($cart_total, 0, ',', '.') }}</span>
-                  </td>
-                </tr>
-                <tr class="shipping">
-                  <th>Shipping</th>
-                  <td>
-                    <span class="amount shipping-cost">Rp.0</span> <!-- Shipping cost will be updated dynamically -->
-                  </td>
-                </tr>
-                <tr class="order-total">
-                  <th>Order Total</th>
-                  <td>
-                    <input type="hidden" name="grand_total" class="grand_total">
-                    <strong><span class="amount grand-total">Rp.0</span></strong> <!-- Grand total will be updated dynamically -->
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-  
-          </div>
-        </div> <!-- end col cart totals -->
-  
-      </div>
-    </div> <!-- end row -->
-  </section> <!-- end cart -->
-  
-  @endsection
-  
-  @push('js')
-  <script>
-   $(document).ready(function() {
-    $('#provinsi').change(function() {
-        var selectedProvinsi = $(this).val();
-        if (selectedProvinsi != "") {
-            $.ajax({
-                url: '/get_kota/' + selectedProvinsi,
-                success: function(data) {
-                    data = JSON.parse(data);
-                    var option = "";
-                    data.rajaongkir.results.map(function(kota) {
-                        option += "<option value=" + kota.city_id + ">" + kota.city_name + "</option>";
-                    });
-                    $('#kota').html(option);
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alert('Failed to retrieve city data. ' + error);
-                }
-            });
-        }
-    });
+                  <span class="amount cart-total">Rp.{{ number_format($cart_total, 0, ',', '.') }}</span>
+                </td>
+              </tr>
+              <tr class="shipping">
+                <th>Shipping</th>
+                <td>
+                  <span class="amount shipping-cost">Rp.0</span> <!-- Shipping cost will be updated dynamically -->
+                </td>
+              </tr>
+              <tr class="order-total">
+                <th>Order Total</th>
+                <td>
+                  <input type="hidden" name="grand_total" class="grand_total">
+                  <strong><span class="amount grand-total">Rp.0</span></strong> <!-- Grand total will be updated dynamically -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-    $('.form-cart').submit(function(e) {
-        e.preventDefault(); // Menghentikan pengiriman formulir secara langsung
+        </div>
+      </div> <!-- end col cart totals -->
 
-        // Mengisi nilai grand_total jika belum terisi
-        var grandTotal = $('input[name="grand_total"]').val();
-        if (!grandTotal || grandTotal === "0" || isNaN(grandTotal)) {
-            var cartTotal = parseInt($('.cart-total').text().replace(/[Rp.]/g, '').replace(',', ''));
-            var shippingCost = parseInt($('.shipping-cost').text().replace(/[Rp.]/g, '').replace(',', ''));
-            grandTotal = cartTotal + shippingCost;
-            $('.grand-total').text('Rp.' + number_format(grandTotal, 0, ',', '.')); // Mengupdate tampilan Grand Total
-            $('input[name="grand_total"]').val(grandTotal); // Set nilai untuk input tersembunyi
-        }
+    </div>
+  </div> <!-- end row -->
+</section> <!-- end cart -->
 
+@endsection
+
+@push('js')
+<script>
+  $(document).ready(function () {
+    $('#provinsi').change(function () {
+      var selectedProvinsi = $(this).val();
+      if (selectedProvinsi != "") {
         $.ajax({
-            url: $(this).attr('action'),
-            method: $(this).attr('method'),
-            data: $(this).serialize(),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Menambahkan token CSRF di dalam header
-            },
-            success: function(response) {
-                window.location.href = '/checkout';
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                alert('Failed to submit form. ' + error);
-            }
+          url: '/get_kota/' + selectedProvinsi,
+          success: function (data) {
+            data = JSON.parse(data);
+            var option = "";
+            data.rajaongkir.results.map(function (kota) {
+              option += "<option value=" + kota.city_id + ">" + kota.city_name + "</option>";
+            });
+            $('#kota').html(option);
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            alert('Failed to retrieve city data. ' + error);
+          }
         });
+      }
     });
 
-  $('.update-total').click(function(e) {
-    e.preventDefault(); 
-    var selectedKota = $('#kota').val();
-    var berat = $('#berat').val();
-    if (selectedKota != null && berat != "") {
-      $.ajax({
-        url: '/get_ongkir/' + selectedKota + '/' + berat,
-        success: function(data) {
-          console.log("Response from server:", data);
-          if (data.rajaongkir && data.rajaongkir.results && data.rajaongkir.results.length > 0) {
-            var result = data.rajaongkir.results[0];
-            if (result.costs && result.costs.length > 0) {
-              var shippingCost = parseInt(result.costs[0].cost[0].value);
-              $('.shipping-cost').text('Rp.' + shippingCost);
+    $('.form-cart').submit(function (e) {
+      e.preventDefault(); // Menghentikan pengiriman formulir secara langsung
 
-              // Mengupdate total pesanan
-              var cartTotal = parseInt($('.cart-total').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
-              var grandTotal = cartTotal + shippingCost;
-              $('.grand-total').text('Rp.' + grandTotal);
-              $('input[name="grand_total"]').val(grandTotal); // Set nilai untuk input tersembunyi
-            } else {
-              alert('Failed to retrieve shipping cost. No shipping options available.');
-            }
-          } else {
-            alert('Failed to retrieve shipping cost. Invalid response data.');
-          }
+      // Mengisi nilai grand_total jika belum terisi
+      var cartTotal = parseInt($('.cart-total').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
+      var shippingCost = parseInt($('.shipping-cost').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
+
+      var grandTotal = null; // Defaultnya diatur menjadi null
+
+      if (!isNaN(cartTotal) && !isNaN(shippingCost)) {
+        grandTotal = cartTotal + shippingCost;
+      }
+
+      $('input[name="grand_total"]').val(grandTotal);
+
+      $.ajax({
+        url: $(this).attr('action'),
+        method: $(this).attr('method'),
+        data: $(this).serialize(),
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Menambahkan token CSRF di dalam header
         },
-        error: function(xhr, status, error) {
+        success: function (response) {
+          window.location.href = '/checkout';
+        },
+        error: function (xhr, status, error) {
           console.error(xhr.responseText);
-          alert('Failed to retrieve shipping cost. ' + error);
+          alert('Failed to submit form. ' + error);
         }
       });
-    } else {
-      alert('Please select a city and enter the weight.');
-    }
-  });
-});
+    });
 
+    $('.update-total').click(function (e) {
+      e.preventDefault();
+      var selectedKota = $('#kota').val();
+      if (selectedKota != null) {
+        $.ajax({
+          url: '/get_ongkir/' + selectedKota,
+          success: function (data) {
+            console.log("Response from server:", data);
+            if (data.rajaongkir && data.rajaongkir.results && data.rajaongkir.results.length > 0) {
+              var result = data.rajaongkir.results[0];
+              if (result.costs && result.costs.length > 0) {
+                var shippingCost = parseInt(result.costs[0].cost[0].value);
+                $('.shipping-cost').text('Rp.' + shippingCost);
+
+                // Mengupdate total pesanan
+                var cartTotal = parseInt($('.cart-total').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
+                var grandTotal = null; // Diatur menjadi null untuk update total
+                if (!isNaN(cartTotal)) {
+                  grandTotal = cartTotal + shippingCost;
+                }
+                $('.grand-total').text('Rp.' + grandTotal);
+                $('input[name="grand_total"]').val(grandTotal); // Set nilai untuk input tersembunyi
+              } else {
+                alert('Failed to retrieve shipping cost. No shipping options available.');
+              }
+            } else {
+              alert('Failed to retrieve shipping cost. Invalid response data.');
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            alert('Failed to retrieve shipping cost. ' + error);
+          }
+        });
+      } else {
+        alert('Please select a city.');
+      }
+    });
+
+  });
 </script>
 @endpush

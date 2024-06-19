@@ -4,44 +4,63 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
-use Auth;
+use App\Models\Product;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CartController extends Controller
 {
     public function add_to_cart(Request $request)
     {
+        // Validasi data yang diterima
+        $validator = Validator::make($request->all(), [
+            'id_member' => 'required|integer',
+            'id_barang' => 'required|integer',
+            'jumlah' => 'required|integer|min:1',
+            'is_checkout' => 'required|boolean',
+        ]);
+
+        // Cek jika validasi gagal
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        // Validasi berhasil, lanjutkan dengan data yang divalidasi
+        $validatedData = $validator->validated();
+
         try {
-            // Validasi data yang diterima
-            $validatedData = $request->validate([
-                'id_member' => 'required|integer',
-                'id_barang' => 'required|integer',
-                'jumlah' => 'required|integer|min:1',
-                'total' => 'required|numeric|min:0',
-                'is_checkout' => 'required|boolean',
-            ]);
+            // Cari barang berdasarkan ID
+            $product = Product::findOrFail($validatedData['id_barang']);
 
-            // Cek apakah item sudah ada dalam keranjang untuk member tertentu
-            $existingCartItem = Cart::where('id_member', $validatedData['id_member'])
-                ->where('id_barang', $validatedData['id_barang'])
-                ->first();
+            // Hitung total harga berdasarkan harga barang dan jumlahnya
+            $total = $product->harga * $validatedData['jumlah'];
 
-            if ($existingCartItem) {
-                // Jika item sudah ada, tambahkan jumlah kuantitasnya
-                $existingCartItem->jumlah += $validatedData['jumlah'];
-                $existingCartItem->total += $validatedData['total'];
-                $existingCartItem->save();
-            } else {
-                // Jika item belum ada, tambahkan sebagai item baru dalam keranjang
-                Cart::create($validatedData);
+            // Jika is_checkout adalah true, hapus semua item dalam keranjang untuk member tersebut
+            if ($validatedData['is_checkout']) {
+                Cart::where('id_member', $validatedData['id_member'])->delete();
             }
+
+            // Tambahkan item baru ke keranjang
+            Cart::create([
+                'id_member' => $validatedData['id_member'],
+                'id_barang' => $validatedData['id_barang'],
+                'nama_barang' => $product->nama_barang, // Tambahkan nama barang
+                'jumlah' => $validatedData['jumlah'],
+                'total' => $total, // Tambahkan total harga
+                'is_checkout' => $validatedData['is_checkout']
+            ]);
 
             // Response success
             return response()->json(['message' => 'Data berhasil ditambahkan ke dalam keranjang.']);
+        } catch (ModelNotFoundException $e) {
+            // Tangani kesalahan jika produk tidak ditemukan
+            Log::error('Product not found: ' . $e->getMessage());
+            return response()->json(['error' => 'Produk tidak ditemukan.'], 404);
         } catch (\Exception $e) {
             // Tangani kesalahan dengan mencatat pesan log
             Log::error('Error adding to cart: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal Server Error'], 500);
+            return response()->json(['error' => 'Terjadi kesalahan saat menambahkan ke keranjang.'], 500);
         }
     }
 }

@@ -4,16 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>@section('title', ' List Products')</title>
+  <title>@section('title', 'List Products')</title>
   <!-- Google Fonts -->
   <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700%7COpen+Sans:400,400i,600,700' rel='stylesheet'>
 
-  <!-- Css -->
-  <link rel="stylesheet" href="/front/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/front/css/magnific-popup.css" />
-  <link rel="stylesheet" href="/front/css/font-icons.css" />
-  <link rel="stylesheet" href="/front/css/sliders.css" />
-  <link rel="stylesheet" href="/front/css/style.css" />
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
   <!-- Favicons -->
   <link rel="shortcut icon" href="images/logo.png">
@@ -21,90 +17,65 @@
   <link rel="apple-touch-icon" sizes="200x200" href="images/logo.png">
   <link rel="apple-touch-icon" sizes="200x200" href="images/logo.png">
 
+  <!-- Custom Styles -->
+  <style>
+    .product:hover .product-img img {
+      filter: blur(5px);
+      transition: filter 0.3s ease-in-out;
+    }
+    .product-quickview {
+      transition: background-color 0.3s ease-in-out;
+    }
+    .product-quickview:hover {
+      background-color: #D4AF37; /* Coklat keemasan */
+    }
+  </style>
 </head>
 <body>
-  <section class="section-wrap pt-80 pb-40 catalogue">
-    <div class="container relative">
-  
+  <section class="pt-20 pb-10 catalogue">
+    <div class="container mx-auto">
       <!-- Filter -->          
-      <div class="shop-filter">
-        <div class="view-mode hidden-xs">
-          <span>View:</span>
-          <a class="grid grid-active" id="grid"></a>
-          <a class="list" id="list"></a>
-        </div>
-        <div class="filter-show hidden-xs">
-          <span>Show:</span>
-          <a href="#" class="active">12</a>
-          <a href="#">24</a>
-          <a href="#">all</a>
-        </div>
-        <form class="ecommerce-ordering">
-      <div class="row">
-        <div class="col-md-12 catalogue-col right mb-50">
-          <div class="shop-catalogue grid-view">
-  
-            <div class="row items-grid">
 
-              @foreach ($products as $product)
-                  
-              <div class="col-md-4 col-xs-6 product product-grid">
-                <div class="product-item clearfix">
-             
-                  <div class="product-img hover-trigger">
-                    <a href="/product/{{ $product->id }}">
-                      <img src="{{ asset($product->gambar) }}" alt="">
-                      <img src="{{ asset($product->gambar) }}" alt="" class="back-img">
-                    </a>
-                    <div class="hover-2">                    
-                      <div class="product-actions">
-                        <a href="#" class="product-add-to-wishlist">
-                          <i class="fa fa-heart"></i>
-                        </a>
-                      </div>                        
-                    </div>
-                    <a href="/product/{{ $product->id }}" class="product-quickview">More</a>
-                  </div>
-  
-                  <div class="product-details">
-                    <h3 class="product-title">
-                      <a href="/product/{{ $product->id }}">{{ $product->nama_barang }}</a>
-                    </h3>
-                    <span class="category">
-                      <a href="/productS/{{ $product->id_subkategori }}">{{ $product->subcategory->nama_subkategori }}</a>
-                    </span>
-                  </div>
-  
-                  <span class="price">
-                    <ins>
-                      <span class="amount">Rp.{{ number_format($product->harga) }}</span>
-                    </ins>                        
-                  </span>
-                </div>
-              </div>
-              @endforeach
-  
-            </div> 
-          </div> 
-          
-          <!-- Pagination -->
-          <div class="pagination-wrap clearfix">
-            <p class="result-count">Showing: 12 of 80 results</p>                 
-            <nav class="pagination right clearfix">
-              <a href="#"><i class="fa fa-angle-left"></i></a>
-              <span class="page-numbers current">1</span>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#"><i class="fa fa-angle-right"></i></a>
-            </nav>
+      <form class="ecommerce-ordering mb-10">
+        <div class="flex justify-between items-center">
+          <div class="flex">
+            <!-- Filter and sorting options here -->
           </div>
-  
-        </div> <!-- end col -->
-  
-      </div> <!-- end row -->
-    </div> <!-- end container -->
-  </section> <!-- end catalog -->
+          <div class="flex">
+            <a href="#" class="text-gray-600 hover:text-gray-900">
+              <i class="fa fa-shopping-cart"></i> 
+            </a>
+          </div>
+        </div>
+      </form>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        @foreach ($products as $product)
+        <div class="product border p-4 rounded-lg shadow hover:shadow-lg transition duration-200">
+          <div class="product-img mb-4 relative">
+            <a href="/product/{{ $product->id }}">
+              <img src="{{ asset($product->gambar) }}" alt="" class="w-full h-64 object-cover mb-2">
+            </a>
+            <a href="/product/{{ $product->id }}" class="product-quickview absolute bottom-0 left-0 w-full text-center py-2 bg-gray-800 hover:bg-gray-700 text-white transition duration-300">More</a>
+          </div>
+          <div class="product-details text-left">
+            <h3 class="product-title text-xl font-semibold mb-2">
+              <a href="/product/{{ $product->id }}" class="hover:text-gray-700">{{ $product->nama_barang }}</a>
+            </h3>
+            <span class="category text-gray-500 text-sm">
+              <a href="/products/{{ $product->id_subkategori }}" class="hover:text-gray-700">{{ $product->subcategory->nama_subkategori }}</a>
+            </span>
+            <div class="price mt-4">
+              <span class="amount text-lg font-semibold text-gray-800">Rp.{{ number_format($product->harga) }}</span>
+            </div>
+          </div>
+        </div>
+        @endforeach
+
+      </div>
+    </div>
+  </section>
   <!-- jQuery Scripts -->
   <script type="text/javascript" src="front/js/jquery.min.js"></script>
   <script type="text/javascript" src="front/js/bootstrap.min.js"></script>

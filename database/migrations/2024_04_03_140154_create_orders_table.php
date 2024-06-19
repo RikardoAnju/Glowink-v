@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_member');
             $table->integer('invoice');
             $table->integer('grand_total')->nullable();
+            $table->string('nama_barang')->nullable(); // Menambah kolom untuk nama barang di tabel orders
             $table->timestamps();
         });
 
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_produk');
             $table->integer('jumlah');
             $table->integer('total');
+            $table->string('nama_barang')->nullable(); // Menambah kolom untuk nama barang di tabel orders_details
             $table->timestamps();
         });
     }

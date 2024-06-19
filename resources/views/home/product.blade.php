@@ -248,7 +248,7 @@
                     </tr>
                     <tr>
                       <th>Manfaat:</th>
-                      <td>{{ $product->manfaat}}</td>
+                      <td>{{ $product->manfaat }}</td>
                     </tr>                                     
                   </tbody>
                 </table>
@@ -273,57 +273,11 @@
 </section> <!-- end single product -->
 
 <!-- Related Products -->
-<section class="section-wrap pt-0 shop-items-slider">
-  <div class="container">
-    <div class="row heading-row">
-      <div class="col-md-12 text-center">
-        <h2 class="heading bottom-line">Latest Products</h2>
-      </div>
-    </div>
-
-    <div class="row">
-      <!-- Owl Carousel -->
-      <div id="owl-related-items" class="owl-carousel owl-theme">
-        @foreach ($latest_products as $produk)
-        <div class="product">
-          <div class="product-item hover-trigger">
-            <div class="product-img">
-              <a href="/product/{{ $produk->id }}">
-                <img src="{{ asset($produk->gambar) }}" alt="">
-                <img src="{{ asset($produk->gambar) }}" alt="" class="back-img">
-              </a>
-              <div class="product-label"><span class="sale">sale</span></div>
-              <div class="hover-2">                    
-                <div class="product-actions">
-                  <a href="#" class="product-add-to-wishlist"><i class="fa fa-heart"></i></a>
-                </div>                        
-              </div>
-              <a href="/product/{{ $produk->id }}" class="product-quickview">More</a>
-            </div>
-            <div class="product-details">                      
-              <h3 class="product-title"><a href="/product/{{ $produk->id }}">{{ $produk->nama_barang }}</a></h3>
-              <span class="category"><a href="/products/{{ $produk->id_subkategori }}">{{ $produk->subcategory->nama_subkategori }}</a></span>
-            </div>
-            <span class="price">
-              <ins><span class="amount">Rp.{{ number_format($produk->harga) }}</span></ins>
-            </span>
-          </div>
-        </div>
-        @endforeach
-      </div>
-    </div> <!-- end row -->
-  </div> <!-- end container -->
-</section> <!-- end related products -->
-
 <!-- JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/front/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/front/js/plugins.js"></script>  
 <script type="text/javascript" src="/front/js/scripts.js"></script>
-
-<!-- JavaScript tambahan -->
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
   $(function(){
@@ -340,9 +294,7 @@
       @if (Auth::guard('webmember')->check())
         var id_member = {{ Auth::guard('webmember')->user()->id }};
         var id_barang = {{ $product->id }};
-        var total = parseFloat({{ $product->harga }}) * jumlah;
-        total = total.toFixed(2); // Menampilkan dua angka desimal
-        var is_checkout = 0;
+        var is_checkout = 1; // Set is_checkout ke 1 untuk menandai barang siap untuk checkout
 
         $.ajax({
           url: '{{ route('add_to_cart') }}',
@@ -354,11 +306,10 @@
             id_member: id_member,
             id_barang: id_barang,
             jumlah: jumlah,
-            total: total,
             is_checkout: is_checkout
           },
           success: function(data) {
-            // Redirect ke halaman cart
+            // Redirect ke halaman cart setelah berhasil ditambahkan ke keranjang
             window.location.href = '/cart';
           },
           error: function(xhr, status, error) {
@@ -373,8 +324,6 @@
     });
   });
 </script>
-
-
 
 
 </body>

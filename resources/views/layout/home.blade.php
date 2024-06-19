@@ -152,7 +152,7 @@
                 <ul>
                     <li class="nav-register">
                         @if (Auth::guard('webmember')->check())
-                            <a href="/profile">{{ Auth::guard('webmember')->user()->nama_member }}</a>
+                            <a href="/orders">{{ Auth::guard('webmember')->user()->nama_member }}</a>
                         @else
                             <a href="/login_member">Login</a>
                         @endif

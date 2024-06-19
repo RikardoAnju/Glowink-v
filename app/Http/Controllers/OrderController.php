@@ -10,15 +10,16 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     public function show($id)
-    {
-        $order= Order::find($id);
-    
-        if (!$order) {
-            return response()->json(['message' => 'Category not found'], 404);
-        }
-    
-        return response()->json(['data' => $order], 200);
+{
+    $order = Order::find($id);
+
+    if (!$order) {
+        abort(404, 'Order not found');
     }
+
+    return view('orders.show', compact('order'));
+}
+
     
     public function list()
     {

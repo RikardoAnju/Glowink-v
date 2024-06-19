@@ -130,12 +130,25 @@ Route::post('/payments', [HomeController::class, 'payments'])->name('payments');
 Route::post('/upload_bukti', [PaymentController::class, 'uploadBukti'])->name('upload_bukti');
 Route::post('/payments', [HomeController::class, 'payment'])->name('payments');
 Route::post('/payments', [PaymentController::class, 'store'])->name('payments');
-Route::get('/get_ongkir/{destination}/{weight}', [ShippingController::class, 'getOngkir']);
+//Route::get('/get_ongkir/{destination}', [ShippingController::class, 'getOngkir']);
 Route::post('/payments', [HomeController::class, 'payments']);
+
+
 
 Route::get('/get_ongkir/{destination}', [ShippingController::class, 'getOngkir']);
 
 
+///paymeny
 
 
+Route::post('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+Route::post('/midtrans-callback', [PaymentController::class, 'callback'])->name('payments.callback');
 
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/payment/pending', [PaymentController::class, 'pending'])->name('payment.pending');
+Route::get('/payment/error', [PaymentController::class, 'error'])->name('payment.error');
+Route::get('/orders/{id}', [OrderController::class, 'index'])->name('orders');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+Route::post('/cart/checkout', [ProductController::class, 'checkout'])->name('cart.checkout');

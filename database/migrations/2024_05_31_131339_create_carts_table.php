@@ -12,6 +12,7 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_member');
             $table->unsignedBigInteger('id_barang');
+            $table->string('nama_barang'); // Tambah kolom untuk nama barang
             $table->integer('jumlah');
             $table->decimal('total', 8, 2);
             $table->boolean('is_checkout');

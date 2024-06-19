@@ -9,7 +9,7 @@ use App\Models\Pesanan; // Menggunakan model Pesanan dari namespace App\Models
 class PesananController extends Controller
 {
     // Metode untuk menampilkan halaman pesanan
-    public function pesanan()
+    public function list()
     {
         return view('pesanan');
     }

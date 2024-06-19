@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -12,15 +11,20 @@ class ReportController extends Controller
         $report = DB::table('orders_details')
             ->join('products', 'products.id', '=', 'orders_details.id_produk')
             ->select(DB::raw('
-                nama_barang,
+                products.nama_barang,
                 COUNT(*) as jumlah_dibeli,
-                harga,
-                SUM(total) as pendapatan,
-                SUM(jumlah) as total_qty'))
-            ->whereRaw("DATE(orders_details.created_at) >= '{$request->dari}'")
-            ->whereRaw("DATE(orders_details.created_at) <= '{$request->sampai}'")
-            ->groupBy('id_produk', 'nama_barang', 'harga', 'products.id')  // Perbaiki di sini
+                products.harga,
+                SUM(orders_details.jumlah) as total_qty'))
+            ->addSelect(DB::raw('SUM(orders_details.total) as total_harga'))
+            ->whereRaw("DATE(orders_details.created_at) >= '{$request->input('dari')}'")
+            ->whereRaw("DATE(orders_details.created_at) <= '{$request->input('sampai')}'")
+            ->groupBy('orders_details.id_produk', 'products.nama_barang', 'products.harga', 'products.id')
             ->get();
+
+        // Hitung pendapatan
+        foreach ($report as $data) {
+            $data->pendapatan = $data->total_harga * $data->jumlah_dibeli; // Perhitungan pendapatan (total_harga * jumlah_dibeli)
+        }
 
         return response()->json([
             'data' => $report
@@ -32,5 +36,3 @@ class ReportController extends Controller
        return view('report.index');
     }
 }
-
-

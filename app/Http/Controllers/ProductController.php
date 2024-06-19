@@ -16,9 +16,10 @@ class ProductController extends Controller
  
     public function list()
     {
+        $products = Product::with('category', 'subcategory')->get();
         $categories = Category::all();
         $subcategories = Subcategory::all();
-        return view('product.index', compact('categories', 'subcategories'));
+        return view('product.index', compact('products', 'categories', 'subcategories'));
     }
     /**
      * Display a listing of the resource.

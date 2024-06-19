@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -23,12 +24,12 @@ class ShippingController extends Controller
                 'form_params' => $formParams,
                 'headers' => [
                     'content-type' => 'application/x-www-form-urlencoded',
-                    'key' => env('RAJAONGKIR_API_KEY')
+                    'key' => '1dc1002793a890f90a69835a2c9858e4'
                 ]
             ]);
 
             $responseBody = $response->getBody()->getContents();
-            Log::info('Request Data: ', $formParams);
+            Log::info('Request Data: ' . json_encode($formParams));
             Log::info('Response from RajaOngkir: ' . $responseBody);
 
             if ($response->getStatusCode() !== 200) {

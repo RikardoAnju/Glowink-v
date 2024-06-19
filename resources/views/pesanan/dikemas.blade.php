@@ -33,6 +33,9 @@
           </thead>
           <tbody id="kategoriTableBody">
               <!-- Data dari API akan dimasukkan di sini -->
+              <tr id="loadingRow">
+                  <td colspan="6" class="text-center">Memuat data...</td>
+              </tr>
           </tbody>
       </table>
   </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderDetail;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -12,14 +13,20 @@ use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
-
     public function create(Request $request)
     {
         // Menyiapkan parameter
         $params = [
             'transaction_details' => [
-                'order_id' => (string) Str::uuid(),
-                'gross_amount' => (int) $request->total,
+                'order_id' => (string) Str::slug(Str::uuid()),
+                'gross_amount' => (int) $request->grand_total,
+            ],
+            'item_details' => [
+                [
+                    'price' => (int) $request->grand_total,
+                    'quantity' => 1,
+                    'name' => $request->nama_barang,
+                ],
             ],
             'customer_details' => [
                 'first_name' => $request->nama_member,
@@ -47,13 +54,14 @@ class PaymentController extends Controller
 
             $payment = new Payment;
             $payment->id_order = $params['transaction_details']['order_id'];
-            $payment->status = 'pending';
-            $payment->total = $request->total;
+            $payment->nama_barang = $request->nama_barang;
             $payment->nama_member = $request->nama_member;
-            $payment->email = $request->email;
+            $payment->total = $request->grand_total;
             $payment->provinsi = $request->provinsi;
             $payment->kabupaten = $request->kabupaten;
             $payment->detail_alamat = $request->detail_alamat;
+            $payment->email = $request->email;
+            $payment->status = 'pending';
             $payment->payment_token = $token;
             $payment->checkout_link = $checkout_link;
             $payment->save();
@@ -63,35 +71,61 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Token tidak ditemukan dalam respon', 'response' => $responseData], 500);
         }
     }
+
+    public function callback(Request $request)
+    {
+        $serverKey = 'SB-Mid-server-neldKfU17v4PHZK9PhGufcNF';
+        $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+
+        if ($hashed != $request->signature_key) {
+            return response()->json(['message' => 'Invalid signature'], 403);
+        }
+
+        $payment = Payment::where('id_order', $request->order_id)->first();
+
+        if ($payment) {
+            $payment->status = $request->transaction_status;
+            $payment->save();
+        }
+
+        return response()->json(['message' => 'Payment status updated'], 200);
+    }
+
+    public function success()
+    {
+        return view('home.success');
+    }
+
+    public function pending()
+    {
+        return view('home.pending');
+    }
+
+    public function error()
+    {
+        return view('home.error');
+    }
+
     public function webhook(Request $request)
     {
-        // Mendapatkan MIDTRANS_SERVER_KEY dari environment variable
         $midtransServerKey = env('MIDTRANS_SERVER_KEY');
-    
-        // Memeriksa apakah MIDTRANS_SERVER_KEY telah diatur
+
         if (!$midtransServerKey) {
             return response()->json(['error' => 'MIDTRANS_SERVER_KEY is not set'], 500);
         }
-    
-        // Menghasilkan Authorization header untuk request ke API Midtrans
+
         $auth = base64_encode("$midtransServerKey:");
-    
-        // Melakukan request ke API Midtrans untuk mendapatkan status pembayaran
+
         $response = Http::withHeaders([
             'content-type' => 'application/json',
             'Authorization' => "Basic $auth",
         ])->get("https://api.sandbox.midtrans.com/v2/{$request->order_id}/status");
-    
-        // Memeriksa apakah respons berhasil diterima
+
         if ($response->successful()) {
             $responseData = $response->json();
-    
-            // Mencari pembayaran berdasarkan order_id
             $payment = Payment::where('id_order', $responseData['order_id'])->first();
-    
-            // Memeriksa apakah pembayaran ditemukan
+
             if ($payment) {
-                // Memeriksa status transaksi dan melakukan tindakan yang sesuai
                 switch ($responseData['transaction_status']) {
                     case 'settlement':
                         $payment->status = 'settlement';
@@ -102,21 +136,19 @@ class PaymentController extends Controller
                     case 'deny':
                     case 'expire':
                     case 'cancel':
-                        // Menangani status transaksi lain sesuai kebutuhan
+                        $payment->status = $responseData['transaction_status'];
+                        $payment->save();
                 }
-    
+
                 return response()->json(['message' => 'Payment status updated successfully'], 200);
             } else {
                 return response()->json(['error' => 'Payment not found'], 404);
             }
         } else {
-            // Menangani kesalahan jika respons tidak berhasil diterima
             return response()->json(['error' => 'Failed to fetch payment status'], $response->status());
         }
     }
-    
 
-    // Menampilkan data pembayaran berdasarkan ID
     public function show($id)
     {
         $payment = Payment::find($id);
@@ -128,19 +160,16 @@ class PaymentController extends Controller
         return response()->json(['data' => $payment], 200);
     }
 
-    // Menampilkan form edit pembayaran
     public function edit(Payment $payment)
     {
         return view('payment.edit', compact('payment'));
     }
 
-    // Menampilkan daftar pembayaran
     public function list()
     {
         return view('payment.index');
     }
 
-    // Menampilkan semua pembayaran dalam bentuk JSON
     public function index()
     {
         $payments = Payment::all();
@@ -150,13 +179,10 @@ class PaymentController extends Controller
         ]);
     }
 
-    
-
-    // Memperbarui data pembayaran yang ada
     public function update(Request $request, Payment $payment)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'required|in:menunggu,ditolak,diterima',
+            'status' => 'required|in:menunggu,ditolak,diterima,settlement,pending,deny,expire,cancel',
         ]);
 
         if ($validator->fails()) {
@@ -172,13 +198,12 @@ class PaymentController extends Controller
         ]);
     }
 
-    // Menghapus data pembayaran
     public function destroy(Payment $payment)
     {
         if ($payment->bukti) {
             File::delete(public_path('images/'.$payment->bukti));
         }
-        
+
         $payment->delete();
 
         return response()->json([

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,4 +10,10 @@ class OrderDetail extends Model
 
     protected $guarded = [];
     protected $table = 'orders_details';
+
+    // Definisikan relasi belongsTo ke model Order
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'id_order');
+    }
 }

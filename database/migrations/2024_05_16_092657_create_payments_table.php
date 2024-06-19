@@ -15,10 +15,10 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('id_order');
-            $table->string('id_produk');
-            $table->string('nama_member')->default(''); // Memberikan nilai default kosong
-            $table->double('total');
+            $table->uuid('id_order')->unique()->nullable()->default(null);
+            $table->string('nama_member')->default('');
+            $table->string('nama_barang')->default(''); // Tambahkan kolom nama_barang
+            $table->decimal('total', 15, 2); // Menggunakan decimal untuk representasi uang
             $table->string('provinsi');
             $table->string('kabupaten');
             $table->string('detail_alamat');
