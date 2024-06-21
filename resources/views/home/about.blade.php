@@ -6,8 +6,9 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-8 mb-50">
-            <h2 class="intro-heading">about our shop</h2>
-            <p>{{ $about->deskripsi }}</p>
+            <h2 class="intro-heading">HAI, WELCOME TO GLOWINK DEAR!</h2>
+            <p>This glowink website is a website created to fulfill Project-Based-Learning tasks.
+              Located in Batam and providing a million solutions for your skin problems.</p>
           </div>
         </div>
         <hr class="mb-0">
@@ -20,24 +21,25 @@
 
         <div class="row heading-row">
           <div class="col-md-12 text-center">
-            <span class="subheading">Who We Are</span>
+            <span class="subheading"></span>
             <h2 class="heading bottom-line">
-              meet our team
+                TEAM DEVELOPT
             </h2>
           </div>
         </div>
 
         <div class="row">
 
-          <div class="col-sm-3 col-xs-6 col-xxs-12 mb-40">
+          <div class="col-sm-2 col-xs-6 col-xxs-12 mb-40">
             <div class="team-wrap">
               <div class="team-member">
                 <div class="team-img hover-trigger">
-                  <img src="/front/img/team/team_1.jpg" alt="">
+                  <img src="/front/img/team/yulia.png" alt="">
                 </div>
                 <div class="team-details text-center">                
-                  <h4 class="team-title">Name</h4>
-                  <span>#</span>
+                  <h4 class="team-title">YULIA PIPKA</h4>
+                  <span>3312301035</span>
+                  <span>Front-End Developt</span>
                   <div class="social-icons rounded">
                     <a href="#"><i class="fa fa-twitter"></i></a>
                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -49,15 +51,16 @@
             </div>
           </div> <!-- end team member -->
 
-          <div class="col-sm-3 col-xs-6 col-xxs-12 mb-40">
+          <div class="col-sm-2 col-xs-6 col-xxs-12 mb-40">
             <div class="team-wrap">
               <div class="team-member">
                 <div class="team-img hover-trigger">
-                  <img src="/front/img/team/team_2.jpg" alt="">
+                  <img src="/front/img/team/shandi.png" alt="">
                 </div>
                 <div class="team-details text-center">
-                  <h4 class="team-title">name</h4>
-                  <span>#</span>
+                  <h4 class="team-title">SHANDY MAIZA</h4>
+                  <span>3312301039</span>
+                  <span>UI Developt</span>
                   <div class="social-icons rounded">
                     <a href="/front/#"><i class="fa fa-twitter"></i></a>
                     <a href="/front/#"><i class="fa fa-facebook"></i></a>
@@ -69,15 +72,16 @@
             </div>
           </div> <!-- end team member -->
 
-          <div class="col-sm-3 col-xs-6 col-xxs-12 mb-40">
+          <div class="col-sm-2 col-xs-6 col-xxs-12 mb-40">
             <div class="team-wrap">
               <div class="team-member">
                 <div class="team-img hover-trigger">
-                  <img src="/front/img/team/team_3.jpg" alt="">
+                  <img src="/front/img/team/dhafin.png" alt="">
                 </div>
                 <div class="team-details text-center">
-                  <h4 class="team-title">name</h4>
-                  <span>Marketing Officer</span>
+                  <h4 class="team-title">M. DHAFIN</h4>
+                  <span>3312301041</span>
+                  <span>UI Developt</span>
                   <div class="social-icons rounded">
                     <a href="/front/#"><i class="fa fa-twitter"></i></a>
                     <a href="/front/#"><i class="fa fa-facebook"></i></a>
@@ -89,15 +93,58 @@
             </div>
           </div> <!-- end team member -->
 
-          <div class="col-sm-3 col-xs-6 col-xxs-12 mb-40">
+          <div class="col-sm-2 col-xs-6 col-xxs-12 mb-40">
             <div class="team-wrap">
               <div class="team-member">
                 <div class="team-img hover-trigger">
-                  <img src="/front/img/team/team_4.jpg" alt="">
+                  <img src="/front/img/team/kardo.jpg" alt="">
                 </div>
                 <div class="team-details text-center">
-                  <h4 class="team-title">name</h4>
-                  <span>Photographer</span>
+                  <h4 class="team-title">RIKARDO ANJU</h4>
+                  <span>3312301044</span>
+                  <span>Back-End Developt</span>
+                  <div class="social-icons rounded">
+                    <a href="/front/#"><i class="fa fa-twitter"></i></a>
+                    <a href="/front/#"><i class="fa fa-facebook"></i></a>
+                    <a href="/front/#"><i class="fa fa-google-plus"></i></a>
+                    <a href="/front/#"><i class="fa fa-linkedin"></i></a>
+                  </div>
+                </div>                               
+              </div>
+            </div>
+          </div> <!-- end team member -->
+
+          <div class="col-sm-2 col-xs-6 col-xxs-12 mb-40">
+            <div class="team-wrap">
+              <div class="team-member">
+                <div class="team-img hover-trigger">
+                  <img src="/front/img/team/fabian.png" alt="">
+                </div>
+                <div class="team-details text-center">
+                  <h4 class="team-title">FABIAN ANGGA</h4>
+                  <span>3312301055</span>
+                  <span>Back-End Developt</span>
+                  <div class="social-icons rounded">
+                    <a href="/front/#"><i class="fa fa-twitter"></i></a>
+                    <a href="/front/#"><i class="fa fa-facebook"></i></a>
+                    <a href="/front/#"><i class="fa fa-google-plus"></i></a>
+                    <a href="/front/#"><i class="fa fa-linkedin"></i></a>
+                  </div>
+                </div>                               
+              </div>
+            </div>
+          </div> <!-- end team member -->
+
+          <div class="col-sm-2 col-xs-6 col-xxs-12 mb-40">
+            <div class="team-wrap">
+              <div class="team-member">
+                <div class="team-img hover-trigger">
+                  <img src="/front/img/team/given.png" alt="">
+                </div>
+                <div class="team-details text-center">
+                  <h4 class="team-title">GIVENS ANANDA</h4>
+                  <span>3312301058</span>
+                  <span>Support Developt</span>
                   <div class="social-icons rounded">
                     <a href="/front/#"><i class="fa fa-twitter"></i></a>
                     <a href="/front/#"><i class="fa fa-facebook"></i></a>
@@ -113,40 +160,5 @@
 
       </div>
     </section> <!-- end our team -->
-
-    <!-- Promo Section -->
-    <section class="section-wrap promo-bg" style="background-image:url(/front/img/promo_2_bg.jpg);">
-      <div class="container text-center">
-        <div class="table-box">
-          <h2 class="heading-frame white">The best ideas</h2>
-        </div>
-      </div>
-    </section> <!-- end promo section -->
-
-    <!-- Testimonials -->
-    <section class="section-wrap testimonials">
-      <div class="container">
-
-        <div class="row heading-row mb-20">
-          <div class="col-md-6 col-md-offset-3 text-center">
-            <span class="subheading">Hot Customers</span>
-            <h2 class="heading bottom-line">Happy Clients</h2>
-          </div>
-        </div>
-
-        <div id="owl-testimonials" class="owl-carousel owl-theme owl-dark-dots text-center">
-          @foreach ($testimonis as $Testimoni)
-           
-          <div class="item">
-            <div class="testimonial">
-              <p class="testimonial-text">{{ $Testimoni->deskripsi }}</p>
-              <span>{{ $Testimoni->nama_testimoni }}</span>
-            </div>
-          </div>
-          
-          @endforeach
-
-    </section> <!-- end testimonials -->
-
 
 @endsection

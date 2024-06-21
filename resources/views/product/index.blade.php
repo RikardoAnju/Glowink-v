@@ -24,7 +24,6 @@
                   <th class="px-4 py-2 w-48">Subkategori</th> 
                   <th class="px-4 py-2 w-48">Nama Barang</th> 
                   <th class="px-4 py-2 w-48">Harga</th> 
-                  <th class="px-4 py-2 w-48">Diskon</th> 
                   <th class="px-4 py-2 w-48">Sku</th> 
                   <th class="px-4 py-2 w-48">Bahan</th> 
                   <th class="px-4 py-2 w-48">Ukuran</th> 
@@ -82,10 +81,6 @@
                 <div class="mb-4">
                   <label for="harga" class="block text-sm font-medium text-gray-700">Harga:</label>
                   <input type="number" name="harga" id="harga"  class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Harga Barang">
-                </div>
-                <div class="mb-4">
-                  <label for="diskon" class="block text-sm font-medium text-gray-700">Diskon:</label>
-                  <input type="number" name="diskon" id="diskon" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Diskon Barang">
                 </div>
                 <div class="mb-4">
                   <label for="sku" class="block text-sm font-medium text-gray-700">Sku:</label>
@@ -282,10 +277,6 @@
                   <input type="number" name="harga" id="harga" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Harga Barang" required>
               </div>
               
-              <div class="mb-4">
-                  <label for="diskon" class="block text-sm font-medium text-gray-700">Diskon:</label>
-                  <input type="number" name="diskon" id="diskon" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Masukkan Diskon Barang" required>
-              </div>
               
               <div class="mb-4">
                   <label for="sku" class="block text-sm font-medium text-gray-700">SKU:</label>
@@ -399,7 +390,6 @@
                   '<td class="px-4 py-2 w-48 break-all">' + subcategoryName + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.nama_barang + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.harga + '</td>' +
-                  '<td class="px-4 py-2 w-64 break-all">' + val.diskon + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.sku + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.bahan + '</td>' +
                   '<td class="px-4 py-2 w-64 break-all">' + val.ukuran + '</td>' +

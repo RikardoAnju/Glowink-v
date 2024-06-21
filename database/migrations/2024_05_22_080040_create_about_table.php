@@ -18,11 +18,6 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('email');
             $table->string('telepon');
-            $table->string('atas_nama');
-            $table->string('no_rekening_mandiri');
-            $table->string('no_rekening_bca');
-            $table->string('no_rekening_bsi');
-
             $table->timestamps();
         });
     }

@@ -15,10 +15,10 @@
   <link rel="stylesheet" href="/front/css/sliders.css">
   <link rel="stylesheet" href="/front/css/style.css">
   <!-- Favicons -->
-  <link rel="shortcut icon" href="/front/img/favicon.ico">
-  <link rel="apple-touch-icon" href="/front/img/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/front/img/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/front/img/apple-touch-icon-114x114.png">
+  <link rel="shortcut icon" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="apple-touch-icon" sizes="200x200" href="images/logo.png">
+  <link rel="apple-touch-icon" sizes="200x200" href="images/logo.png">
 </head>
 <body>
 
@@ -107,8 +107,7 @@
                     </li>
                   </ul>
                 </li>
-                <li class="dropdown"><a href="/faq">F.A.Q</a></li>
-                <li class="dropdown"><a href="/contact">Contact Us</a></li>
+               
                 <!-- Mobile search -->
                 <li id="mobile-search" class="hidden-lg hidden-md">
                   <form method="get" class="mobile-search">
@@ -192,7 +191,7 @@
           </ins>
         </span>
         <!-- Short Description -->
-        <p class="short-description">{{ $product->deskripsi }}</p>
+        {{-- <p class="short-description">{{ $product->deskripsi }}</p> --}}
 
         <!-- Product Actions -->
         <div class="product-actions">
@@ -210,7 +209,7 @@
             </div>
           </div>
           <a href="#" class="btn btn-dark btn-lg add-to-cart"><span>Add to Cart</span></a>
-          <a href="#" class="product-add-to-wishlist"><i class="fa fa-heart"></i></a>                          
+          {{-- <a href="#" class="product-add-to-wishlist"><i class="fa fa-heart"></i></a>                           --}}
         </div>
 
         <!-- Product Meta -->
@@ -280,22 +279,37 @@
 <script type="text/javascript" src="/front/js/scripts.js"></script>
 
 <script>
-  $(function(){
-    $('.add-to-cart').click(function(e){
-      e.preventDefault();
+$(function(){
+  $('.add-to-cart').click(function(e){
+    e.preventDefault();
 
-      var jumlah = $('.jumlah').val();
+    var jumlah = $('.jumlah').val();
 
-      if(jumlah <= 0 || isNaN(jumlah)) {
-        alert('Jumlah barang harus lebih besar dari 0.');
-        return;
-      }
+    if(jumlah <= 0 || isNaN(jumlah)) {
+      alert('Jumlah barang harus lebih besar dari 0.');
+      return;
+    }
 
-      @if (Auth::guard('webmember')->check())
-        var id_member = {{ Auth::guard('webmember')->user()->id }};
-        var id_barang = {{ $product->id }};
-        var is_checkout = 1; // Set is_checkout ke 1 untuk menandai barang siap untuk checkout
+    @if (Auth::guard('webmember')->check())
+      var id_member = {{ Auth::guard('webmember')->user()->id }};
+      var id_barang = {{ $product->id }};
+      var is_checkout = 1; // Set is_checkout ke 1 untuk menandai barang siap untuk checkout
 
+      // Memeriksa apakah barang sudah ada di keranjang
+      var itemExist = false;
+      $('.cart-item').each(function() {
+        var existingIdBarang = $(this).data('id-barang');
+        if (existingIdBarang == id_barang) {
+          var existingQty = parseInt($(this).find('.cart-qty').text());
+          var newQty = existingQty + parseInt(jumlah);
+          $(this).find('.cart-qty').text(newQty);
+          itemExist = true;
+          return false; // Keluar dari each loop
+        }
+      });
+
+      // Jika barang belum ada di keranjang, tambahkan baru
+      if (!itemExist) {
         $.ajax({
           url: '{{ route('add_to_cart') }}',
           method: "POST",
@@ -317,12 +331,15 @@
             console.error(error);
           }
         });
-      @else
-        // Redirect ke halaman login jika pengguna tidak login
-        window.location.href = '/login_member';
-      @endif
-    });
+      }
+
+    @else
+      // Redirect ke halaman login jika pengguna tidak login
+      window.location.href = '/login_member';
+    @endif
   });
+});
+
 </script>
 
 

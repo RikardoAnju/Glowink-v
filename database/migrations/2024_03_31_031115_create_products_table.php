@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->text('deskripsi');
             $table->integer('harga');
-            $table->integer('diskon');
             $table->string('sku');
             $table->text('bahan');
             $table->text('manfaat');

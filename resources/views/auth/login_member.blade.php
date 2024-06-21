@@ -46,14 +46,14 @@
                         <span id="passwordError" style="color: red; display: none;">Please enter your password.</span>
                         <span id="credentialError" style="color: red; display: none;">Email or password is incorrect.</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    {{-- <div class="flex justify-between items-center">
                         <div class="flex items-center">
                             <input type="checkbox" name="remember_me" id="remember_me"
                                 class="rounded-full text-blue-400 cursor-pointer">
                             <label for="remember_me" class="ml-2 text-gray-700">Remember Me</label>
                         </div>
                         <a href="/forgot_password" class="text-blue-400 hover:text-blue-600">Forgot password?</a>
-                    </div>
+                    </div> --}}
                     <div class="my-5">
                         <button type="button" onclick="validateForm()"
                             class="w-full rounded-full bg-blue-400 hover:bg-blue-600 text-white py-2">LOGIN</button>

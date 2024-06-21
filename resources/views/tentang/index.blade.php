@@ -43,22 +43,6 @@
                                 <label for="telepon" class="block text-sm font-medium text-gray-700">Telepon</label>
                                 <input type="text" name="telepon" id="telepon" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->telepon }}">
                             </div>
-                            <div class="mb-4 w-full">
-                                <label for="atas_nama" class="block text-sm font-medium text-gray-700">Atas Nama</label>
-                                <input type="text" name="atas_nama" id="atas_nama" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->atas_nama }}">
-                            </div>
-                            <div class="mb-4 w-full">
-                                <label for="no_rekening_mandiri" class="block text-sm font-medium text-gray-700">Mandiri</label>
-                                <input type="text" name="no_rekening_mandiri" id="no_rekening_mandiri" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->no_rekening_mandiri }}">
-                            </div>
-                            <div class="mb-4 w-full">
-                                <label for="no_rekening_bca" class="block text-sm font-medium text-gray-700">BCA</label>
-                                <input type="text" name="no_rekening_bca" id="no_rekening_bca" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->no_rekening_bca }}">
-                            </div>
-                            <div class="mb-4 w-full">
-                                <label for="no_rekening_bsi" class="block text-sm font-medium text-gray-700">BSI</label>
-                                <input type="text" name="no_rekening_bsi" id="no_rekening_bsi" class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Telepon" required value="{{ $about->no_rekening_bsi }}">
-                            </div>
                         </div>
                     </div>
                 </div>

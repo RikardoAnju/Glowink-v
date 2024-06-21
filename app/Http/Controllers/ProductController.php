@@ -57,7 +57,6 @@ class ProductController extends Controller
             'ukuran' => 'required',
             'manfaat' => 'required',
             'harga' => 'required',
-            'diskon' => 'required',
             'sku' => 'required',
             'bahan' => 'required',
         ]);
@@ -127,7 +126,6 @@ class ProductController extends Controller
             'harga' => 'required',
             'manfaat' => 'required',
             'ukuran' => 'required',
-            'diskon' => 'required',
             'sku' => 'required',
             'bahan' => 'required',
             'gambar' => 'image|mimes:jpg,png,jpeg,webp|max:2048', // Perhatikan tidak ada "required" di sini karena gambar tidak selalu harus diubah

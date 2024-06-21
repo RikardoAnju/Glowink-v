@@ -202,9 +202,9 @@
                   <p class="mb-30">Glowink Shop is a very slick.</p>
                   <div class="footer-socials">
                     <div class="social-icons nobase">
-                      <a href="/front/#"><i class="fa fa-twitter"></i></a>
-                      <a href="/front/#"><i class="fa fa-facebook"></i></a>
-                      <a href="/front/#"><i class="fa fa-google-plus"></i></a>
+                      <a href=""><i class="fa fa-twitter"></i></a>
+                      <a href=""><i class="fa fa-facebook"></i></a>
+                      <a href=""><i class="fa fa-google-plus"></i></a>
                     </div>
                   </div>
                 </div>
@@ -214,10 +214,10 @@
                 <div class="widget footer-links">
                   <h5 class="widget-title bottom-line left-align grey">Information</h5>
                   <ul class="list-no-dividers">
-                    <li><a href="/front/#">Our stores</a></li>
-                    <li><a href="/front/#">About us</a></li>
-                    <li><a href="/front/#">Business with us</a></li>
-                    <li><a href="/front/#">Delivery information</a></li>
+                    <li><a href="">Our stores</a></li>
+                    <li><a href="">About us</a></li>
+                    <li><a href="">Business with us</a></li>
+                    <li><a href="">Delivery information</a></li>
                   </ul>
                 </div>
               </div>
@@ -226,10 +226,10 @@
                 <div class="widget footer-links">
                   <h5 class="widget-title bottom-line left-align grey">Account</h5>
                   <ul class="list-no-dividers">                  
-                    <li><a href="/front/#">My account</a></li>
-                    <li><a href="/front/#">Wishlist</a></li>
-                    <li><a href="/front/#">Order history</a></li>
-                    <li><a href="/front/#">Specials</a></li>
+                    <li><a href="">My account</a></li>
+                    <li><a href="">Wishlist</a></li>
+                    <li><a href="">Order history</a></li>
+                    <li><a href="">Specials</a></li>
                   </ul>
                 </div>
               </div>
@@ -238,25 +238,15 @@
                 <div class="widget footer-links">
                   <h5 class="widget-title bottom-line left-align grey">Useful Links</h5>
                   <ul class="list-no-dividers">
-                    <li><a href="/front/#">Shipping Policy</a></li>
-                    <li><a href="/front/#">Stores</a></li>
-                    <li><a href="/front/#">Returns</a></li>
-                    <li><a href="/front/#">Terms &amp; Conditions</a></li>
+                    <li><a href="">Shipping Policy</a></li>
+                    <li><a href="">Stores</a></li>
+                    <li><a href="">Returns</a></li>
+                    <li><a href="">Terms &amp; Conditions</a></li>
                   </ul>
                 </div>
               </div>
 
-              <div class="col-md-2 col-sm-6 col-xs-12">
-                <div class="widget footer-links">
-                  <h5 class="widget-title bottom-line left-align grey">Service</h5>
-                  <ul class="list-no-dividers">
-                    <li><a href="/front/#">Support</a></li>
-                    <li><a href="/front/#">Warranty</a></li>
-                    <li><a href="/front/#">FAQ</a></li>
-                    <li><a href="/front/#">Contact</a></li>
-                  </ul>
-                </div>
-              </div>
+      
 
             </div>
           </div>    
