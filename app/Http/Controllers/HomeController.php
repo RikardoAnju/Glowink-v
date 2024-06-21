@@ -16,6 +16,7 @@ use App\Models\Testimoni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
@@ -86,7 +87,7 @@ public function cart()
     $id_member = Auth::guard('webmember')->user()->id;
 
     // Ambil item keranjang untuk pengguna yang sedang login dan belum checkout
-    $carts = Cart::where('id_member', $id_member)->where('is_checkout', 1)->get();
+    $carts = Cart::where('id_member', $id_member)->where('is_checkout', 0)->get();
 
     // Pastikan produk terkait ditemukan untuk setiap item di keranjang
     $carts->load('product'); // Pastikan relasi 'product' ada di model Cart
@@ -105,36 +106,58 @@ public function cart()
 
 public function checkout_orders(Request $request)
 {
-    // Memasukkan data order baru ke dalam tabel orders
-    $id = DB::table('orders')->insertGetId([
-        'id_member' => $request->id_member,
-        'nama_barang' => $request->nama_barang,
-        'invoice' => date('ymds'),
-        'grand_total' => $request->grand_total,
-        'status' => 'Baru',
-        'created_at' => now(),
-        'updated_at' => now()
-    ]);
-    
+    try {
+        // Validasi request
+        $validator = Validator::make($request->all(), [
+            'id_member' => 'required|integer',
+            'nama_barang' => 'required',
+            'grand_total' => 'required|numeric|min:0',
+            'id_produk' => 'required|array',
+            'id_produk.*' => 'required|integer',
+            'jumlah' => 'required|array',
+            'jumlah.*' => 'required|integer|min:1',
+            'total' => 'required|array',
+            'total.*' => 'required|numeric|min:0',
+        ]);
 
-    // Memasukkan detail order ke dalam tabel orders_details
-    for ($i = 0; $i < count($request->id_produk); $i++) {
-        DB::table('orders_details')->insert([
-            'id_order' => $id,
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 400);
+        }
+
+        // Memasukkan data order baru ke dalam tabel orders
+        $id = DB::table('orders')->insertGetId([
+            'id_member' => $request->id_member,
             'nama_barang' => $request->nama_barang,
-            'id_produk' => $request->id_produk[$i],
-            'jumlah' => $request->jumlah[$i], 
-            'total' => $request->total[$i],
+            'invoice' => date('ymds'), // Contoh pembuatan invoice sederhana
+            'grand_total' => $request->grand_total,
+            'status' => 'Baru',
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        // Memasukkan detail order ke dalam tabel orders_details
+        for ($i = 0; $i < count($request->id_produk); $i++) {
+            DB::table('orders_details')->insert([
+                'id_order' => $id,
+                'nama_barang' => $request->nama_barang,
+                'id_produk' => $request->id_produk[$i],
+                'jumlah' => $request->jumlah[$i],
+                'total' => $request->total[$i],
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
+
+        // Hapus data dari keranjang (cart)
+        Cart::where('id_member', $request->id_member)->delete();
+
+        return response()->json(['success' => true, 'message' => 'Order placed successfully.']);
+
+    } catch (\Exception $e) {
+        // Tangani kesalahan dengan log dan respons error
+        Log::error('Error checkout order: ' . $e->getMessage());
+        return response()->json(['error' => 'Terjadi kesalahan saat melakukan checkout.'], 500);
     }
-
-    Cart::where('id_member', Auth::guard('webmember')->user()->id)->update([
-        'is_checkout' => 1
-    ]);
-
-    return response()->json(['success' => true, 'message' => 'Order placed successfully.']);
 }
 
 
@@ -227,8 +250,10 @@ public function orders()
     // Ambil user yang sedang login
     $user = Auth::guard('webmember')->user();
 
-    // Ambil data orders berdasarkan id_member
-    $orders = Order::where('id_member', $user->id)->get();
+    // Ambil data orders berdasarkan id_member, mengambil yang paling baru (berdasarkan id terbesar)
+    $orders = Order::where('id_member', $user->id)
+                   ->orderBy('id', 'desc')
+                   ->get();
 
     // Ambil data payments berdasarkan nama_member
     $payments = Payment::where('nama_member', $user->nama_member)->get();

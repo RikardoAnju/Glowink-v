@@ -8,11 +8,12 @@
       <div class="ecommerce col-xs-12">
         <form name="checkout" id="checkout" class="checkout ecommerce-checkout row" method="POST" action="{{ route('payments.create') }}">
           @csrf
+          
           <input type="hidden" name="order_id" value="{{ Illuminate\Support\Str::uuid()->toString() }}">
           <input type="hidden" name="nama_member" value="{{ $member->nama_member }}">
           <input type="hidden" name="nama_barang" value="{{ $orders->first()->nama_barang }}">
           <input type="hidden" name="email" value="{{ $member->email }}">
-          <input type="hidden" name="grand_total" id="grand_total" value="{{ $orders->first()->grand_total }}">
+          <input type="hidden" name="grand_total" id="grand_total" value="{{ $orders->last()->grand_total }}">
           <input type="hidden" name="provinsi" value="">
           <input type="hidden" name="kabupaten" value="">
 
@@ -47,7 +48,7 @@
                 <tbody>
                   <tr>
                     <th>Order Total</th>
-                    <td class="amount">Rp.{{ number_format($orders->sum('grand_total'), 0, ',', '.') }}</td>
+                    <td class="amount">Rp.{{ number_format($orders->last()->grand_total, 0, ',', '.') }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -130,6 +131,13 @@ $(document).ready(function() {
       }
     });
   });
+
+  // Menangani navigasi mundur di browser
+  history.pushState(null, null, location.href);
+  window.onpopstate = function () {
+    history.go(1);
+  };
+
 });
 </script>
 @endpush

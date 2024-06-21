@@ -39,6 +39,11 @@ class CartController extends Controller
             // Cari produk berdasarkan ID barang
             $product = Product::findOrFail($validatedData['id_barang']);
 
+            // Cek apakah stok mencukupi
+            if ($product->stok < $validatedData['jumlah']) {
+                return response()->json(['error' => 'Stok tidak mencukupi.'], 400);
+            }
+
             // Cek apakah produk sudah ada di keranjang untuk member ini
             $cartItem = Cart::where('id_member', $validatedData['id_member'])
                             ->where('id_barang', $validatedData['id_barang'])
@@ -47,24 +52,40 @@ class CartController extends Controller
             if ($cartItem) {
                 // Jika produk sudah ada di keranjang, update jumlahnya
                 $newQuantity = $cartItem->jumlah + $validatedData['jumlah'];
+
+                // Cek apakah stok mencukupi untuk penambahan jumlah baru
+                if ($product->stok < ($newQuantity - $cartItem->jumlah)) {
+                    return response()->json(['error' => 'Stok tidak mencukupi untuk jumlah tambahan ini.'], 400);
+                }
+
                 $cartItem->update(['jumlah' => $newQuantity]);
 
+                // Kurangi stok produk
+                $product->stok -= $validatedData['jumlah'];
+                $product->save();
+
                 // Respons sukses
-                return response()->json(['message' => 'Kuantitas produk di keranjang berhasil diperbarui.']);
+                return response()->json(['success' => true, 'message' => 'Kuantitas produk di keranjang berhasil diperbarui.']);
+
             } else {
                 // Jika produk belum ada di keranjang, tambahkan sebagai item baru
                 $total = $product->harga * $validatedData['jumlah'];
                 Cart::create([
                     'id_member' => $validatedData['id_member'],
                     'id_barang' => $validatedData['id_barang'],
+        
                     'nama_barang' => $product->nama_barang,
                     'jumlah' => $validatedData['jumlah'],
                     'total' => $total,
                     'is_checkout' => $validatedData['is_checkout']
                 ]);
 
+                // Kurangi stok produk
+                $product->stok -= $validatedData['jumlah'];
+                $product->save();
+
                 // Respons sukses
-                return response()->json(['message' => 'Barang berhasil ditambahkan ke dalam keranjang.']);
+                return response()->json(['success' => true, 'message' => 'Barang berhasil ditambahkan ke dalam keranjang.']);
             }
 
         } catch (ModelNotFoundException $e) {

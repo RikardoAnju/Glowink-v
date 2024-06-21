@@ -18,7 +18,6 @@
   <link rel="shortcut icon" href="images/logo.png">
   <link rel="apple-touch-icon" href="images/logo.png">
   <link rel="apple-touch-icon" sizes="200x200" href="images/logo.png">
-  <link rel="apple-touch-icon" sizes="200x200" href="images/logo.png">
 </head>
 <body>
 
@@ -62,7 +61,7 @@
             <div class="nav-cart mobile-cart hidden-lg hidden-md">
               <div class="nav-cart-outer">
                 <div class="nav-cart-inner">
-                  <a href="/front/#" class="nav-cart-icon">
+                  <a href="/cart" class="nav-cart-icon">
                     <span class="nav-cart-badge">2</span>
                   </a>
                 </div>
@@ -179,7 +178,7 @@
         <!-- Breadcrumbs -->
         <ol class="breadcrumb">
           <li><a href="/">Home</a></li>
-          <li><a href="/products/{{ $product->id_subkategori }}">{{ $product->subcategory->nama_subkategori }}</a></li>
+          <li><a href="/products/{{ $product->subcategory->id }}">{{ $product->subcategory->nama_subkategori }}</a></li>
           <li class="active">Catalog</li>
         </ol>
         <!-- Product Title -->
@@ -208,7 +207,7 @@
               </a>
             </div>
           </div>
-          <a href="#" class="btn btn-dark btn-lg add-to-cart"><span>Add to Cart</span></a>
+          <a href="#" class="btn btn-dark btn-lg add-to-cart" data-product-id="{{ $product->id }}"><span>Add to Cart</span></a>
           {{-- <a href="#" class="product-add-to-wishlist"><i class="fa fa-heart"></i></a>                           --}}
         </div>
 
@@ -216,11 +215,13 @@
         <div class="product_meta">
           <span class="sku">SKU: <a href="#">{{ $product->sku }}</a></span>
           <span class="brand_as">Category: <a href="#">{{ $product->category->nama_kategori }}</a></span>
-          <span class="posted_in">Stok: <a href="#">{{ $product->stok }}</a></span>                
+          <span class="posted_in
+">Stock: <a href="#">{{ $product->stok }}</a></span>                
         </div>
 
         <!-- Accordion -->
         <div class="panel-group accordion mb-50" id="accordion">
+         
           <div class="panel">
             <div class="panel-heading">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="minus">Description<span>&nbsp;</span></a>
@@ -238,15 +239,15 @@
                 <table class="table shop_attributes">
                   <tbody>
                     <tr>
-                      <th>Ukuran:</th>
+                      <th>Size:</th>
                       <td>{{ $product->ukuran }}</td>
                     </tr>
                     <tr>
-                      <th>Terbuat Dari:</th>
+                      <th>Material:</th>
                       <td>{{ $product->bahan }}</td>
                     </tr>
                     <tr>
-                      <th>Manfaat:</th>
+                      <th>Benefits:</th>
                       <td>{{ $product->manfaat }}</td>
                     </tr>                                     
                   </tbody>
@@ -254,7 +255,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> <!-- end accordion -->
 
         <!-- Social Share -->
         <div class="socials-share clearfix">
@@ -279,69 +280,72 @@
 <script type="text/javascript" src="/front/js/scripts.js"></script>
 
 <script>
-$(function(){
-  $('.add-to-cart').click(function(e){
-    e.preventDefault();
-
-    var jumlah = $('.jumlah').val();
-
-    if(jumlah <= 0 || isNaN(jumlah)) {
-      alert('Jumlah barang harus lebih besar dari 0.');
-      return;
-    }
-
-    @if (Auth::guard('webmember')->check())
-      var id_member = {{ Auth::guard('webmember')->user()->id }};
-      var id_barang = {{ $product->id }};
-      var is_checkout = 1; // Set is_checkout ke 1 untuk menandai barang siap untuk checkout
-
-      // Memeriksa apakah barang sudah ada di keranjang
-      var itemExist = false;
-      $('.cart-item').each(function() {
-        var existingIdBarang = $(this).data('id-barang');
-        if (existingIdBarang == id_barang) {
-          var existingQty = parseInt($(this).find('.cart-qty').text());
-          var newQty = existingQty + parseInt(jumlah);
-          $(this).find('.cart-qty').text(newQty);
-          itemExist = true;
-          return false; // Keluar dari each loop
-        }
-      });
-
-      // Jika barang belum ada di keranjang, tambahkan baru
-      if (!itemExist) {
-        $.ajax({
-          url: '{{ route('add_to_cart') }}',
-          method: "POST",
-          headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-          },
-          data: {
-            id_member: id_member,
-            id_barang: id_barang,
-            jumlah: jumlah,
-            is_checkout: is_checkout
-          },
-          success: function(data) {
-            // Redirect ke halaman cart setelah berhasil ditambahkan ke keranjang
-            window.location.href = '/cart';
-          },
-          error: function(xhr, status, error) {
-            alert('Error: ' + xhr.responseJSON.error); // Menampilkan pesan error
-            console.error(error);
+  $(function(){
+    $('.add-to-cart').click(function(e){
+      e.preventDefault();
+  
+      var jumlah = $('.jumlah').val();
+      var productId = $(this).data('product-id');
+  
+      if(jumlah <= 0 || isNaN(jumlah)) {
+        alert('Quantity must be greater than 0.');
+        return;
+      }
+  
+      @if (Auth::guard('webmember')->check())
+        var id_member = {{ Auth::guard('webmember')->user()->id }};
+        var id_barang = productId;
+        var is_checkout = 0; // Set is_checkout to 1 to mark item ready for checkout
+  
+        // Check if item is already in the cart
+        var itemExist = false;
+        $('.cart-item').each(function() {
+          var existingIdBarang = $(this).data('id-barang');
+          if (existingIdBarang == id_barang) {
+            var existingQty = parseInt($(this).find('.cart-qty').text());
+            var newQty = existingQty + parseInt(jumlah);
+            $(this).find('.cart-qty').text(newQty);
+            itemExist = true;
+            return false; // Exit each loop
           }
         });
-      }
-
-    @else
-      // Redirect ke halaman login jika pengguna tidak login
-      window.location.href = '/login_member';
-    @endif
+  
+        // If item is not yet in the cart, add it
+        if (!itemExist) {
+          $.ajax({
+            url: '{{ route('add_to_cart') }}',
+            method: "POST",
+            headers: {
+              'X-CSRF-TOKEN': "{{ csrf_token() }}",
+            },
+            data: {
+              id_member: id_member,
+              id_barang: id_barang,
+              jumlah: jumlah,
+              is_checkout: is_checkout
+            },
+            success: function(data) {
+              // Automatically reduce product stock
+              var newStock = parseInt($('.posted_in a').text()) - jumlah;
+              $('.posted_in a').text(newStock);
+  
+              // Redirect to cart page after successfully adding to cart
+              window.location.href = '/cart';
+            },
+            error: function(xhr, status, error) {
+              alert('Error: ' + xhr.responseJSON.error); // Display error message
+              console.error(error);
+            }
+          });
+        }
+  
+      @else
+        // Redirect to login page if user is not logged in
+        window.location.href = '/login_member';
+      @endif
+    });
   });
-});
-
 </script>
-
 
 </body>
 </html>
