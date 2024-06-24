@@ -20,6 +20,20 @@ class MemberController extends Controller
             'data' => $members
         ]);
     }
+    public function list()
+    {
+        return view('members.index');
+    }
+    public function show($id)
+    {
+        $smembers = Member::find($id);
+    
+        if (!$smembers) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
+    
+        return response()->json(['data' => $smembers], 200);
+    }
 
     /**
      * Menyimpan kategori baru.
@@ -29,10 +43,6 @@ class MemberController extends Controller
         // Validasi input
         $validator = Validator::make($request->all(), [
             'nama_member' => 'required',
-            'provinsi' => 'required',
-            'kabupaten' => 'required',
-            'kecamatan' => 'required',
-            'detail_alamat' => 'required',
             'no_hp' => 'required',
             'email' => 'required|unique:members,email|email',
             'password' => 'required',
@@ -58,12 +68,7 @@ class MemberController extends Controller
         ]);
     }
     
-    public function show (Member $member)
-    {
-        return response()->json([
-            'data'=> $member
-        ]);
-    }
+
 
     /**
      * Memperbarui kategori yang ditentukan.
@@ -73,10 +78,6 @@ class MemberController extends Controller
         // Validasi input
         $validator = Validator::make($request->all(), [
             'nama_member' => 'required',
-            'provinsi' => 'required',
-            'kabupaten' => 'required',
-            'kecamatan' => 'required',
-            'detail_alamat' => 'required',
             'no_hp' => 'required',
             'email' => 'required',
             'password' => 'required|same:konfirmasi_password',

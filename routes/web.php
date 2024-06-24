@@ -13,6 +13,7 @@ use App\Http\Controllers\DashbuyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -62,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
 
 //kategori
 Route::get('/kategori', [CategoryController::class, 'list']);
+Route::get('/members', [MemberController::class, 'list']);
 Route::get('/subkategori',[SubcategoryController::class, 'list']);
 Route::get('/slider',[SliderController::class, 'list']);
 Route::get('/barang',[ProductController::class, 'list']);
@@ -73,11 +75,6 @@ Route::get('/testimonis', [TestimoniController::class, 'index']);
 //pesanan
 
 Route::get('/pesanan/baru',[OrderController::class, 'list']);
-Route::get('/pesanan/dikomfirmasi',[OrderController::class, 'dikomfirmasi_list']);
-Route::get('/pesanan/dikemas',[OrderController::class, 'dikemas_list']);
-Route::get('/pesanan/dikirim',[OrderController::class, 'dikirim_list']);
-Route::get('/pesanan/diterima',[OrderController::class, 'diterima_list']);
-Route::get('/pesanan/selesai',[OrderController::class, 'selesai_list']);
 Route::get('/laporan',[ReportController::class, 'index']);
 
 
@@ -127,7 +124,6 @@ Route::post('/payments/upload', [HomeController::class, 'payments'])->name('paym
 Route::post('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
 Route::post('/pesanan_selesai/{order}', [HomeController::class, 'pesanan_selesai']);
 Route::post('/payments', [HomeController::class, 'payments'])->name('payments');
-Route::post('/upload_bukti', [PaymentController::class, 'uploadBukti'])->name('upload_bukti');
 Route::post('/payments', [HomeController::class, 'payment'])->name('payments');
 Route::post('/payments', [PaymentController::class, 'store'])->name('payments');
 //Route::get('/get_ongkir/{destination}', [ShippingController::class, 'getOngkir']);

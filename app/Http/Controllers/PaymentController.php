@@ -198,16 +198,4 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function destroy(Payment $payment)
-    {
-        if ($payment->bukti) {
-            File::delete(public_path('images/'.$payment->bukti));
-        }
-
-        $payment->delete();
-
-        return response()->json([
-            'message' => 'Payment berhasil dihapus.'
-        ]);
-    }
 }

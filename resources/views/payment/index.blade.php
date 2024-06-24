@@ -135,8 +135,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-  <script>
- 
+<script>
  function rupiah(angka){
     const format = angka.toString().split('').reverse().join('');
     const convert = format.match(/\d{1,3}/g);
