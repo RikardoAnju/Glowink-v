@@ -43,16 +43,16 @@
       <!-- Fullscreen search -->
       <div class="search-wrap">
         <div class="search-inner">
-          <div class="search-cell">
-            <form method="get">
-              <div class="search-field-holder">
-                <input type="search" class="form-control main-search-input" placeholder="Search for">
-                <i class="ui-close search-close" id="search-close"></i>
-              </div>            
-            </form>
-          </div>
+            <div class="search-cell">
+                <form method="GET" action="{{ route('search.customer') }}">
+                    <div class="search-field-holder">
+                        <input type="search" name="query" class="form-control main-search-input" placeholder="Search for products" required>
+                        <i class="ui-close search-close" id="search-close"></i>
+                    </div>            
+                </form>
+            </div>
         </div>        
-      </div> <!-- end fullscreen search -->
+    </div>   <!-- end fullscreen search -->
 
       
       <nav class="navbar navbar-static-top">

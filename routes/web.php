@@ -21,6 +21,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TentangController;
 use App\Http\Middleware\CanDeleteData;
 
@@ -148,3 +149,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::post('/cart/checkout', [ProductController::class, 'checkout'])->name('cart.checkout');
+
+//Search
+Route::get('/search/customer', [SearchController::class, 'searchCustomer'])->name('search.customer');
