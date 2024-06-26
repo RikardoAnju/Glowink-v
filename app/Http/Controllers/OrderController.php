@@ -10,60 +10,59 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     public function show($id)
-{
-    $order = Order::find($id);
+    {
+        $order = Order::find($id);
 
-    if (!$order) {
-        abort(404, 'Order not found');
+        if (!$order) {
+            abort(404, 'Order not found');
+        }
+
+        return view('orders.show', compact('order'));
     }
 
-    return view('orders.show', compact('order'));
-}
+    public function updateStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
 
+        return redirect()->back()->with('success', 'Status updated successfully.');
+    }
+    
+    public function showOrders()
+    {
+        $orders = Order::with('member')->paginate(5); // Mengambil data dengan paginasi
+        return view('pesanan.index', compact('orders'));
+    }
     
     public function list()
     {
         $orders = Order::all();
         return view('pesanan.index', compact('orders'));
     }
-    public function dikomfirmasi_list()
-    {
-        $orders = Order::where('status', 'Dikonfirmasi')->get();
-        return view('pesanan.dikomfirmasi', compact('orders'));
-    }
-    public function dikemas_list()
-    {
-        $orders = Order::where('status', 'Dikemas')->get();
-        return view('pesanan.dikemas', compact('orders'));
-    }
     
-    public function dikirim_list()
-    {
-        $orders = Order::all();
-        return view('pesanan.dikirim', compact('orders'));
-    }
-    public function diterima_list()
-    {
-        $orders = Order::all();
-        return view('pesanan.diterima', compact('orders'));
-    }
-    public function selesai_list()
-    {
-        $orders = Order::all();
-        return view('pesanan.selesai', compact('orders'));
-    }
-    
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $orders = Order::with('member')->get();
+    public function index(Request $request)
+{
+    $keyword = $request->input('keyword');
 
-        return response()->json([
-            'data' => $orders
-        ]);
-    }
+    $orders = Order::with('member')
+        ->when($keyword, function ($query, $keyword) {
+            return $query->where(function ($query) use ($keyword) {
+                $query->where('nama_barang', 'like', "%{$keyword}%")
+                      ->orWhere('invoice', 'like', "%{$keyword}%")
+                      ->orWhere('status', 'like', "%{$keyword}%")
+                      ->orWhereDate('created_at', $keyword);
+            });
+        })
+        ->paginate(10); // Menggunakan paginate untuk pagination
+
+    return view('pesanan.index', compact('orders', 'keyword'));
+}
+
 
     /**
      * Show the form for creating a new resource.

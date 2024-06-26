@@ -278,41 +278,6 @@
                 >
                 Pesanan Baru
                 </a>
-                <a
-                href="/pesanan/dikomfirmasi"
-                role="menuitem"
-                class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
-                >
-                Pesanan Dikomfirmasi
-                </a>
-                <a
-                href="/pesanan/dikemas"
-                role="menuitem"
-                class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                >
-                Pesanan Dikemas
-                </a>
-                <a
-                href="/pesanan/dikirim"
-                role="menuitem"
-                class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                >
-                Pesanan Dikirim
-                </a>
-                <a
-                href="/pesanan/diterima"
-                role="menuitem"
-                class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                >
-                Pesanan Diterima
-                </a>
-                <a
-                href="/pesanan/selesai"
-                role="menuitem"
-                class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                >
-                Selesai
-                </a>
                
             </div>
             </div>
