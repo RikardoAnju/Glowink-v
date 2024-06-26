@@ -33,13 +33,6 @@ Route::get('/add_barang', function () {
     return view('add_barang');
 });
 
-//Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
-//Route::get('/detailproduk', [DetailProdukController::class, 'detailproduk'])->name('detailproduk');
-//Route::get('/register', [RegisterController::class, 'register'])->name('register');
-
-//Route::get('/pesanan', [PesananController::class, 'pesanan'])->name('pesanan');
-//Route::get('/dashbuy', [DashbuyController::class, 'dashbuy'])->name('dashbuy');
-
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');

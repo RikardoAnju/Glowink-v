@@ -243,7 +243,7 @@
                       <td>{{ $product->ukuran }}</td>
                     </tr>
                     <tr>
-                      <th>Material:</th>
+                      <th>Bahan:</th>
                       <td>{{ $product->bahan }}</td>
                     </tr>
                     <tr>
