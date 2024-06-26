@@ -73,12 +73,14 @@ Route::get('/review',[ReviewController::class, 'list']);
 Route::get('/testimonis', [TestimoniController::class, 'index']);
 
 
-//pesanan
-
+//pesanan baru
 Route::get('/pesanan/baru',[OrderController::class, 'list']);
-Route::get('/laporan',[ReportController::class, 'index']);
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::put('/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
 
+//laporan 
+Route::get('/laporan',[ReportController::class, 'index']);  
 Route::get('/tentang', [TentangController::class, 'index'])->name('tentang.index');
 Route::put('/tentang/{about}', [TentangController::class, 'update'])->name('tentang.update');
 
