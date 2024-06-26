@@ -147,3 +147,5 @@ Route::post('/cart/checkout', [ProductController::class, 'checkout'])->name('car
 
 //Search
 Route::get('/search/customer', [SearchController::class, 'searchCustomer'])->name('search.customer');
+
+Route::post('/pesanan_diterima', [HomeController::class, 'pesanan_diterima']);

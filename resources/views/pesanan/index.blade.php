@@ -117,6 +117,7 @@
                                         <option value="Dikonfirmasi" {{ $order->status == 'Dikonfirmasi' ? 'selected' : '' }}>Dikonfirmasi</option>
                                         <option value="Dikemas" {{ $order->status == 'Dikemas' ? 'selected' : '' }}>Dikemas</option>
                                         <option value="Dikirim" {{ $order->status == 'Dikirim' ? 'selected' : '' }}>Dikirim</option>
+                                       
                                     
                                     </select>
                                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded mt-1">Simpan</button>
