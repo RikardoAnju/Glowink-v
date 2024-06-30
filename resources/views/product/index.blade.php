@@ -460,6 +460,12 @@
               type: 'GET',
               success: function (response) {
                   $('#editDataForm input[name="id_kategori"]').val(response.id_kategori);
+                  $('#editDataForm input[name="nama_barang"]').val(response.nama_barang);
+                  $('#editDataForm input[name="harga"]').val(response.harga);
+                  $('#editDataForm input[name="bahan"]').val(response.bahan);
+                  $('#editDataForm input[name="ukuran"]').val(response.ukuran);
+                  $('#editDataForm input[name="stok"]').val(response.stok);
+                  $('#editDataForm input[name="manfaat"]').val(response.manfaat);
                   $('#editDataForm select[name="id_subkategori"]').val(response.id_subkategori);
                   $('#editDataForm textarea[name="deskripsi"]').val(response.deskripsi);
                   $('#editDataForm').attr('action', '/api/products/' + id);

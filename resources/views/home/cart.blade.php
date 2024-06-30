@@ -145,93 +145,110 @@
 @push('js')
 <script>
   $(document).ready(function() {
-  $('#provinsi').change(function() {
-    var selectedProvinsi = $(this).val();
-    if (selectedProvinsi != "") {
-      $.ajax({
-        url: '/get_kota/' + selectedProvinsi,
-        success: function(data) {
-          data = JSON.parse(data);
-          var option = "";
-          data.rajaongkir.results.map(function(kota) {
-            option += "<option value=" + kota.city_id + ">" + kota.city_name + "</option>";
-          });
-          $('#kota').html(option);
-        },
-        error: function(xhr, status, error) {
-          console.error(xhr.responseText);
-          alert('Failed to retrieve city data. ' + error);
-        }
+    // Function to update the total price based on item quantities and shipping cost
+    function updateTotal() {
+      var cartTotal = 0;
+      $('.cart-item').each(function() {
+        var quantity = parseInt($(this).find('.quantity').val());
+        var price = parseInt($(this).find('.price').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
+        cartTotal += quantity * price;
       });
-    }
-  });
-
-  $('.form-cart').submit(function(e) {
-    e.preventDefault(); // Menghentikan pengiriman formulir secara langsung
-    
-    // Mengisi nilai grand_total jika belum terisi
-    var grandTotal = $('input[name="grand_total"]').val();
-    if (!grandTotal || grandTotal === "0") {
-      var cartTotal = parseInt($('.cart-total').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
-      var shippingCost = parseInt($('.shipping-cost').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
-      grandTotal = cartTotal + shippingCost;
+      
+      var shippingCost = parseInt($('.shipping-cost').text().replace('Rp.', '').replace(/\./g, '').replace(',', '')) || 0;
+      var grandTotal = cartTotal + shippingCost;
+      
+      $('.cart-total').text('Rp.' + cartTotal.toLocaleString());
+      $('.grand-total').text('Rp.' + grandTotal.toLocaleString());
       $('input[name="grand_total"]').val(grandTotal);
     }
 
-    $.ajax({
-      url: $(this).attr('action'),
-      method: $(this).attr('method'),
-      data: $(this).serialize(),
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Menambahkan token CSRF di dalam header
-      },
-      success: function(response) {
-        window.location.href = '/checkout';
-      },
-      error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-        alert('Failed to submit form. ' + error);
+    $('#provinsi').change(function() {
+      var selectedProvinsi = $(this).val();
+      if (selectedProvinsi != "") {
+        $.ajax({
+          url: '/get_kota/' + selectedProvinsi,
+          success: function(data) {
+            data = JSON.parse(data);
+            var option = "";
+            data.rajaongkir.results.map(function(kota) {
+              option += "<option value=" + kota.city_id + ">" + kota.city_name + "</option>";
+            });
+            $('#kota').html(option);
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            alert('Failed to retrieve city data. ' + error);
+          }
+        });
       }
+    });
+
+    $('.form-cart').submit(function(e) {
+      e.preventDefault(); // Menghentikan pengiriman formulir secara langsung
+      
+      // Mengisi nilai grand_total jika belum terisi
+      var grandTotal = $('input[name="grand_total"]').val();
+      if (!grandTotal || grandTotal === "0") {
+        updateTotal();
+      }
+
+      $.ajax({
+        url: $(this).attr('action'),
+        method: $(this).attr('method'),
+        data: $(this).serialize(),
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Menambahkan token CSRF di dalam header
+        },
+        success: function(response) {
+          window.location.href = '/checkout';
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+          alert('Failed to submit form. ' + error);
+        }
+      });
+    });
+
+    $('.update-total').click(function(e) {
+      e.preventDefault();
+      var selectedKota = $('#kota').val();
+      if (selectedKota != null) {
+        $.ajax({
+          url: '/get_ongkir/' + selectedKota,
+          success: function(data) {
+            console.log("Response from server:", data);
+            if (data.rajaongkir && data.rajaongkir.results && data.rajaongkir.results.length > 0) {
+              var result = data.rajaongkir.results[0];
+              if (result.costs && result.costs.length > 0) {
+                var shippingCost = parseInt(result.costs[0].cost[0].value);
+                $('.shipping-cost').text('Rp.' + shippingCost.toLocaleString());
+
+                // Mengupdate total pesanan
+                updateTotal();
+              } else {
+                alert('Failed to retrieve shipping cost. No shipping options available.');
+              }
+            } else {
+              alert('Failed to retrieve shipping cost. Invalid response data.');
+            }
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            alert('Failed to retrieve shipping cost. ' + error);
+          }
+        });
+      } else {
+        alert('Please select a city.');
+      }
+    });
+
+    // Update total when quantity changes
+    $(document).on('change', '.quantity', function() {
+      updateTotal();
     });
   });
-
-  $('.update-total').click(function(e) {
-  e.preventDefault(); 
-  var selectedKota = $('#kota').val();
-  if (selectedKota != null) {
-    $.ajax({
-      url: '/get_ongkir/' + selectedKota,
-      success: function(data) {
-        console.log("Response from server:", data);
-        if (data.rajaongkir && data.rajaongkir.results && data.rajaongkir.results.length > 0) {
-          var result = data.rajaongkir.results[0];
-          if (result.costs && result.costs.length > 0) {
-            var shippingCost = parseInt(result.costs[0].cost[0].value);
-            $('.shipping-cost').text('Rp.' + shippingCost);
-
-            // Mengupdate total pesanan
-            var cartTotal = parseInt($('.cart-total').text().replace('Rp.', '').replace(/\./g, '').replace(',', ''));
-            var grandTotal = cartTotal + shippingCost;
-            $('.grand-total').text('Rp.' + grandTotal);
-            $('input[name="grand_total"]').val(grandTotal); // Set nilai untuk input tersembunyi
-          } else {
-            alert('Failed to retrieve shipping cost. No shipping options available.');
-          }
-        } else {
-          alert('Failed to retrieve shipping cost. Invalid response data.');
-        }
-      },
-      error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-        alert('Failed to retrieve shipping cost. ' + error);
-      }
-    });
-  } else {
-    alert('Please select a city.');
-  }
-});
-});
-
 </script>
+
+
 
 @endpush

@@ -243,7 +243,7 @@
                       <td>{{ $product->ukuran }}</td>
                     </tr>
                     <tr>
-                      <th>Material:</th>
+                      <th>Bahan:</th>
                       <td>{{ $product->bahan }}</td>
                     </tr>
                     <tr>
@@ -277,7 +277,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/front/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/front/js/plugins.js"></script>  
-<script type="text/javascript" src="/front/js/scripts.js"></script>
+
 
 <script>
   $(function(){
@@ -286,6 +286,7 @@
   
       var jumlah = $('.jumlah').val();
       var productId = $(this).data('product-id');
+      var harga = $(this).data('harga'); // Ambil harga dari atribut data
   
       if(jumlah <= 0 || isNaN(jumlah)) {
         alert('Quantity must be greater than 0.');
@@ -295,7 +296,7 @@
       @if (Auth::guard('webmember')->check())
         var id_member = {{ Auth::guard('webmember')->user()->id }};
         var id_barang = productId;
-        var is_checkout = 0; // Set is_checkout to 1 to mark item ready for checkout
+        var is_checkout = 0; // Set is_checkout to 0 to mark item not ready for checkout
   
         // Check if item is already in the cart
         var itemExist = false;
@@ -305,6 +306,10 @@
             var existingQty = parseInt($(this).find('.cart-qty').text());
             var newQty = existingQty + parseInt(jumlah);
             $(this).find('.cart-qty').text(newQty);
+            
+            var newTotalPrice = newQty * harga; // Hitung total harga baru
+            $(this).find('.cart-total-price').text(newTotalPrice); // Perbarui total harga
+            
             itemExist = true;
             return false; // Exit each loop
           }

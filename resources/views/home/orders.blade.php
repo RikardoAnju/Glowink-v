@@ -11,7 +11,7 @@
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
-                            <th>Nama </th>
+                            <th>Nama</th>
                             <th>Nominal</th>
                             <th>Status</th>
                         </tr>
@@ -39,6 +39,7 @@
                             <th>Tanggal</th>
                             <th>Nominal</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +49,15 @@
                                 <td>{{ $order->created_at }}</td>
                                 <td>Rp.{{ number_format($order->grand_total) }}</td>
                                 <td>{{ $order->status }}</td>
+                                <td>
+                                    @if (!in_array($order->status, ['baru', 'dikomfirmasi', 'dikemas']))
+                                        <form action="/pesanan_diterima" method="POST" class="form-diterima">
+                                            @csrf
+                                            <input type="hidden" name="id_order" value="{{ $order->id }}">
+                                            <button type="submit" class="btn btn-success btn-diterima">Diterima</button>
+                                        </form>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

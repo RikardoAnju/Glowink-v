@@ -73,7 +73,6 @@ class CartController extends Controller
                 Cart::create([
                     'id_member' => $validatedData['id_member'],
                     'id_barang' => $validatedData['id_barang'],
-        
                     'nama_barang' => $product->nama_barang,
                     'jumlah' => $validatedData['jumlah'],
                     'total' => $total,

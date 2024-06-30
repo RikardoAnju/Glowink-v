@@ -239,12 +239,30 @@ public function checkout()
 
 
 
-public function pesanan_selesai(Order $order)
+public function pesanan_diterima(Request $request)
 {
-    $order->status = 'Selesai';
-    $order->save();
-    return redirect('/orders');
+    try {
+        // Assuming you are retrieving the order ID from the request
+        $orderId = $request->input('id_order');
+
+        // Fetch the order from the database
+        $order = Order::findOrFail($orderId);
+
+        // Assuming $order has a relationship with Member model
+        // Adjust the following line based on your actual relationship
+        $memberId = $order->member->id; // Replace 'member' with your actual relationship name
+
+        // Update order status to 'Selesai'
+        $order->status = 'diterima';
+        $order->save();
+
+        return redirect('/orders')->with('success', 'Order marked as completed.');
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Error: ' . $e->getMessage()], 500);
+    }
 }
+
 public function orders()
 {
     // Ambil user yang sedang login
