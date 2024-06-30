@@ -17,6 +17,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\SliderController;
@@ -53,12 +54,21 @@ Route::post('register_member', [AuthController::class, 'register_member_action']
 Route::post('/login_member_action', [AuthController::class, 'login_member_action'])->name('login_member_action');
 
 
+//Profile
+Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles.index');
+Route::get('/profiles/create', [ProfileController::class, 'create'])->name('profiles.create');
+Route::post('/profiles', [ProfileController::class, 'store'])->name('profiles.store');
+Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
+Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name('profiles.update');
+Route::delete('/profiles/{profile}', [ProfileController::class, 'destroy'])->name('profiles.destroy');
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminpage', [AdminpageController::class, 'index']);
     Route::delete('/api/categories/{id}', [CategoryController::class, 'destroy'])->middleware([CanDeleteData::class]);
     Route::delete('/api/subcategories/{id}', [SubcategoryController::class, 'destroy'])->middleware([CanDeleteData::class]);
-  
+    
     
 });
 
